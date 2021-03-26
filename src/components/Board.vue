@@ -14,7 +14,6 @@
       },
     },
     setup: (props) => {
-      let a
       console.log(`${props.title} component was set up.`)
       return {}
     },
