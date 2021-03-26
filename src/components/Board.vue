@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ title }}</h1>
+  <h1>Board</h1>
 </template>
 
 <script lang="ts">
@@ -7,14 +7,9 @@
 
   export default defineComponent({
     name: 'Board',
-    props: {
-      title: {
-        type: String,
-        required: true,
-      },
-    },
-    setup: (props) => {
-      console.log(`${props.title} component was set up.`)
+    props: {},
+    setup: () => {
+      console.log('Board component xas set up')
       return {}
     },
   })

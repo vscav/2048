@@ -1,15 +1,16 @@
 <template>
-  <Board />
+  <div>Tile</div>
 </template>
 
 <script lang="ts">
   import { defineComponent } from 'vue'
-  import Board from '/@/components/Board.vue'
 
   export default defineComponent({
-    name: 'App',
-    components: {
-      Board,
+    name: 'Title',
+    components: {},
+    props: {},
+    setup() {
+      return {}
     },
   })
 </script>
