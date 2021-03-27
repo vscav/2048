@@ -10,6 +10,7 @@
     components: {},
     props: {},
     setup() {
+      console.log('[app] GameEndOverlay component was set up.')
       return {}
     },
   })

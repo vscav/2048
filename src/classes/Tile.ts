@@ -5,9 +5,9 @@ export class Tile {
   private oldRow: number
   private oldColumn: number
   private markForDeletion: boolean
-  private mergedInto: boolean | null
+  private mergedInto: Tile | null
   private id: number
-  static count: number
+  private static count = 0
 
   constructor(value = 0, row = -1, column = -1) {
     this.value = value
@@ -18,6 +18,8 @@ export class Tile {
     this.markForDeletion = false
     this.mergedInto = null
     this.id = Tile.count++
+
+    console.log(this.id)
   }
 
   public getValue(): number {
@@ -69,11 +71,15 @@ export class Tile {
   }
 
   public isNew(): boolean {
-    return this.oldRow == -1 && !this.mergedInto
+    return this.oldRow === -1 && !this.mergedInto
   }
 
-  public hasMergedInto(): boolean | null {
+  public getMergedInto(): Tile | null {
     return this.mergedInto
+  }
+
+  public setMergedInto(tile: Tile): void {
+    this.mergedInto = tile
   }
 
   public getId(): number {

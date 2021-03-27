@@ -25,3 +25,120 @@ body {
   text-align: center;
   color: #2c3e50;
 }
+
+.board {
+  order: 1;
+  width: 440px;
+  height: 440px;
+  padding: 5px;
+  background-color: #001427;
+  border-radius: 7px;
+  outline: none;
+  position: relative;
+}
+
+.cell,
+.tile {
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  line-height: 95px;
+  display: inline-block;
+  font-size: 55px;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 7px;
+  color: #f9f6f2;
+  background-color: #002b44;
+}
+
+.board .cell,
+.tile {
+  user-select: none;
+  cursor: default;
+}
+
+.tile0 {
+  background-color: #002b44;
+}
+
+.tile2 {
+  background-color: #86cb92;
+}
+
+.tile4 {
+  background-color: #70b28b;
+}
+
+.tile8 {
+  background-color: #609977;
+}
+
+.tile16 {
+  background-color: #40664f;
+}
+
+.tile32 {
+  background-color: #edcf72;
+}
+
+.tile64 {
+  background-color: #edc44b;
+}
+
+.tile128 {
+  background-color: #eac317;
+  font-size: 45px;
+}
+
+.tile256 {
+  background-color: #ddb500;
+  font-size: 45px;
+}
+
+.tile512 {
+  background-color: #ff7759;
+  font-size: 45px;
+}
+
+.tile1024 {
+  background-color: #f65e3b;
+  font-size: 35px;
+}
+
+.tile2048 {
+  background-color: #252424;
+  font-size: 35px;
+}
+
+.tile {
+  position: absolute;
+}
+
+.tile.new {
+  animation-duration: 0.2s;
+  animation-name: newTile;
+  animation-fill-mode: forwards;
+  animation-delay: 0.15s;
+  transform: scale(0);
+}
+
+@keyframes newTile {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@for $row from 0 through 3 {
+  @for $column from 0 through 3 {
+    .position-#{$row}-#{$column}:not(.isMoving) {
+      top: 110px * $row + 5px;
+      left: 110px * $column + 5px;
+    }
+  }
+}
