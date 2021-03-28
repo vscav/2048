@@ -28,52 +28,68 @@ export class Tile {
     this._id = ++Tile._count
   }
 
-  public getValue(): number {
+  public get value(): number {
     return this._value
   }
 
-  public setValue(newValue: number): void {
+  public set value(newValue: number) {
     this._value = newValue
   }
 
-  public getRow(): number {
+  public get row(): number {
     return this._row
   }
 
-  public setRow(newRow: number): void {
+  public set row(newRow: number) {
     this._row = newRow
   }
 
-  public getColumn(): number {
+  public get column(): number {
     return this._column
   }
 
-  public setColumn(newColumn: number): void {
+  public set column(newColumn: number) {
     this._column = newColumn
   }
 
-  public getOldRow(): number {
+  public get oldRow(): number {
     return this._oldRow
   }
 
-  public setOldRow(newOldRow: number): void {
+  public set oldRow(newOldRow: number) {
     this._oldRow = newOldRow
   }
 
-  public getOldColumn(): number {
+  public get oldColumn(): number {
     return this._oldColumn
   }
 
-  public setOldColumn(newOldColumn: number): void {
+  public set oldColumn(newOldColumn: number) {
     this._oldColumn = newOldColumn
   }
 
-  public getMarkForDeletion(): boolean {
+  public get markForDeletion(): boolean {
     return this._markForDeletion
   }
 
-  public setMarkForDeletion(newMark: boolean): void {
+  public set markForDeletion(newMark: boolean) {
     this._markForDeletion = newMark
+  }
+
+  public get mergedInto(): Tile | null {
+    return this._mergedInto
+  }
+
+  public set mergedInto(tile: Tile | null) {
+    this._mergedInto = tile
+  }
+
+  public get id(): number {
+    return this._id
+  }
+
+  public static get count(): number {
+    return this._count
   }
 
   public isNew(): boolean {
@@ -103,21 +119,5 @@ export class Tile {
           this.fromColumn() != this.toColumn())) ||
       this._mergedInto
     )
-  }
-
-  public getMergedInto(): Tile | null {
-    return this._mergedInto
-  }
-
-  public setMergedInto(tile: Tile): void {
-    this._mergedInto = tile
-  }
-
-  public getId(): number {
-    return this._id
-  }
-
-  public static getCount(): number {
-    return this._count
   }
 }

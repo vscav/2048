@@ -1,5 +1,5 @@
 <template>
-  <span :class="classes">{{ tile.getValue() }}</span>
+  <span :class="classes">{{ tile.value }}</span>
 </template>
 
 <script lang="ts">
@@ -21,14 +21,14 @@
       const classes = computed(() => {
         const classesArray = ['tile']
 
-        classesArray.push('tile' + tile.value.getValue())
+        classesArray.push('tile' + tile.value.value)
 
-        if (!tile.value.getMergedInto()) {
+        if (!tile.value.mergedInto) {
           classesArray.push(
-            'position_' + tile.value.getRow() + '_' + tile.value.getColumn(),
+            'position_' + tile.value.row + '_' + tile.value.column,
           )
         }
-        if (tile.value.getMergedInto()) {
+        if (tile.value.mergedInto) {
           classesArray.push('merged')
         }
         if (tile.value.isNew()) {

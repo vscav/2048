@@ -1,7 +1,7 @@
 <template>
   <Score :board="board" />
   <div class="board" tabIndex="1">
-    <div v-for="(rowItem, rowIndex) in board.getCells()" :key="rowIndex">
+    <div v-for="(rowItem, rowIndex) in board.cells" :key="rowIndex">
       <Cell
         v-for="(columnItem, columnIndex) in rowItem"
         :key="columnIndex"
@@ -74,7 +74,7 @@
         window.removeEventListener('keydown', handleKeyDown)
       })
       const tiles = computed(() => {
-        return board.value.getTiles().filter((tile) => tile.getValue() !== 0)
+        return board.value.tiles.filter((tile) => tile.value !== 0)
       })
       return {
         board,

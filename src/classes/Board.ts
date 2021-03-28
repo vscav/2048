@@ -37,23 +37,23 @@ export class Board {
     this._won = false
   }
 
-  public getTiles(): Tile[] {
+  public get tiles(): Tile[] {
     return this._tiles
   }
 
-  public getCells(): Tile[][] {
+  public get cells(): Tile[][] {
     return this._cells
   }
 
-  public getLastScorePoints(): number {
+  public get lastScorePoints(): number {
     return this._lastScore.points
   }
 
-  public getLastScoreAnimation(): boolean {
+  public get lastScoreAnimation(): boolean {
     return this._lastScore.animation
   }
 
-  public getScore(): number {
+  public get score(): number {
     return this._score
   }
 
@@ -65,7 +65,7 @@ export class Board {
     let canMove = false
     for (let row = 0; row < this._size; ++row) {
       for (let column = 0; column < this._size; ++column) {
-        canMove ||= this._cells[row][column].getValue() == 0
+        canMove ||= this._cells[row][column].value == 0
         for (let dir = 0; dir < 4; ++dir) {
           const newRow = row + this._deltaX[dir]
           const newColumn = column + this._deltaY[dir]
@@ -78,8 +78,8 @@ export class Board {
             continue
           }
           canMove ||=
-            this._cells[row][column].getValue() ==
-            this._cells[newRow][newColumn].getValue()
+            this._cells[row][column].value ==
+            this._cells[newRow][newColumn].value
         }
       }
     }
@@ -97,7 +97,7 @@ export class Board {
     const emptyCells: Cell[] = []
     for (let row = 0; row < this._size; ++row) {
       for (let column = 0; column < this._size; ++column) {
-        if (this._cells[row][column].getValue() === 0) {
+        if (this._cells[row][column].value === 0) {
           emptyCells.push({ row, column })
         }
       }
@@ -112,11 +112,11 @@ export class Board {
   private setPositions(): void {
     this._cells.forEach((row, rowIndex) => {
       row.forEach((tile, columnIndex) => {
-        tile.setOldRow(tile.getRow())
-        tile.setOldColumn(tile.getColumn())
-        tile.setRow(rowIndex)
-        tile.setColumn(columnIndex)
-        tile.setMarkForDeletion(false)
+        tile.oldRow = tile.row
+        tile.oldColumn = tile.column
+        tile.row = rowIndex
+        tile.column = columnIndex
+        tile.markForDeletion = false
       })
     })
   }
@@ -150,9 +150,7 @@ export class Board {
     let hasChanged = false
 
     for (let row = 0; row < this._size; ++row) {
-      const currentRow = this._cells[row].filter(
-        (tile) => tile.getValue() !== 0,
-      )
+      const currentRow = this._cells[row].filter((tile) => tile.value !== 0)
       const resultRow: Tile[] = []
 
       for (let target = 0; target < this._size; ++target) {
@@ -160,29 +158,25 @@ export class Board {
           ? (currentRow.shift() as Tile)
           : this.addTile()
 
-        if (
-          currentRow.length > 0 &&
-          currentRow[0].getValue() === targetTile.getValue()
-        ) {
+        if (currentRow.length > 0 && currentRow[0].value === targetTile.value) {
           const tile1 = targetTile
-          targetTile = this.addTile(targetTile.getValue())
-          tile1.setMergedInto(targetTile)
+          targetTile = this.addTile(targetTile.value)
+          tile1.mergedInto = targetTile
 
           const tile2 = currentRow.shift() as Tile
-          tile2.setMergedInto(targetTile)
-          targetTile.setValue(targetTile.getValue() + tile2.getValue())
+          tile2.mergedInto = targetTile
+          targetTile.value = targetTile.value + tile2.value
 
-          this._lastScore.points = targetTile.getValue()
+          this._lastScore.points = targetTile.value
           this._lastScore.animation = true
           this._score += this._lastScore.points
         }
 
         resultRow[target] = targetTile
         // Quick test (win on 8):
-        // this.won ||= targetTile.getValue() === 8
-        this._won ||= targetTile.getValue() === 2048
-        hasChanged ||=
-          targetTile.getValue() !== this._cells[row][target].getValue()
+        // this.won ||= targetTile.value === 8
+        this._won ||= targetTile.value === 2048
+        hasChanged ||= targetTile.value !== this._cells[row][target].value
       }
 
       this._cells[row] = resultRow
@@ -192,11 +186,9 @@ export class Board {
   }
 
   private clearOldTiles() {
-    this._tiles = this._tiles.filter(
-      (tile) => tile.getMarkForDeletion() === false,
-    )
+    this._tiles = this._tiles.filter((tile) => tile.markForDeletion === false)
     this._tiles.forEach((tile) => {
-      tile.setMarkForDeletion(true)
+      tile.markForDeletion = true
     })
   }
 }
