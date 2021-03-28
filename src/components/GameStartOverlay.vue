@@ -1,16 +1,16 @@
 <template>
-  <span class="cell">{{ '' }}</span>
+  <div>Game Start Overlay</div>
 </template>
 
 <script lang="ts">
   import { defineComponent } from 'vue'
 
   export default defineComponent({
-    name: 'Cell',
+    name: 'GameStartOverlay',
     components: {},
     props: {},
     setup() {
-      console.log('[app] A new Cell component was set up.')
+      console.log('[app] GameStartOverlay component was set up.')
       return {}
     },
   })

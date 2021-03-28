@@ -33,12 +33,12 @@
       console.log('[app] Board component was set up.')
       const board = ref(new Board())
       const handleKeyDown = (event: KeyboardEvent) => {
+        console.log(event.key)
         if (board.value.hasWon()) {
           return
         }
         if (event.keyCode >= 37 && event.keyCode <= 40) {
           event.preventDefault()
-          console.log('[app] Made a move on board.')
           const direction = event.keyCode - 37
           board.value.move(direction)
           // TODO: use something different than keyCode (deprecated)
@@ -54,7 +54,7 @@
         window.removeEventListener('keydown', handleKeyDown)
       })
       const tiles = computed(() => {
-        return board.value.getTiles().filter((tile) => tile?.getValue() !== 0)
+        return board.value.getTiles().filter((tile) => tile.getValue() !== 0)
       })
       return {
         board,

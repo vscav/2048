@@ -1,4 +1,5 @@
 import { Tile } from '/@/classes/Tile'
+import { rotateLeft } from '/@/utils/matrix'
 
 interface Cell {
   row: number
@@ -7,8 +8,8 @@ interface Cell {
 
 export class Board {
   readonly size: number
-  private tiles!: Tile[]
-  private cells!: Tile[][]
+  private tiles: Tile[]
+  private cells: Tile[][]
   private won: boolean
 
   constructor(size = 4) {
@@ -24,6 +25,8 @@ export class Board {
     this.addRandomTile()
     this.setPositions()
     this.won = false
+
+    // console.log(this.cells)
   }
 
   public getTiles(): Tile[] {
@@ -42,6 +45,7 @@ export class Board {
     const res: Tile = new Tile(value)
     // Tile.apply(res, [])
     this.tiles.push(res)
+
     return res
   }
 
@@ -55,14 +59,10 @@ export class Board {
       }
     }
     const index = ~~(Math.random() * emptyCells.length) // Apply probability law here
-    const cell = emptyCells[index] // The cell where tjhe tile will be added (based on the index above)
-    const newValue = Math.random() < 0.1 ? 4 : 2 // Apply probability law here (will it be a 2 or a 4? Current probability for 4: 0.1)
+    const cell = emptyCells[index] // The cell where the tile will be added (based on the index above)
+    const newValue = Math.random() < 0.1 ? 4 : 2 // Apply probability law here (will it be a 2 or a 4? Current variable for 4: 0.1)
 
-    try {
-      this.cells[cell.row][cell.column] = this.addTile(newValue)
-    } catch (error) {
-      console.log('[error] There are no more availabled empty cells.')
-    }
+    this.cells[cell.row][cell.column] = this.addTile(newValue)
   }
 
   private setPositions(): void {
@@ -78,19 +78,72 @@ export class Board {
   }
 
   public move(direction: number): Board {
-    console.log('has moved with a diretion of ' + direction)
+    // console.log('has moved with a direction of ' + direction)
 
-    // TODO: moveLeft call
+    this.clearOldTiles()
 
-    // TODO: if the move change the board/positions, then add a random tile:
-    this.addRandomTile()
+    for (let i = 0; i < direction; ++i) {
+      this.cells = rotateLeft(this.cells)
+    }
+
+    const hasChanged = this.moveLeft()
+
+    for (let i = direction; i < 4; ++i) {
+      this.cells = rotateLeft(this.cells)
+    }
+
+    if (hasChanged) {
+      this.addRandomTile()
+    }
 
     this.setPositions()
 
     return this
   }
 
-  // TODO: move left function (private)
+  private moveLeft(): boolean {
+    let hasChanged = false
 
-  // TODO: clear old tiles function
+    for (let row = 0; row < this.size; ++row) {
+      const currentRow = this.cells[row].filter((tile) => tile.getValue() !== 0)
+      const resultRow: Tile[] = []
+
+      for (let target = 0; target < this.size; ++target) {
+        let targetTile: Tile = currentRow.length
+          ? (currentRow.shift() as Tile)
+          : this.addTile()
+
+        if (
+          currentRow.length > 0 &&
+          currentRow[0].getValue() === targetTile.getValue()
+        ) {
+          const tile1 = targetTile
+          targetTile = this.addTile(targetTile.getValue())
+          tile1.setMergedInto(targetTile)
+
+          const tile2 = currentRow.shift() as Tile
+          tile2.setMergedInto(targetTile)
+          targetTile.setValue(targetTile.getValue() + tile2.getValue())
+        }
+
+        resultRow[target] = targetTile
+        this.won ||= targetTile.getValue() === 2048
+        hasChanged ||=
+          targetTile.getValue() !== this.cells[row][target].getValue()
+      }
+
+      this.cells[row] = resultRow
+    }
+
+    return hasChanged
+  }
+
+  private clearOldTiles() {
+    this.tiles = this.tiles.filter(
+      (tile) => tile.getMarkForDeletion() === false,
+    )
+    this.tiles.forEach((tile) => {
+      tile.setMarkForDeletion(true)
+    })
+  }
 }

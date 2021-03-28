@@ -17,9 +17,7 @@ export class Tile {
     this.oldColumn = -1
     this.markForDeletion = false
     this.mergedInto = null
-    this.id = Tile.count++
-
-    console.log(this.id)
+    this.id = ++Tile.count
   }
 
   public getValue(): number {
@@ -72,6 +70,31 @@ export class Tile {
 
   public isNew(): boolean {
     return this.oldRow === -1 && !this.mergedInto
+  }
+
+  private fromRow(): number {
+    return this.mergedInto ? this.row : this.oldRow
+  }
+
+  private fromColumn(): number {
+    return this.mergedInto ? this.column : this.oldColumn
+  }
+
+  private toRow(): number {
+    return this.mergedInto ? this.mergedInto.row : this.row
+  }
+
+  private toColumn(): number {
+    return this.mergedInto ? this.mergedInto.column : this.column
+  }
+
+  public hasMoved(): boolean | Tile | null {
+    return (
+      (this.fromRow() != -1 &&
+        (this.fromRow() != this.toRow() ||
+          this.fromColumn() != this.toColumn())) ||
+      this.mergedInto
+    )
   }
 
   public getMergedInto(): Tile | null {
