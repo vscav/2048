@@ -33,16 +33,27 @@
       console.log('[app] Board component was set up.')
       const board = ref(new Board())
       const handleKeyDown = (event: KeyboardEvent) => {
-        console.log(event.key)
         if (board.value.hasWon()) {
           return
         }
-        if (event.keyCode >= 37 && event.keyCode <= 40) {
-          event.preventDefault()
-          const direction = event.keyCode - 37
-          board.value.move(direction)
-          // TODO: use something different than keyCode (deprecated)
+        let direction: number
+        switch (event.key) {
+          case 'ArrowLeft':
+            direction = 0
+            break
+          case 'ArrowUp':
+            direction = 1
+            break
+          case 'ArrowRight':
+            direction = 2
+            break
+          case 'ArrowDown':
+            direction = 3
+            break
+          default:
+            return
         }
+        board.value.move(direction)
       }
       const onRestart = () => {
         board.value = new Board()
