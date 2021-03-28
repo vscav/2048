@@ -7,61 +7,59 @@ interface Cell {
 }
 
 export class Board {
-  readonly size: number
-  readonly deltaX = [-1, 0, 1, 0]
-  readonly deltaY = [0, -1, 0, 1]
-  private tiles: Tile[]
-  private cells: Tile[][]
-  private won: boolean
+  private readonly _size: number
+  private readonly _deltaX = [-1, 0, 1, 0]
+  private readonly _deltaY = [0, -1, 0, 1]
+  private _tiles: Tile[]
+  private _cells: Tile[][]
+  private _won: boolean
 
   constructor(size = 4) {
-    this.size = size
-    this.tiles = []
-    this.cells = []
-    for (let i = 0; i < this.size; ++i) {
-      this.cells[i] = []
-      for (let j = 0; j < this.size; ++j) {
-        this.cells[i].push(this.addTile())
+    this._size = size
+    this._tiles = []
+    this._cells = []
+    for (let i = 0; i < this._size; ++i) {
+      this._cells[i] = []
+      for (let j = 0; j < this._size; ++j) {
+        this._cells[i].push(this.addTile())
       }
     }
     this.addRandomTile()
     this.setPositions()
-    this.won = false
-
-    // console.log(this.cells)
+    this._won = false
   }
 
   public getTiles(): Tile[] {
-    return this.tiles
+    return this._tiles
   }
 
   public getCells(): Tile[][] {
-    return this.cells
+    return this._cells
   }
 
   public hasWon(): boolean {
-    return this.won
+    return this._won
   }
 
   public hasLost(): boolean {
     let canMove = false
-    for (let row = 0; row < this.size; ++row) {
-      for (let column = 0; column < this.size; ++column) {
-        canMove ||= this.cells[row][column].getValue() == 0
+    for (let row = 0; row < this._size; ++row) {
+      for (let column = 0; column < this._size; ++column) {
+        canMove ||= this._cells[row][column].getValue() == 0
         for (let dir = 0; dir < 4; ++dir) {
-          const newRow = row + this.deltaX[dir]
-          const newColumn = column + this.deltaY[dir]
+          const newRow = row + this._deltaX[dir]
+          const newColumn = column + this._deltaY[dir]
           if (
             newRow < 0 ||
-            newRow >= this.size ||
+            newRow >= this._size ||
             newColumn < 0 ||
-            newColumn >= this.size
+            newColumn >= this._size
           ) {
             continue
           }
           canMove ||=
-            this.cells[row][column].getValue() ==
-            this.cells[newRow][newColumn].getValue()
+            this._cells[row][column].getValue() ==
+            this._cells[newRow][newColumn].getValue()
         }
       }
     }
@@ -70,16 +68,16 @@ export class Board {
 
   private addTile(value = 0): Tile {
     const res: Tile = new Tile(value)
-    this.tiles.push(res)
+    this._tiles.push(res)
 
     return res
   }
 
   private addRandomTile(): void {
     const emptyCells: Cell[] = []
-    for (let row = 0; row < this.size; ++row) {
-      for (let column = 0; column < this.size; ++column) {
-        if (this.cells[row][column].getValue() === 0) {
+    for (let row = 0; row < this._size; ++row) {
+      for (let column = 0; column < this._size; ++column) {
+        if (this._cells[row][column].getValue() === 0) {
           emptyCells.push({ row, column })
         }
       }
@@ -88,11 +86,11 @@ export class Board {
     const cell = emptyCells[index] // The cell where the tile will be added (based on the index above)
     const newValue = Math.random() < 0.1 ? 4 : 2 // Apply probability law here (will it be a 2 or a 4? Current variable for 4: 0.1)
 
-    this.cells[cell.row][cell.column] = this.addTile(newValue)
+    this._cells[cell.row][cell.column] = this.addTile(newValue)
   }
 
   private setPositions(): void {
-    this.cells.forEach((row, rowIndex) => {
+    this._cells.forEach((row, rowIndex) => {
       row.forEach((tile, columnIndex) => {
         tile.setOldRow(tile.getRow())
         tile.setOldColumn(tile.getColumn())
@@ -109,13 +107,13 @@ export class Board {
     this.clearOldTiles()
 
     for (let i = 0; i < direction; ++i) {
-      this.cells = rotateLeft(this.cells)
+      this._cells = rotateLeft(this._cells)
     }
 
     const hasChanged = this.moveLeft()
 
     for (let i = direction; i < 4; ++i) {
-      this.cells = rotateLeft(this.cells)
+      this._cells = rotateLeft(this._cells)
     }
 
     if (hasChanged) {
@@ -130,11 +128,13 @@ export class Board {
   private moveLeft(): boolean {
     let hasChanged = false
 
-    for (let row = 0; row < this.size; ++row) {
-      const currentRow = this.cells[row].filter((tile) => tile.getValue() !== 0)
+    for (let row = 0; row < this._size; ++row) {
+      const currentRow = this._cells[row].filter(
+        (tile) => tile.getValue() !== 0,
+      )
       const resultRow: Tile[] = []
 
-      for (let target = 0; target < this.size; ++target) {
+      for (let target = 0; target < this._size; ++target) {
         let targetTile: Tile = currentRow.length
           ? (currentRow.shift() as Tile)
           : this.addTile()
@@ -154,22 +154,22 @@ export class Board {
 
         resultRow[target] = targetTile
         // this.won ||= targetTile.getValue() === 8
-        this.won ||= targetTile.getValue() === 2048
+        this._won ||= targetTile.getValue() === 2048
         hasChanged ||=
-          targetTile.getValue() !== this.cells[row][target].getValue()
+          targetTile.getValue() !== this._cells[row][target].getValue()
       }
 
-      this.cells[row] = resultRow
+      this._cells[row] = resultRow
     }
 
     return hasChanged
   }
 
   private clearOldTiles() {
-    this.tiles = this.tiles.filter(
+    this._tiles = this._tiles.filter(
       (tile) => tile.getMarkForDeletion() === false,
     )
-    this.tiles.forEach((tile) => {
+    this._tiles.forEach((tile) => {
       tile.setMarkForDeletion(true)
     })
   }

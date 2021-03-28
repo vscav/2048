@@ -1,91 +1,91 @@
 export class Tile {
-  private value: number
-  private row: number
-  private column: number
-  private oldRow: number
-  private oldColumn: number
-  private markForDeletion: boolean
-  private mergedInto: Tile | null
-  private id: number
-  private static count = 0
+  private _value: number
+  private _row: number
+  private _column: number
+  private _oldRow: number
+  private _oldColumn: number
+  private _markForDeletion: boolean
+  private _mergedInto: Tile | null
+  private _id: number
+  private static _count = 0
 
   constructor(value = 0, row = -1, column = -1) {
-    this.value = value
-    this.row = row
-    this.column = column
-    this.oldRow = -1
-    this.oldColumn = -1
-    this.markForDeletion = false
-    this.mergedInto = null
-    this.id = ++Tile.count
+    this._value = value
+    this._row = row
+    this._column = column
+    this._oldRow = -1
+    this._oldColumn = -1
+    this._markForDeletion = false
+    this._mergedInto = null
+    this._id = ++Tile._count
   }
 
   public getValue(): number {
-    return this.value
+    return this._value
   }
 
   public setValue(newValue: number): void {
-    this.value = newValue
+    this._value = newValue
   }
 
   public getRow(): number {
-    return this.row
+    return this._row
   }
 
   public setRow(newRow: number): void {
-    this.row = newRow
+    this._row = newRow
   }
 
   public getColumn(): number {
-    return this.column
+    return this._column
   }
 
   public setColumn(newColumn: number): void {
-    this.column = newColumn
+    this._column = newColumn
   }
 
   public getOldRow(): number {
-    return this.oldRow
+    return this._oldRow
   }
 
   public setOldRow(newOldRow: number): void {
-    this.oldRow = newOldRow
+    this._oldRow = newOldRow
   }
 
   public getOldColumn(): number {
-    return this.oldColumn
+    return this._oldColumn
   }
 
   public setOldColumn(newOldColumn: number): void {
-    this.oldColumn = newOldColumn
+    this._oldColumn = newOldColumn
   }
 
   public getMarkForDeletion(): boolean {
-    return this.markForDeletion
+    return this._markForDeletion
   }
 
   public setMarkForDeletion(newMark: boolean): void {
-    this.markForDeletion = newMark
+    this._markForDeletion = newMark
   }
 
   public isNew(): boolean {
-    return this.oldRow === -1 && !this.mergedInto
+    return this._oldRow === -1 && !this._mergedInto
   }
 
   private fromRow(): number {
-    return this.mergedInto ? this.row : this.oldRow
+    return this._mergedInto ? this._row : this._oldRow
   }
 
   private fromColumn(): number {
-    return this.mergedInto ? this.column : this.oldColumn
+    return this._mergedInto ? this._column : this._oldColumn
   }
 
   private toRow(): number {
-    return this.mergedInto ? this.mergedInto.row : this.row
+    return this._mergedInto ? this._mergedInto._row : this._row
   }
 
   private toColumn(): number {
-    return this.mergedInto ? this.mergedInto.column : this.column
+    return this._mergedInto ? this._mergedInto._column : this._column
   }
 
   public hasMoved(): boolean | Tile | null {
@@ -93,23 +93,23 @@ export class Tile {
       (this.fromRow() != -1 &&
         (this.fromRow() != this.toRow() ||
           this.fromColumn() != this.toColumn())) ||
-      this.mergedInto
+      this._mergedInto
     )
   }
 
   public getMergedInto(): Tile | null {
-    return this.mergedInto
+    return this._mergedInto
   }
 
   public setMergedInto(tile: Tile): void {
-    this.mergedInto = tile
+    this._mergedInto = tile
   }
 
   public getId(): number {
-    return this.id
+    return this._id
   }
 
   public static getCount(): number {
-    return this.count
+    return this._count
   }
 }
