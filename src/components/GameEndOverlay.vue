@@ -1,17 +1,40 @@
 <template>
-  <div>Game End Overlay</div>
+  <div v-show="show" class="overlay">
+    <p class="message">{{ content }}</p>
+  </div>
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
+  import { computed, defineComponent, toRefs } from 'vue'
 
   export default defineComponent({
     name: 'GameEndOverlay',
     components: {},
-    props: {},
-    setup() {
+    props: {
+      board: {
+        type: Object,
+        required: true,
+      },
+    },
+    setup(props) {
       console.log('[app] GameEndOverlay component was set up.')
-      return {}
+      const { board } = toRefs(props)
+      const show = computed(() => {
+        return board.value.hasWon() || board.value.hasLost()
+      })
+      const content = computed(() => {
+        if (board.value.hasWon()) {
+          return 'You win!'
+        } else if (board.value.hasLost()) {
+          return 'Game over!'
+        } else {
+          return ''
+        }
+      })
+      return {
+        content,
+        show,
+      }
     },
   })
 </script>

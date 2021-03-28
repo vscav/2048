@@ -131,7 +131,8 @@ body {
   display: inline;
 }
 
-.tile.new {
+.tile.new,
+.overlay {
   animation-duration: 0.2s;
   animation-name: newTile;
   animation-fill-mode: forwards;
@@ -147,6 +148,27 @@ body {
   to {
     transform: scale(1);
   }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: rgba(0, 20, 39, 0.75);
+  border-radius: 7px;
+}
+
+.overlay .message {
+  font-size: 55px;
+  font-weight: bolder;
+  color: #f9f6f2;
 }
 
 @for $row from 0 through 3 {

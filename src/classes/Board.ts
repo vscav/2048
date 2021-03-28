@@ -8,6 +8,8 @@ interface Cell {
 
 export class Board {
   readonly size: number
+  readonly deltaX = [-1, 0, 1, 0]
+  readonly deltaY = [0, -1, 0, 1]
   private tiles: Tile[]
   private cells: Tile[][]
   private won: boolean
@@ -41,9 +43,33 @@ export class Board {
     return this.won
   }
 
+  public hasLost(): boolean {
+    let canMove = false
+    for (let row = 0; row < this.size; ++row) {
+      for (let column = 0; column < this.size; ++column) {
+        canMove ||= this.cells[row][column].getValue() == 0
+        for (let dir = 0; dir < 4; ++dir) {
+          const newRow = row + this.deltaX[dir]
+          const newColumn = column + this.deltaY[dir]
+          if (
+            newRow < 0 ||
+            newRow >= this.size ||
+            newColumn < 0 ||
+            newColumn >= this.size
+          ) {
+            continue
+          }
+          canMove ||=
+            this.cells[row][column].getValue() ==
+            this.cells[newRow][newColumn].getValue()
+        }
+      }
+    }
+    return !canMove
+  }
+
   private addTile(value = 0): Tile {
     const res: Tile = new Tile(value)
-    // Tile.apply(res, [])
     this.tiles.push(res)
 
     return res
@@ -127,6 +153,7 @@ export class Board {
         }
 
         resultRow[target] = targetTile
+        // this.won ||= targetTile.getValue() === 8
         this.won ||= targetTile.getValue() === 2048
         hasChanged ||=
           targetTile.getValue() !== this.cells[row][target].getValue()

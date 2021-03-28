@@ -7,6 +7,7 @@
       ></Cell>
     </div>
     <Tile v-for="(tile, index) in tiles" :key="index" :tile="tile" />
+    <GameEndOverlay :board="board" :onrestart="onRestart" />
   </div>
 </template>
 
@@ -18,14 +19,18 @@
     onMounted,
     ref,
   } from 'vue'
+
   import Cell from '/@/components/Cell.vue'
+  import GameEndOverlay from '/@/components/GameEndOverlay.vue'
   import Tile from '/@/components/Tile.vue'
+
   import { Board } from '/@/classes/Board'
 
   export default defineComponent({
     name: 'Board',
     components: {
       Cell,
+      GameEndOverlay,
       Tile,
     },
     props: {},
@@ -34,6 +39,7 @@
       const board = ref(new Board())
       const handleKeyDown = (event: KeyboardEvent) => {
         if (board.value.hasWon()) {
+          console.log('Player have already won.')
           return
         }
         let direction: number
