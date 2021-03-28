@@ -27,6 +27,7 @@
   import Tile from '/@/components/Tile.vue'
 
   import { Board } from '/@/classes/Board'
+  import { Probability } from '/@/utils/probability'
 
   export default defineComponent({
     name: 'Board',
@@ -39,6 +40,22 @@
     props: {},
     setup: () => {
       console.log('[app] Board component was set up.')
+
+      const prob = new Probability()
+      const uniform = prob.uniform(0, 1)
+      const value = uniform.random()
+      console.log(`Random value from uniform distribution: ${value}`)
+      console.log(
+        `The min random number which could be returned by 'uniform()' (inclusive): ${uniform.min}`,
+      )
+      console.log(
+        `The max random number which could be returned by 'uniform()' (exclusive): ${uniform.max}`,
+      )
+      console.log(`The expected mean for this distribution: ${uniform.mean}`)
+      console.log(
+        `The expected variance for this distribution: ${uniform.variance}`,
+      )
+
       const board = ref(new Board())
       const handleKeyDown = (event: KeyboardEvent) => {
         if (board.value.hasWon()) {
