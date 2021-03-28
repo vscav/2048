@@ -13,6 +13,11 @@ export class Board {
   private _tiles: Tile[]
   private _cells: Tile[][]
   private _won: boolean
+  private _score = 0
+  private _lastScore = {
+    points: 0,
+    animation: false,
+  }
 
   constructor(size = 4) {
     if (size <= 0) {
@@ -38,6 +43,18 @@ export class Board {
 
   public getCells(): Tile[][] {
     return this._cells
+  }
+
+  public getLastScorePoints(): number {
+    return this._lastScore.points
+  }
+
+  public getLastScoreAnimation(): boolean {
+    return this._lastScore.animation
+  }
+
+  public getScore(): number {
+    return this._score
   }
 
   public hasWon(): boolean {
@@ -106,6 +123,7 @@ export class Board {
 
   public move(direction: number): Board {
     // console.log('has moved with a direction of ' + direction)
+    this._lastScore.animation = false
 
     this.clearOldTiles()
 
@@ -153,9 +171,14 @@ export class Board {
           const tile2 = currentRow.shift() as Tile
           tile2.setMergedInto(targetTile)
           targetTile.setValue(targetTile.getValue() + tile2.getValue())
+
+          this._lastScore.points = targetTile.getValue()
+          this._lastScore.animation = true
+          this._score += this._lastScore.points
         }
 
         resultRow[target] = targetTile
+        // Quick test (win on 8):
         // this.won ||= targetTile.getValue() === 8
         this._won ||= targetTile.getValue() === 2048
         hasChanged ||=

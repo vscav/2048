@@ -1,4 +1,5 @@
 <template>
+  <Score :board="board" />
   <div class="board" tabIndex="1">
     <div v-for="(rowItem, rowIndex) in board.getCells()" :key="rowIndex">
       <Cell
@@ -22,6 +23,7 @@
 
   import Cell from '/@/components/Cell.vue'
   import GameEndOverlay from '/@/components/GameEndOverlay.vue'
+  import Score from '/@/components/Score.vue'
   import Tile from '/@/components/Tile.vue'
 
   import { Board } from '/@/classes/Board'
@@ -31,6 +33,7 @@
     components: {
       Cell,
       GameEndOverlay,
+      Score,
       Tile,
     },
     props: {},
