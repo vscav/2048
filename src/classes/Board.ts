@@ -15,6 +15,9 @@ export class Board {
   private _won: boolean
 
   constructor(size = 4) {
+    if (size <= 0) {
+      throw new Error(`Board size must be >= 0 (but was ${size})`)
+    }
     this._size = size
     this._tiles = []
     this._cells = []

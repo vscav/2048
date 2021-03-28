@@ -10,6 +10,14 @@ export class Tile {
   private static _count = 0
 
   constructor(value = 0, row = -1, column = -1) {
+    if (value < 0) {
+      throw new Error(`Tile value must be >= 0 (but was ${value})`)
+    }
+    if ((value & (value - 1)) !== 0 || value === 1) {
+      throw new Error(
+        `Tile value must be in the binary sequence [0, 2, 4, 8, 16, 32, 64, ...] (but was ${value})`,
+      )
+    }
     this._value = value
     this._row = row
     this._column = column
