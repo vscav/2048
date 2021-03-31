@@ -1,5 +1,6 @@
+import { rotateLeft } from '/@/lib/matrix'
+import { ProbManager } from '/@/classes/ProbManager'
 import { Tile } from '/@/classes/Tile'
-import { rotateLeft } from '/@/utils/matrix'
 
 interface Cell {
   row: number
@@ -7,6 +8,7 @@ interface Cell {
 }
 
 export class Board {
+  private readonly _probabilityManager: ProbManager
   private readonly _size: number
   private readonly _deltaX = [-1, 0, 1, 0]
   private readonly _deltaY = [0, -1, 0, 1]
@@ -32,6 +34,7 @@ export class Board {
         this._cells[i].push(this.addTile())
       }
     }
+    this._probabilityManager = new ProbManager()
     this.addRandomTile()
     this.setPositions()
     this._won = false
@@ -102,9 +105,13 @@ export class Board {
         }
       }
     }
-    const index = ~~(Math.random() * emptyCells.length) // Apply probability law here
-    const cell = emptyCells[index] // The cell where the tile will be added (based on the index above)
-    const newValue = Math.random() < 0.1 ? 4 : 2 // Apply probability law here (will it be a 2 or a 4? Current variable for 4: 0.1)
+
+    const uniformValue = this._probabilityManager.uniform()
+    // console.log(uniformValue)
+
+    const index = ~~(uniformValue * emptyCells.length)
+    const cell = emptyCells[index]
+    const newValue = uniformValue < 0.1 ? 4 : 2
 
     this._cells[cell.row][cell.column] = this.addTile(newValue)
   }
