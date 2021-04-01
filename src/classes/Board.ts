@@ -31,7 +31,7 @@ export class Board {
     for (let i = 0; i < this._size; ++i) {
       this._cells[i] = []
       for (let j = 0; j < this._size; ++j) {
-        this._cells[i].push(this.addTile())
+        this._cells[i].push(this.addTile(0))
       }
     }
     this._probabilityManager = new ProbManager()
@@ -81,15 +81,16 @@ export class Board {
             continue
           }
           canMove ||=
-            this._cells[row][column].value ==
-            this._cells[newRow][newColumn].value
+            this._cells[row][column].value ===
+            this._cells[newRow][newColumn].value &&
+            this._cells[newRow][newColumn].value !== 'x'
         }
       }
     }
     return !canMove
   }
 
-  private addTile(value = 0): Tile {
+  private addTile(value: number | string): Tile {
     const res: Tile = new Tile(value)
     this._tiles.push(res)
 
@@ -106,14 +107,17 @@ export class Board {
       }
     }
 
-    const uniformValue = this._probabilityManager.uniform()
+    const uniformValue1 = this._probabilityManager.uniform()
     // console.log(uniformValue)
 
-    const index = ~~(uniformValue * emptyCells.length)
+    const index = ~~(uniformValue1 * emptyCells.length)
     const cell = emptyCells[index]
-    const newValue = uniformValue < 0.1 ? 4 : 2
+    const newValue = uniformValue1 < 0.1 ? 4 : 2
 
-    this._cells[cell.row][cell.column] = this.addTile(newValue)
+    const uniformValue2 = this._probabilityManager.uniform()
+
+    this._cells[cell.row][cell.column] =
+      uniformValue2 < 0.05 ? this.addTile('x') : this.addTile(newValue)
   }
 
   private setPositions(): void {
@@ -163,16 +167,21 @@ export class Board {
       for (let target = 0; target < this._size; ++target) {
         let targetTile: Tile = currentRow.length
           ? (currentRow.shift() as Tile)
-          : this.addTile()
+          : this.addTile(0)
 
-        if (currentRow.length > 0 && currentRow[0].value === targetTile.value) {
+        if (
+          currentRow.length > 0 &&
+          typeof currentRow[0].value !== 'string' &&
+          currentRow[0].value === targetTile.value
+        ) {
           const tile1 = targetTile
           targetTile = this.addTile(targetTile.value)
           tile1.mergedInto = targetTile
 
           const tile2 = currentRow.shift() as Tile
           tile2.mergedInto = targetTile
-          targetTile.value = targetTile.value + tile2.value
+          targetTile.value =
+            (targetTile.value as number) + (tile2.value as number)
 
           this._lastScore.points = targetTile.value
           this._lastScore.animation = true

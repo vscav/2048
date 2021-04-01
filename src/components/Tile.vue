@@ -1,5 +1,7 @@
 <template>
-  <span :class="classes">{{ tile.value }}</span>
+  <span :class="classes">{{
+    typeof tile.value === 'string' ? '' : tile.value
+  }}</span>
 </template>
 
 <script lang="ts">

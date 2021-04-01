@@ -1,5 +1,9 @@
-export class Tile {
-  private _value: number
+export interface Moveable {
+  hasMoved(): boolean | Tile | null
+}
+
+export class Tile implements Moveable {
+  private _value: number | string
   private _row: number
   private _column: number
   private _oldRow: number
@@ -9,14 +13,25 @@ export class Tile {
   private _id: number
   private static _count = 0
 
-  constructor(value = 0, row = -1, column = -1) {
-    if (value < 0) {
-      throw new Error(`Tile value must be >= 0 (but was ${value})`)
+  constructor(value: number | string, row = -1, column = -1) {
+    if (typeof value === 'number') {
+      if (value < 0) {
+        throw new Error(
+          `Tile value (as number) must be >= 0 (but was ${value})`,
+        )
+      }
+      if ((value & (value - 1)) !== 0 || value === 1) {
+        throw new Error(
+          `Tile value (as number) must be in the binary sequence [0, 2, 4, 8, 16, 32, 64, ...] (but was ${value})`,
+        )
+      }
     }
-    if ((value & (value - 1)) !== 0 || value === 1) {
-      throw new Error(
-        `Tile value must be in the binary sequence [0, 2, 4, 8, 16, 32, 64, ...] (but was ${value})`,
-      )
+    if (typeof value === 'string') {
+      if (value !== 'x' && value !== 'j') {
+        throw new Error(
+          `Tile value (as string) must be 'x' (obstacle) or 'j' (joker) (but was ${value})`,
+        )
+      }
     }
     this._value = value
     this._row = row
@@ -28,11 +43,11 @@ export class Tile {
     this._id = ++Tile._count
   }
 
-  public get value(): number {
+  public get value(): number | string {
     return this._value
   }
 
-  public set value(newValue: number) {
+  public set value(newValue: number | string) {
     this._value = newValue
   }
 
