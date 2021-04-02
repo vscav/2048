@@ -1,4 +1,5 @@
 import { rotateLeft } from '/@/lib/matrix'
+import { Obstacle } from '/@/classes/Obstacle'
 import { ProbManager } from '/@/classes/ProbManager'
 import { Tile } from '/@/classes/Tile'
 
@@ -97,6 +98,13 @@ export class Board {
     return res
   }
 
+  private addObstacle(): Obstacle {
+    const res: Obstacle = new Obstacle()
+    this._tiles.push(res)
+
+    return res
+  }
+
   private addRandomTile(): void {
     const emptyCells: Cell[] = []
     for (let row = 0; row < this._size; ++row) {
@@ -108,7 +116,6 @@ export class Board {
     }
 
     const uniformValue1 = this._probabilityManager.uniform()
-    // console.log(uniformValue)
 
     const index = ~~(uniformValue1 * emptyCells.length)
     const cell = emptyCells[index]
@@ -117,7 +124,7 @@ export class Board {
     const uniformValue2 = this._probabilityManager.uniform()
 
     this._cells[cell.row][cell.column] =
-      uniformValue2 < 0.05 ? this.addTile('x') : this.addTile(newValue)
+      uniformValue2 < 0.01 ? this.addObstacle() : this.addTile(newValue)
   }
 
   private setPositions(): void {
@@ -133,7 +140,6 @@ export class Board {
   }
 
   public move(direction: number): Board {
-    // console.log('has moved with a direction of ' + direction)
     this._lastScore.animation = false
 
     this.clearOldTiles()
@@ -159,6 +165,7 @@ export class Board {
 
   private moveLeft(): boolean {
     let hasChanged = false
+    let mergingCount = 0
 
     for (let row = 0; row < this._size; ++row) {
       const currentRow = this._cells[row].filter((tile) => tile.value !== 0)
@@ -193,9 +200,30 @@ export class Board {
         // this.won ||= targetTile.value === 8
         this._won ||= targetTile.value === 2048
         hasChanged ||= targetTile.value !== this._cells[row][target].value
+        mergingCount =
+          targetTile.value !== this._cells[row][target].value
+            ? mergingCount + 1
+            : mergingCount
       }
 
       this._cells[row] = resultRow
+    }
+
+    for (let row = 0; row < this._size; ++row) {
+      const currentRow = this._cells[row].filter((tile) => tile.value !== 0)
+
+      for (let column = 0; column < this._size; ++column) {
+        if (currentRow.length > 0 && currentRow[column]?.value === 'x') {
+          const obstacle = currentRow[column] as Obstacle
+          if (mergingCount > 0) {
+            obstacle.decrement()
+          }
+          if (obstacle.remainingMoves <= 0) {
+            // Transform in a null Tile
+            obstacle.value = 0
+          }
+        }
+      }
     }
 
     return hasChanged
