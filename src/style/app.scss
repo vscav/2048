@@ -1,7 +1,8 @@
-@import './variables/_breakpoints.scss';
-@import './variables/_colors.scss';
-@import './variables/_media.scss';
-@import './variables/_sizes.scss';
+@import './utils/_breakpoints.scss';
+@import './utils/_colors.scss';
+@import './utils/_media.scss';
+@import './utils/_mixins.scss';
+@import './utils/_sizes.scss';
 
 * {
   margin: 0;
@@ -64,6 +65,21 @@ body {
 .tile {
   user-select: none;
   cursor: default;
+}
+
+.tilej {
+  background-color: #8c2155;
+  text-indent: -9999px;
+
+  &::after {
+    @include center();
+
+    content: '';
+    width: 32px;
+    height: 32px;
+    background: url('../assets/images/gift.svg');
+    background-size: 32px 32px;
+  }
 }
 
 .tilex {

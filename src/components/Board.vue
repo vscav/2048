@@ -1,4 +1,5 @@
 <template>
+  <ControlsPanel :board="board" />
   <Score :board="board" />
   <div class="board" tabIndex="1">
     <div v-for="(rowItem, rowIndex) in board.cells" :key="rowIndex">
@@ -22,6 +23,7 @@
   } from 'vue'
 
   import Cell from '/@/components/Cell.vue'
+  import ControlsPanel from './ControlsPanel.vue'
   import GameEndOverlay from '/@/components/GameEndOverlay.vue'
   import Score from '/@/components/Score.vue'
   import Tile from '/@/components/Tile.vue'
@@ -35,6 +37,7 @@
       GameEndOverlay,
       Score,
       Tile,
+      ControlsPanel,
     },
     props: {},
     setup: () => {

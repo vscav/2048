@@ -24,6 +24,7 @@
         const classesArray = ['tile']
 
         classesArray.push('tile' + tile.value.value)
+        // classesArray.push('tilej')
 
         if (!tile.value.mergedInto) {
           classesArray.push(

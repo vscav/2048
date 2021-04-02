@@ -1,4 +1,5 @@
 import { rotateLeft } from '/@/lib/matrix'
+import { Joker } from '/@/classes/Joker'
 import { Obstacle } from '/@/classes/Obstacle'
 import { ProbManager } from '/@/classes/ProbManager'
 import { Tile } from '/@/classes/Tile'
@@ -98,6 +99,15 @@ export class Board {
     return res
   }
 
+  private addJoker(): Joker {
+    const res: Joker = new Joker()
+    this._tiles.push(res)
+
+    console.log(res.value)
+
+    return res
+  }
+
   private addObstacle(): Obstacle {
     const res: Obstacle = new Obstacle()
     this._tiles.push(res)
@@ -117,14 +127,23 @@ export class Board {
 
     const uniformValue1 = this._probabilityManager.uniform()
 
+    // Use the first uniform to calc the index of the targeted empty cell
     const index = ~~(uniformValue1 * emptyCells.length)
     const cell = emptyCells[index]
+    // Use the first uniform to calc the value of the numbered Tile to add
     const newValue = uniformValue1 < 0.1 ? 4 : 2
 
     const uniformValue2 = this._probabilityManager.uniform()
+    const uniformValue3 = this._probabilityManager.uniform()
 
+    // Use the second uniform to decide whether we add a "normal" Tile or a "special" Tile
+    // If we have to add a "special" Tile, we use a third uniform to know which type of "special" Tile we will add
     this._cells[cell.row][cell.column] =
-      uniformValue2 < 0.01 ? this.addObstacle() : this.addTile(newValue)
+      uniformValue2 < 0.01
+        ? uniformValue3 < 0.01
+          ? this.addObstacle()
+          : this.addJoker()
+        : this.addTile(newValue)
   }
 
   private setPositions(): void {
@@ -178,8 +197,9 @@ export class Board {
 
         if (
           currentRow.length > 0 &&
-          typeof currentRow[0].value !== 'string' &&
-          currentRow[0].value === targetTile.value
+          (currentRow[0].value === 'j' ||
+            targetTile.value === 'j' ||
+            currentRow[0].value === targetTile.value)
         ) {
           const tile1 = targetTile
           targetTile = this.addTile(targetTile.value)
@@ -187,8 +207,19 @@ export class Board {
 
           const tile2 = currentRow.shift() as Tile
           tile2.mergedInto = targetTile
-          targetTile.value =
-            (targetTile.value as number) + (tile2.value as number)
+
+          console.log('target tile: ', targetTile.value)
+          console.log('tile2: ', tile2.value)
+
+          if (targetTile.value === 'j') {
+            targetTile.value = (tile2.value as number) + (tile2.value as number)
+          } else if (tile2.value === 'j') {
+            targetTile.value =
+              (targetTile.value as number) + (targetTile.value as number)
+          } else {
+            targetTile.value =
+              (targetTile.value as number) + (tile2.value as number)
+          }
 
           this._lastScore.points = targetTile.value
           this._lastScore.animation = true
@@ -197,8 +228,8 @@ export class Board {
 
         resultRow[target] = targetTile
         // Quick test (win on 8):
-        this._won ||= targetTile.value === 8
-        // this._won ||= targetTile.value === 2048
+        // this._won ||= targetTile.value === 8
+        this._won ||= targetTile.value === 2048
         hasChanged ||= targetTile.value !== this._cells[row][target].value
         mergingCount =
           targetTile.value !== this._cells[row][target].value
