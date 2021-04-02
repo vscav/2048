@@ -1,6 +1,7 @@
 <template>
   <div v-show="show" class="overlay">
     <p class="message">{{ content }}</p>
+    <button class="button" @click="restart">Try again</button>
   </div>
 </template>
 
@@ -13,6 +14,10 @@
     props: {
       board: {
         type: Object,
+        required: true,
+      },
+      onrestart: {
+        type: Function,
         required: true,
       },
     },
@@ -31,8 +36,12 @@
           return ''
         }
       })
+      const restart = () => {
+        props.onrestart && props.onrestart()
+      }
       return {
         content,
+        restart,
         show,
       }
     },

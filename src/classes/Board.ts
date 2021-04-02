@@ -197,8 +197,8 @@ export class Board {
 
         resultRow[target] = targetTile
         // Quick test (win on 8):
-        // this.won ||= targetTile.value === 8
-        this._won ||= targetTile.value === 2048
+        this._won ||= targetTile.value === 8
+        // this._won ||= targetTile.value === 2048
         hasChanged ||= targetTile.value !== this._cells[row][target].value
         mergingCount =
           targetTile.value !== this._cells[row][target].value

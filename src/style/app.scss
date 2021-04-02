@@ -175,6 +175,18 @@ body {
   color: #f9f6f2;
 }
 
+.overlay .button {
+  background-color: #876;
+  color: #fff;
+  height: 40px;
+  width: 200px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
 @for $row from 0 through 3 {
   @for $column from 0 through 3 {
     .position_#{$row}_#{$column}:not(.isMoving) {
