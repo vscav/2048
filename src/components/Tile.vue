@@ -6,6 +6,7 @@
 
 <script lang="ts">
   import { computed, defineComponent, toRefs } from 'vue'
+  import { TileType } from '/@/classes/Tile'
 
   export default defineComponent({
     name: 'Tile',
@@ -23,8 +24,9 @@
       const classes = computed(() => {
         const classesArray = ['tile']
 
-        classesArray.push('tile' + tile.value.value)
-        // classesArray.push('tilej')
+        if (tile.value.type === TileType.Classic)
+          classesArray.push('tile' + tile.value.value)
+        else classesArray.push('tile-' + tile.value.type)
 
         if (!tile.value.mergedInto) {
           classesArray.push(

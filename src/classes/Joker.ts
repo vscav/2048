@@ -1,7 +1,7 @@
-import { Tile } from '/@/classes/Tile'
+import { Tile, TileType } from '/@/classes/Tile'
 
 export class Joker extends Tile {
   constructor() {
-    super('j')
+    super(1, -1, -1, TileType.Joker)
   }
 }

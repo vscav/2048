@@ -2,8 +2,18 @@ export interface Moveable {
   hasMoved(): boolean | Tile | null
 }
 
+/* eslint-disable no-unused-vars */
+export enum TileType {
+  Classic = 'classic',
+  Joker = 'joker',
+  Obstacle = 'obstacle',
+  Secret = 'secret',
+}
+/* eslint-enable no-unused-vars */
+
 export class Tile implements Moveable {
-  private _value: number | string
+  private readonly _type: TileType
+  private _value: number
   private _row: number
   private _column: number
   private _oldRow: number
@@ -13,26 +23,27 @@ export class Tile implements Moveable {
   private _id: number
   private static _count = 0
 
-  constructor(value: number | string, row = -1, column = -1) {
+  constructor(value: number, row = -1, column = -1, type = TileType.Classic) {
     if (typeof value === 'number') {
       if (value < 0) {
         throw new Error(
           `Tile value (as number) must be >= 0 (but was ${value})`,
         )
       }
-      if ((value & (value - 1)) !== 0 || value === 1) {
-        throw new Error(
-          `Tile value (as number) must be in the binary sequence [0, 2, 4, 8, 16, 32, 64, ...] (but was ${value})`,
-        )
-      }
+      // if ((value & (value - 1)) !== 0 || value === 1) {
+      //   throw new Error(
+      //     `Tile value (as number) must be in the binary sequence [0, 2, 4, 8, 16, 32, 64, ...] (but was ${value})`,
+      //   )
+      // }
     }
-    if (typeof value === 'string') {
-      if (value !== 'x' && value !== 'j') {
-        throw new Error(
-          `Tile value (as string) must be 'x' (obstacle) or 'j' (joker) (but was ${value})`,
-        )
-      }
-    }
+    // if (typeof value === 'string') {
+    //   if (value !== 'x' && value !== 'j') {
+    //     throw new Error(
+    //       `Tile value (as string) must be 'x' (obstacle) or 'j' (joker) (but was ${value})`,
+    //     )
+    //   }
+    // }
+    this._type = type
     this._value = value
     this._row = row
     this._column = column
@@ -43,12 +54,16 @@ export class Tile implements Moveable {
     this._id = ++Tile._count
   }
 
-  public get value(): number | string {
+  public get value(): number {
     return this._value
   }
 
-  public set value(newValue: number | string) {
+  public set value(newValue: number) {
     this._value = newValue
+  }
+
+  public get type(): TileType {
+    return this._type
   }
 
   public get row(): number {

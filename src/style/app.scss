@@ -67,7 +67,7 @@ body {
   cursor: default;
 }
 
-.tilej {
+.tile-joker {
   background-color: #8c2155;
   text-indent: -9999px;
 
@@ -77,13 +77,24 @@ body {
     content: '';
     width: 32px;
     height: 32px;
-    background: url('../assets/images/gift.svg');
+    background: url('../assets/images/joker.svg');
     background-size: 32px 32px;
   }
 }
 
-.tilex {
+.tile-obstacle {
   background-color: #b9b9bb;
+  text-indent: -9999px;
+
+  &::after {
+    @include center();
+
+    content: '';
+    width: 32px;
+    height: 32px;
+    background: url('../assets/images/obstacle.svg');
+    background-size: 32px 32px;
+  }
 }
 
 .tile0 {

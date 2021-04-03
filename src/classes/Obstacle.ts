@@ -1,10 +1,10 @@
-import { Tile } from '/@/classes/Tile'
+import { Tile, TileType } from '/@/classes/Tile'
 
 export class Obstacle extends Tile {
   private _remainingMoves: number
 
   constructor() {
-    super('x')
+    super(1, -1, -1, TileType.Obstacle)
     this._remainingMoves = Math.random() * (20 - 10) + 10 // Apply probability here
   }
 

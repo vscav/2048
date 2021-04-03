@@ -2,7 +2,7 @@ import { rotateLeft } from '/@/lib/matrix'
 import { Joker } from '/@/classes/Joker'
 import { Obstacle } from '/@/classes/Obstacle'
 import { ProbManager } from '/@/classes/ProbManager'
-import { Tile } from '/@/classes/Tile'
+import { Tile, TileType } from '/@/classes/Tile'
 
 interface Cell {
   row: number
@@ -85,14 +85,14 @@ export class Board {
           canMove ||=
             this._cells[row][column].value ===
             this._cells[newRow][newColumn].value &&
-            this._cells[newRow][newColumn].value !== 'x'
+            this._cells[newRow][newColumn].type !== TileType.Obstacle
         }
       }
     }
     return !canMove
   }
 
-  private addTile(value: number | string): Tile {
+  private addTile(value: number): Tile {
     const res: Tile = new Tile(value)
     this._tiles.push(res)
 
@@ -139,7 +139,7 @@ export class Board {
     // Use the second uniform to decide whether we add a "normal" Tile or a "special" Tile
     // If we have to add a "special" Tile, we use a third uniform to know which type of "special" Tile we will add
     this._cells[cell.row][cell.column] =
-      uniformValue2 < 0.25
+      uniformValue2 < 0.01
         ? uniformValue3 < 0.01
           ? this.addObstacle()
           : this.addJoker()
@@ -197,23 +197,43 @@ export class Board {
 
         if (
           currentRow.length > 0 &&
-          (currentRow[0].value === 'j' ||
-            targetTile.value === 'j' ||
-            currentRow[0].value === targetTile.value)
+          (currentRow[0].type === TileType.Joker ||
+            targetTile.type === TileType.Joker ||
+            currentRow[0].value === targetTile.value) &&
+          (currentRow[0].type !== TileType.Obstacle ||
+            targetTile.type !== TileType.Obstacle)
         ) {
           const tile1 = targetTile
-          targetTile = this.addTile(targetTile.value)
-          tile1.mergedInto = targetTile
-
           const tile2 = currentRow.shift() as Tile
+
+          if (targetTile.type === TileType.Joker) {
+            targetTile = this.addTile(tile2.value)
+          } else {
+            targetTile = this.addTile(targetTile.value)
+          }
+
+          tile1.mergedInto = targetTile
           tile2.mergedInto = targetTile
 
-          if (targetTile.value === 'j' && tile2.value !== 'j') {
+          console.log(tile2.value)
+
+          if (
+            targetTile.type === TileType.Joker &&
+            tile2.type !== TileType.Joker
+          ) {
+            console.log('coucou1')
             targetTile.value = (tile2.value as number) + (tile2.value as number)
-          } else if (tile2.value === 'j' && targetTile.value !== 'j') {
+          } else if (
+            tile2.type === TileType.Joker &&
+            targetTile.type !== TileType.Joker
+          ) {
+            console.log('coucou2')
             targetTile.value =
               (targetTile.value as number) + (targetTile.value as number)
-          } else if (tile2.value === 'j' && targetTile.value === 'j') {
+          } else if (
+            tile2.type === TileType.Joker &&
+            targetTile.type === TileType.Joker
+          ) {
             targetTile.value = 4
           } else {
             targetTile.value =
@@ -243,7 +263,10 @@ export class Board {
       const currentRow = this._cells[row].filter((tile) => tile.value !== 0)
 
       for (let column = 0; column < this._size; ++column) {
-        if (currentRow.length > 0 && currentRow[column]?.value === 'x') {
+        if (
+          currentRow.length > 0 &&
+          currentRow[column]?.type === TileType.Obstacle
+        ) {
           const obstacle = currentRow[column] as Obstacle
           if (mergingCount > 0) {
             obstacle.decrement()
