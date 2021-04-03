@@ -2,6 +2,7 @@ import { rotateLeft } from '/@/lib/matrix'
 import { Joker } from '/@/classes/Joker'
 import { Obstacle } from '/@/classes/Obstacle'
 import { ProbManager } from '/@/classes/ProbManager'
+import { Secret } from '/@/classes/Secret'
 import { Tile, TileType } from '/@/classes/Tile'
 
 interface Cell {
@@ -113,6 +114,13 @@ export class Board {
     return res
   }
 
+  private addSecret(): Secret {
+    const res: Secret = new Secret()
+    this._tiles.push(res)
+
+    return res
+  }
+
   private addRandomTile(): void {
     const emptyCells: Cell[] = []
     for (let row = 0; row < this._size; ++row) {
@@ -133,6 +141,7 @@ export class Board {
 
     const uniformValue2 = this._probabilityManager.uniform()
     const uniformValue3 = this._probabilityManager.uniform()
+    const uniformValue4 = this._probabilityManager.uniform()
 
     // Use the second uniform to decide whether we add a "normal" Tile or a "special" Tile
     // If we have to add a "special" Tile, we use a third uniform to know which type of "special" Tile we will add
@@ -140,7 +149,9 @@ export class Board {
       uniformValue2 < 0.25
         ? uniformValue3 < 0.01
           ? this.addObstacle()
-          : this.addJoker()
+          : uniformValue4 < 0.45
+            ? this.addJoker()
+            : this.addSecret()
         : this.addTile(newValue)
   }
 

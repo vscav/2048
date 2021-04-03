@@ -97,6 +97,21 @@ body {
   }
 }
 
+.tile-secret {
+  background-color: #e4717a;
+  text-indent: -9999px;
+
+  &::after {
+    @include center();
+
+    content: '';
+    width: 32px;
+    height: 32px;
+    background: url('../assets/images/secret.svg');
+    background-size: 32px 32px;
+  }
+}
+
 .tile0 {
   background-color: #002b44;
 }
