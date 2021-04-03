@@ -103,8 +103,6 @@ export class Board {
     const res: Joker = new Joker()
     this._tiles.push(res)
 
-    console.log(res.value)
-
     return res
   }
 
@@ -139,7 +137,7 @@ export class Board {
     // Use the second uniform to decide whether we add a "normal" Tile or a "special" Tile
     // If we have to add a "special" Tile, we use a third uniform to know which type of "special" Tile we will add
     this._cells[cell.row][cell.column] =
-      uniformValue2 < 0.01
+      uniformValue2 < 0.25
         ? uniformValue3 < 0.01
           ? this.addObstacle()
           : this.addJoker()
@@ -215,29 +213,23 @@ export class Board {
           tile1.mergedInto = targetTile
           tile2.mergedInto = targetTile
 
-          console.log(tile2.value)
-
           if (
             targetTile.type === TileType.Joker &&
             tile2.type !== TileType.Joker
           ) {
-            console.log('coucou1')
-            targetTile.value = (tile2.value as number) + (tile2.value as number)
+            targetTile.value = tile2.value + tile2.value
           } else if (
             tile2.type === TileType.Joker &&
             targetTile.type !== TileType.Joker
           ) {
-            console.log('coucou2')
-            targetTile.value =
-              (targetTile.value as number) + (targetTile.value as number)
+            targetTile.value = targetTile.value + targetTile.value
           } else if (
             tile2.type === TileType.Joker &&
             targetTile.type === TileType.Joker
           ) {
             targetTile.value = 4
           } else {
-            targetTile.value =
-              (targetTile.value as number) + (tile2.value as number)
+            targetTile.value = targetTile.value + tile2.value
           }
 
           this._lastScore.points = targetTile.value

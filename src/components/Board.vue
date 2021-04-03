@@ -44,6 +44,7 @@
       console.log('[app] Board component was set up.')
 
       const board = ref(new Board())
+
       const handleKeyDown = (event: KeyboardEvent) => {
         if (board.value.hasWon()) {
           console.log('Player have already won.')
