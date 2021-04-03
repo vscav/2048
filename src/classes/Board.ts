@@ -139,7 +139,7 @@ export class Board {
     // Use the second uniform to decide whether we add a "normal" Tile or a "special" Tile
     // If we have to add a "special" Tile, we use a third uniform to know which type of "special" Tile we will add
     this._cells[cell.row][cell.column] =
-      uniformValue2 < 0.01
+      uniformValue2 < 0.25
         ? uniformValue3 < 0.01
           ? this.addObstacle()
           : this.addJoker()
@@ -208,14 +208,13 @@ export class Board {
           const tile2 = currentRow.shift() as Tile
           tile2.mergedInto = targetTile
 
-          console.log('target tile: ', targetTile.value)
-          console.log('tile2: ', tile2.value)
-
-          if (targetTile.value === 'j') {
+          if (targetTile.value === 'j' && tile2.value !== 'j') {
             targetTile.value = (tile2.value as number) + (tile2.value as number)
-          } else if (tile2.value === 'j') {
+          } else if (tile2.value === 'j' && targetTile.value !== 'j') {
             targetTile.value =
               (targetTile.value as number) + (targetTile.value as number)
+          } else if (tile2.value === 'j' && targetTile.value === 'j') {
+            targetTile.value = 4
           } else {
             targetTile.value =
               (targetTile.value as number) + (tile2.value as number)
