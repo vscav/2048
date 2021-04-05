@@ -39,6 +39,7 @@ export class Board {
     }
     this._probabilityManager = new ProbManager()
     this.addRandomTile()
+    this.addRandomTile()
     this.setPositions()
     this._won = false
   }
