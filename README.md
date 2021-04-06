@@ -38,4 +38,4 @@ Each has of these tiles has an independent chance to appear.
 
 ## Probability explanation
 
-Solving this particualr game is an interesting problem because it has multiple random components. It’s impossible to correctly predict not only where each new tile will be placed, but whether it will be a classic tile (“2” or a “4”) or a special tile (obstacle, joker, secret), which themselves have their own probabilistic parameters.
+Solving this particular game is an interesting problem because it has multiple random components. It’s impossible to correctly predict not only where each new tile will be placed, but whether it will be a classic tile (“2” or a “4”) or a special tile (obstacle, joker, secret), which themselves have their own probabilistic parameters.
