@@ -24,7 +24,9 @@
 
         if (tile.value.type === TileType.Classic)
           classesArray.push('tile' + tile.value.value)
-        else classesArray.push('tile-' + tile.value.type)
+        else {
+          classesArray.push('tile-special', 'tile-' + tile.value.type)
+        }
 
         if (!tile.value.mergedInto) {
           classesArray.push(
@@ -40,14 +42,12 @@
         if (tile.value.hasMoved()) {
           classesArray.push(
             'row_from_' + tile.value.fromRow() + '_to_' + tile.value.toRow(),
-          )
-          classesArray.push(
             'column_from_' +
               tile.value.fromColumn() +
               '_to_' +
               tile.value.toColumn(),
+            'isMoving',
           )
-          classesArray.push('isMoving')
         }
 
         return classesArray.join(' ')

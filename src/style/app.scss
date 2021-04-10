@@ -67,8 +67,7 @@ body {
   cursor: default;
 }
 
-.tile-joker {
-  background-color: #8c2155;
+.tile-special {
   text-indent: -9999px;
 
   &::after {
@@ -77,6 +76,13 @@ body {
     content: '';
     width: 32px;
     height: 32px;
+  }
+}
+
+.tile-joker {
+  background-color: #8c2155;
+
+  &::after {
     background: url('../assets/images/joker.svg');
     background-size: 32px 32px;
   }
@@ -84,14 +90,8 @@ body {
 
 .tile-obstacle {
   background-color: #b9b9bb;
-  text-indent: -9999px;
 
   &::after {
-    @include center();
-
-    content: '';
-    width: 32px;
-    height: 32px;
     background: url('../assets/images/obstacle.svg');
     background-size: 32px 32px;
   }
@@ -99,14 +99,8 @@ body {
 
 .tile-secret {
   background-color: #e4717a;
-  text-indent: -9999px;
 
   &::after {
-    @include center();
-
-    content: '';
-    width: 32px;
-    height: 32px;
     background: url('../assets/images/secret.svg');
     background-size: 32px 32px;
   }
