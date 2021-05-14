@@ -41,6 +41,7 @@
       const onChange = (event: InputEvent) => {
         emit('onchange', { value: (event.target as HTMLInputElement).value })
       }
+
       return {
         onChange,
       }

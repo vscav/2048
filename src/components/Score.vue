@@ -19,16 +19,20 @@
     },
     setup(props) {
       const { board } = toRefs(props)
+
       const lastScore = computed(() => {
         console.log(board.value.lastScorePoints)
         return board.value.lastScorePoints
       })
+
       const scoreAnimation = computed(() => {
         return board.value.lastScoreAnimation
       })
+
       const totalScore = computed(() => {
         return board.value.score
       })
+
       return {
         lastScore,
         totalScore,

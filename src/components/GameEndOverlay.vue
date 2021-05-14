@@ -23,10 +23,13 @@
     },
     setup(props) {
       console.log('[app] GameEndOverlay component was set up.')
+
       const { board } = toRefs(props)
+
       const show = computed(() => {
         return board.value.hasWon() || board.value.hasLost()
       })
+
       const content = computed(() => {
         if (board.value.hasWon()) {
           return 'You win!'
@@ -36,9 +39,11 @@
           return ''
         }
       })
+
       const restart = () => {
         props.onrestart && props.onrestart()
       }
+
       return {
         content,
         restart,

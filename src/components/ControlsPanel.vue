@@ -1,9 +1,9 @@
 <template>
-  <div>Controls panel</div>
+  <button class="button" @click="restart">New game</button>
 </template>
 
 <script lang="ts">
-  import { defineComponent, toRefs } from 'vue'
+  import { defineComponent } from 'vue'
 
   export default defineComponent({
     name: 'ControlsPanel',
@@ -13,11 +13,19 @@
         type: Object,
         required: true,
       },
+      onrestart: {
+        type: Function,
+        required: true,
+      },
     },
     setup(props) {
-      const { board } = toRefs(props)
-      console.log(board)
-      return {}
+      const restart = () => {
+        props.onrestart && props.onrestart()
+      }
+
+      return {
+        restart,
+      }
     },
   })
 </script>

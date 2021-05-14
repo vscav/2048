@@ -1,5 +1,5 @@
 <template>
-  <ControlsPanel :board="board" />
+  <ControlsPanel :board="board" :onrestart="onRestart" />
   <Score :board="board" />
   <div class="board" tabIndex="1">
     <div v-for="(rowItem, rowIndex) in board.cells" :key="rowIndex">
@@ -11,7 +11,7 @@
     <Tile v-for="(tile, index) in tiles" :key="index" :tile="tile" />
     <GameEndOverlay :board="board" :onrestart="onRestart" />
   </div>
-  <RangeSlider :value="25" :min="1" :max="50" @onchange="updateValue" />
+  <!-- <RangeSlider :value="25" :min="1" :max="50" @onchange="updateValue" /> -->
 </template>
 
 <script lang="ts">
@@ -26,7 +26,7 @@
   import Cell from '/@/components/Cell.vue'
   import ControlsPanel from './ControlsPanel.vue'
   import GameEndOverlay from '/@/components/GameEndOverlay.vue'
-  import RangeSlider, { SliderPayload } from '/@/components/RangeSlider.vue'
+  // import RangeSlider, { SliderPayload } from '/@/components/RangeSlider.vue'
   import Score from '/@/components/Score.vue'
   import Tile from '/@/components/Tile.vue'
 
@@ -36,19 +36,23 @@
     name: 'Board',
     components: {
       Cell,
+      ControlsPanel,
       GameEndOverlay,
-      RangeSlider,
+      // RangeSlider,
       Score,
       Tile,
-      ControlsPanel,
     },
     props: {},
     setup: () => {
       console.log('[app] Board component was set up.')
 
-      const board = ref(new Board())
+      const board = ref<Board>(new Board())
 
       const handleKeyDown = (event: KeyboardEvent) => {
+        // if (showModal.value) {
+        //   console.log('Modal is opened.')
+        //   return
+        // }
         if (board.value.hasWon()) {
           console.log('Player have already won.')
           return
@@ -75,9 +79,9 @@
       const onRestart = () => {
         board.value = new Board()
       }
-      const updateValue = (payload: SliderPayload) => {
-        console.log('Value received from slider: ', payload.value)
-      }
+      // const updateValue = (payload: SliderPayload) => {
+      //   console.log('Value received from slider: ', payload.value)
+      // }
       onMounted(() => {
         window.addEventListener('keydown', handleKeyDown)
       })
@@ -90,7 +94,7 @@
       return {
         board,
         onRestart,
-        updateValue,
+        // updateValue,
         tiles,
       }
     },
