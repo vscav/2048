@@ -1,3 +1,5 @@
+import { combination } from '/@/lib/probability/utils'
+
 export class Probability {
   private _rng01: () => number
   private _rng11: () => number
@@ -8,6 +10,22 @@ export class Probability {
     this._rng11 = () => {
       return (((rng() * 0x100000000) | 0) / 0x100000000) * 2
     }
+  }
+
+  bernouilli(p = 0.9): Distribution {
+    return new BernouilliDistribution(this._rng01, p)
+  }
+
+  binomial(n = 10, p = 0.4, k = 1): BinomialDistribution {
+    return new BinomialDistribution(this._rng01, n, p, k)
+  }
+
+  geometric(k = 100, p = 0.2): GeometricDistribution {
+    return new GeometricDistribution(this._rng01, k, p)
+  }
+
+  poisson(lambda = 1): PoissonDistribution {
+    return new PoissonDistribution(this._rng01, lambda)
   }
 
   uniform(min = 0, max = 1): UniformDistribution {
@@ -24,13 +42,115 @@ export enum DistributionType {
 /* eslint-enable no-unused-vars */
 
 export interface Distribution {
-  min: number
-  max: number
-  mean: number
-  variance: number
   type: DistributionType
 
   random(): number
+}
+
+export class BernouilliDistribution implements Distribution {
+  private _rng01: () => number
+  private _type: DistributionType
+  private _p: number
+
+  constructor(rng01: () => number, p: number) {
+    this._rng01 = rng01
+    this._type = DistributionType.Discrete
+    this._p = p
+  }
+
+  get type(): DistributionType {
+    return this._type
+  }
+
+  random(): number {
+    let t = 1
+    t = t * this._rng01()
+    if (t < this._p) {
+      return 1
+    }
+    return 0
+  }
+}
+
+export class BinomialDistribution implements Distribution {
+  private _rng01: () => number
+  private _type: DistributionType
+  private _n: number
+  private _p: number
+  private _k: number
+
+  constructor(rng01: () => number, n: number, p: number, k: number) {
+    this._rng01 = rng01
+    this._type = DistributionType.Discrete
+    this._n = n
+    this._p = p
+    this._k = k
+  }
+
+  get type(): DistributionType {
+    return this._type
+  }
+
+  random(): number {
+    return (
+      combination(this._n, this._k) *
+      Math.pow(this._p, this._k) *
+      Math.pow(1 - this._p, this._n - this._k)
+    )
+  }
+}
+
+export class GeometricDistribution implements Distribution {
+  private _rng01: () => number
+  private _type: DistributionType
+  private _k: number
+  private _p: number
+
+  constructor(rng01: () => number, k: number, p: number) {
+    this._rng01 = rng01
+    this._type = DistributionType.Discrete
+    this._k = k
+    this._p = p
+  }
+
+  get type(): DistributionType {
+    return this._type
+  }
+
+  random(): number {
+    return this._p * Math.pow(1 - this._p, this._k - 1)
+  }
+}
+
+export class PoissonDistribution implements Distribution {
+  private _rng01: () => number
+  private _type: DistributionType
+  private _L: number
+
+  constructor(rng01: () => number, lambda: number) {
+    this._rng01 = rng01
+    this._type = DistributionType.Discrete
+    // 0 experiences so k = 0 and so:
+    this._L = Math.exp(-lambda)
+  }
+
+  get type(): DistributionType {
+    return this._type
+  }
+
+  random(): number {
+    let k = 0
+    let p = 1
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      p = p * this._rng01()
+      if (p <= this._L) {
+        break
+      }
+      k++
+    }
+    return k
+  }
 }
 
 export class UniformDistribution implements Distribution {
@@ -38,8 +158,6 @@ export class UniformDistribution implements Distribution {
   private _min: number
   private _max: number
   private _range: number
-  private _mean: number
-  private _variance: number
   private _type: DistributionType
 
   constructor(rng01: () => number, min: number, max: number) {
@@ -47,8 +165,6 @@ export class UniformDistribution implements Distribution {
     this._min = min
     this._max = max
     this._range = max - min
-    this._mean = min + this._range / 2
-    this._variance = ((max - min) * (max - min)) / 12
     this._type = DistributionType.Continuous
   }
 
@@ -58,14 +174,6 @@ export class UniformDistribution implements Distribution {
 
   get max(): number {
     return this._max
-  }
-
-  get mean(): number {
-    return this._mean
-  }
-
-  get variance(): number {
-    return this._variance
   }
 
   get type(): DistributionType {

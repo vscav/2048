@@ -44,6 +44,26 @@ export class Board {
     this._won = false
   }
 
+  public bernouilliTest(): void {
+    this._probabilityManager.bernouilli()
+  }
+
+  public binomialTest(): void {
+    this._probabilityManager.binomial()
+  }
+
+  public geometricTest(): void {
+    this._probabilityManager.poisson()
+  }
+
+  public poissonTest(): void {
+    this._probabilityManager.poisson()
+  }
+
+  public uniformTest(): void {
+    this._probabilityManager.uniform()
+  }
+
   public get tiles(): Tile[] {
     return this._tiles
   }

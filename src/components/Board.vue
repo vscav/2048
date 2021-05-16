@@ -49,6 +49,7 @@
       const board = ref<Board>(new Board())
 
       const handleKeyDown = (event: KeyboardEvent) => {
+        board.value.geometricTest()
         // if (showModal.value) {
         //   console.log('Modal is opened.')
         //   return
