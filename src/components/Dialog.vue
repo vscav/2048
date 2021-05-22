@@ -1,11 +1,6 @@
 <template>
   <teleport to="#app">
-    <div
-      v-show="isOpen"
-      ref="modal-backdrop"
-      class="modal-backdrop"
-      @click="toggle"
-    >
+    <div v-show="isOpen" ref="modal-backdrop" class="modal-backdrop">
       <div
         v-show="isOpen"
         ref="modal"

@@ -28,13 +28,14 @@ body {
 }
 
 input[type='range'] {
-  width: 100%;
+  width: 75%;
   height: 28px;
   -webkit-appearance: none;
   outline: none;
   border: 0;
   padding: 0 8px;
   margin: 8px 0;
+  background: transparent;
 }
 
 input[type='range']::-webkit-slider-runnable-track {
@@ -347,8 +348,30 @@ input[type='range']:focus::-ms-fill-lower {
   }
 }
 
-.slider-container {
-  width: 100%;
+.slider {
+  margin-bottom: 0.7em;
+
+  .slider-title {
+    font-size: 1rem;
+  }
+
+  .slider-container {
+    width: 100%;
+    display: flex;
+    flex: 1 4 1;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+  }
+
+  .slider-value {
+    font-size: 1.15rem;
+    color: $text-light;
+  }
+
+  // &:last-of-type {
+  //   margin-bottom: 1.15em;
+  // }
 }
 
 .modal-backdrop {
@@ -361,7 +384,7 @@ input[type='range']:focus::-ms-fill-lower {
   justify-content: center;
   align-items: center;
   z-index: 10;
-  cursor: pointer;
+  // cursor: pointer;
 
   .modal {
     background: #001427;
@@ -412,7 +435,7 @@ input[type='range']:focus::-ms-fill-lower {
     position: fixed;
     top: 0;
     left: 0;
-    cursor: pointer;
+    // cursor: pointer;
   }
 
   .sidebar-panel {
@@ -423,9 +446,14 @@ input[type='range']:focus::-ms-fill-lower {
     top: 0;
     height: 100vh;
     z-index: 5;
-    padding: 3rem 20px 2rem 20px;
+    padding: 3rem 2rem 2rem;
     width: 300px;
     box-shadow: 5px 0 15px 1px rgba(0, 0, 0, 0.6);
+
+    .sidebar-title {
+      font-size: 1.45rem;
+      margin-bottom: 1.15em;
+    }
   }
 }
 

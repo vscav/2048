@@ -1,15 +1,25 @@
 <template>
-  <div class="slider-container">
-    <input
-      ref="input"
-      v-model="currentValue"
-      class="slider"
-      type="range"
-      :min="min"
-      :max="max"
-      :step="step"
-      @input="onChange"
-    />
+  <div class="slider">
+    <div v-show="!(description === '')" class="slider-title">
+      <h3>Bernouilli probability</h3>
+    </div>
+    <div class="slider-container">
+      <span>{{ min }}</span>
+      <input
+        ref="input"
+        v-model="currentValue"
+        class="slider"
+        type="range"
+        :min="min"
+        :max="max"
+        :step="step"
+        @input="onChange"
+      />
+      <span>{{ max }}</span>
+    </div>
+    <div class="slider-value">
+      <span>{{ currentValue }}</span>
+    </div>
   </div>
 </template>
 
@@ -39,6 +49,11 @@
       step: {
         type: Number,
         required: true,
+      },
+      description: {
+        type: String,
+        default: '',
+        required: false,
       },
     },
     emits: ['onchange'],

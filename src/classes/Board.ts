@@ -45,6 +45,18 @@ export class Board {
     this._probabilityManager.p = p
   }
 
+  public updateBinomialNumberOfExperiences(n: number): void {
+    this._probabilityManager.n = n
+  }
+
+  public updateGeometricNumberOfExperiences(k: number): void {
+    this._probabilityManager.k = k
+  }
+
+  public updatePoissonNumberOfSuccesses(lambda: number): void {
+    this._probabilityManager.lambda = lambda
+  }
+
   public get probabilityManager(): ProbManager {
     return this._probabilityManager
   }

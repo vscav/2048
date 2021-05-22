@@ -6,13 +6,9 @@
   import { defineComponent } from 'vue'
 
   export default defineComponent({
-    name: 'ControlsPanel',
+    name: 'ActionsPanel',
     components: {},
     props: {
-      board: {
-        type: Object,
-        required: true,
-      },
       onrestart: {
         type: Function,
         required: true,

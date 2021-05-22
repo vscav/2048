@@ -24,12 +24,10 @@ export class Probability {
     return new BernouilliDistribution(this._rng01, p)
   }
 
-  // n: 5 to 20 (range of 1)
   binomial(n = 10, p = 0.8, k = 1): BinomialDistribution {
     return new BinomialDistribution(this._rng01, n, p, k)
   }
 
-  // k: 1 to 50 (range of 1)
   geometric(k = 5, p = 0.2): GeometricDistribution {
     return new GeometricDistribution(this._rng01, k, p)
   }

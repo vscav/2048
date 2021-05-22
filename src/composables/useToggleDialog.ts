@@ -3,7 +3,7 @@ import { ToggleState, UseToggle } from '/@/composables/interfaces'
 
 const createToggleDialog = () => {
   const state: ToggleState = reactive({
-    isOpen: true,
+    isOpen: false,
   })
 
   const useToggleDialog = (): UseToggle => {
