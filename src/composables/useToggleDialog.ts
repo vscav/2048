@@ -1,12 +1,12 @@
 import { reactive, toRefs } from 'vue'
 import { ToggleState, UseToggle } from '/@/composables/interfaces'
 
-const createToggleControls = () => {
+const createToggleDialog = () => {
   const state: ToggleState = reactive({
     isOpen: true,
   })
 
-  const useToggleControls = (): UseToggle => {
+  const useToggleDialog = (): UseToggle => {
     const toggle = (): void => {
       state.isOpen = !state.isOpen
     }
@@ -17,7 +17,7 @@ const createToggleControls = () => {
     }
   }
 
-  return useToggleControls
+  return useToggleDialog
 }
 
-export const useToggleControls = createToggleControls()
+export const useToggleDialog = createToggleDialog()

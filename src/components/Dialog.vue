@@ -1,8 +1,8 @@
 <template>
   <teleport to="#app">
-    <div v-show="isModalOpen" ref="modal-backdrop" class="modal-backdrop">
+    <div v-show="isOpen" ref="modal-backdrop" class="modal-backdrop">
       <div
-        v-show="isModalOpen"
+        v-show="isOpen"
         ref="modal"
         class="modal"
         role="dialog"
@@ -10,7 +10,7 @@
         aria-labelledby="modal-headline"
       >
         <slot>Default is empty</slot>
-        <button class="button" @click="toggleModal">Close modal</button>
+        <button class="button" @click="toggle">Close modal</button>
       </div>
     </div>
   </teleport>
@@ -19,18 +19,18 @@
 <script lang="ts">
   import { defineComponent, ref } from 'vue'
 
-  import { useToggleModal } from '/@/composables/useToggleModal'
+  import { useToggleDialog } from '/@/composables/useToggleDialog'
 
   export default defineComponent({
     name: 'Dialog',
     setup() {
-      const { isModalOpen, toggleModal } = useToggleModal()
+      const { isOpen, toggle } = useToggleDialog()
       const modal = ref<HTMLDivElement | null>(null)
 
       return {
-        isModalOpen,
+        isOpen,
         modal,
-        toggleModal,
+        toggle,
       }
     },
   })

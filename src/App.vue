@@ -3,13 +3,13 @@
   <Dialog>
     <p>Custom text goes here</p>
   </Dialog>
-  <button class="button" type="button" @click="toggleModal">Open Modal</button>
+  <button class="button" type="button" @click="toggle">Open Modal</button>
 </template>
 
 <script lang="ts">
   import { defineComponent } from 'vue'
 
-  import { useToggleModal } from '/@/composables/useToggleModal'
+  import { useToggleDialog } from '/@/composables/useToggleDialog'
 
   import Board from '/@/components/Board.vue'
   import Dialog from '/@/components/Dialog.vue'
@@ -21,9 +21,9 @@
       Dialog,
     },
     setup() {
-      const { toggleModal } = useToggleModal()
+      const { toggle } = useToggleDialog()
       return {
-        toggleModal,
+        toggle,
       }
     },
   })
