@@ -45,6 +45,10 @@ export class Board {
     this._probabilityManager.p = p
   }
 
+  public get probabilityManager(): ProbManager {
+    return this._probabilityManager
+  }
+
   public get tiles(): Tile[] {
     return this._tiles
   }

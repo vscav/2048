@@ -25,7 +25,7 @@ export class ProbManager implements Manager {
     this._probability = new Probability()
     this._min = min
     this._max = max
-    this._p = 0.9
+    this._p = 0.2
     this._n = 10
     this._k = 5
     this._lambda = 10

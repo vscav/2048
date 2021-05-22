@@ -1,15 +1,16 @@
 <template>
   <Board />
-  <Dialog :show="showModal" @close="showModal = false">
+  <Dialog>
     <p>Custom text goes here</p>
   </Dialog>
-  <button class="button" type="button" @click="showModal = !showModal">
-    Open Modal
-  </button>
+  <button class="button" type="button" @click="toggleModal">Open Modal</button>
 </template>
 
 <script lang="ts">
-  import { defineComponent, ref } from 'vue'
+  import { defineComponent } from 'vue'
+
+  import { useToggleModal } from '/@/composables/useToggleModal'
+
   import Board from '/@/components/Board.vue'
   import Dialog from '/@/components/Dialog.vue'
 
@@ -20,10 +21,9 @@
       Dialog,
     },
     setup() {
-      const showModal = ref(false)
-
+      const { toggleModal } = useToggleModal()
       return {
-        showModal,
+        toggleModal,
       }
     },
   })

@@ -1,8 +1,8 @@
 <template>
   <teleport to="#app">
-    <div v-show="showModal" ref="modal-backdrop" class="modal-backdrop">
+    <div v-show="isModalOpen" ref="modal-backdrop" class="modal-backdrop">
       <div
-        v-show="showModal"
+        v-show="isModalOpen"
         ref="modal"
         class="modal"
         role="dialog"
@@ -10,50 +10,27 @@
         aria-labelledby="modal-headline"
       >
         <slot>Default is empty</slot>
-        <button class="button" @click="closeModal">Close modal</button>
+        <button class="button" @click="toggleModal">Close modal</button>
       </div>
     </div>
   </teleport>
 </template>
 
 <script lang="ts">
-  import { defineComponent, ref, watch } from 'vue'
+  import { defineComponent, ref } from 'vue'
+
+  import { useToggleModal } from '/@/composables/useToggleModal'
 
   export default defineComponent({
     name: 'Dialog',
-    props: {
-      show: {
-        type: Boolean,
-        required: true,
-      },
-    },
-    emits: ['close'],
-    setup(props, { emit }) {
-      const showModal = ref<boolean>(false)
+    setup() {
+      const { isModalOpen, toggleModal } = useToggleModal()
       const modal = ref<HTMLDivElement | null>(null)
 
-      const closeModal = () => {
-        emit('close')
-      }
-
-      const onClickOutside = () => {
-        if (showModal.value === true) {
-          closeModal()
-        }
-      }
-
-      watch(
-        () => props.show,
-        (show) => {
-          showModal.value = show
-        },
-      )
-
       return {
-        closeModal,
-        onClickOutside,
-        showModal,
+        isModalOpen,
         modal,
+        toggleModal,
       }
     },
   })

@@ -11,7 +11,6 @@
     <Tile v-for="(tile, index) in tiles" :key="index" :tile="tile" />
     <GameEndOverlay :board="board" :onrestart="onRestart" />
   </div>
-  <!-- Make value as a reactive prop based on the actual board state -->
   <RangeSlider
     :value="0.9"
     :min="0"
@@ -54,12 +53,8 @@
       const board = ref<Board>(new Board())
 
       const handleKeyDown = (event: KeyboardEvent) => {
-        // if (showModal.value) {
-        //   console.log('Modal is opened.')
-        //   return
-        // }
         if (board.value.hasWon()) {
-          console.log('Player have already won.')
+          console.log('coucou2')
           return
         }
         let direction: number
