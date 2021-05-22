@@ -54,7 +54,6 @@
 
       const handleKeyDown = (event: KeyboardEvent) => {
         if (board.value.hasWon()) {
-          console.log('coucou2')
           return
         }
         let direction: number
