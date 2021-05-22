@@ -1,6 +1,4 @@
-export interface Moveable {
-  hasMoved(): boolean | Tile | null
-}
+import { Moveable } from '/@/classes/interfaces'
 
 /* eslint-disable no-unused-vars */
 export enum TileType {
@@ -12,7 +10,7 @@ export enum TileType {
 /* eslint-enable no-unused-vars */
 
 export class Tile implements Moveable {
-  private readonly _type: TileType
+  private _type: TileType
   private _value: number
   private _row: number
   private _column: number
@@ -54,6 +52,10 @@ export class Tile implements Moveable {
 
   public get type(): TileType {
     return this._type
+  }
+
+  public set type(newType: TileType) {
+    this._type = newType
   }
 
   public get row(): number {

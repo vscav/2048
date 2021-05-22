@@ -16,7 +16,6 @@
       },
     },
     setup(props) {
-      console.log('[app] A new Tile component was set up.')
       const { tile } = toRefs(props)
 
       const classes = computed(() => {

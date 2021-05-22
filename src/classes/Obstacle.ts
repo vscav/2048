@@ -1,18 +1,19 @@
 import { Tile, TileType } from '/@/classes/Tile'
+import { Mutable } from '/@/classes/interfaces'
 
-export class Obstacle extends Tile {
-  private _remainingMoves: number
+export class Obstacle extends Tile implements Mutable {
+  _remaining: number
 
-  constructor() {
+  constructor(remaining: number) {
     super(1, -1, -1, TileType.Obstacle)
-    this._remainingMoves = Math.random() * (20 - 10) + 10 // Apply probability here
+    this._remaining = remaining
   }
 
   public get remainingMoves(): number {
-    return this._remainingMoves
+    return this._remaining
   }
 
   public decrement(): void {
-    this._remainingMoves--
+    this._remaining--
   }
 }

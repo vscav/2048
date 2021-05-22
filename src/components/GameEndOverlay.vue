@@ -22,8 +22,6 @@
       },
     },
     setup(props) {
-      console.log('[app] GameEndOverlay component was set up.')
-
       const { board } = toRefs(props)
 
       const show = computed(() => {

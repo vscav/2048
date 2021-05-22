@@ -10,7 +10,6 @@
     components: {},
     props: {},
     setup() {
-      console.log('[app] A new Cell component was set up.')
       return {}
     },
   })

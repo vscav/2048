@@ -11,7 +11,14 @@
     <Tile v-for="(tile, index) in tiles" :key="index" :tile="tile" />
     <GameEndOverlay :board="board" :onrestart="onRestart" />
   </div>
-  <!-- <RangeSlider :value="25" :min="1" :max="50" @onchange="updateValue" /> -->
+  <!-- Make value as a reactive prop based on the actual board state -->
+  <RangeSlider
+    :value="0.9"
+    :min="0"
+    :max="1"
+    :step="0.1"
+    @onchange="updateBernouilliProbability"
+  />
 </template>
 
 <script lang="ts">
@@ -26,7 +33,7 @@
   import Cell from '/@/components/Cell.vue'
   import ControlsPanel from './ControlsPanel.vue'
   import GameEndOverlay from '/@/components/GameEndOverlay.vue'
-  // import RangeSlider, { SliderPayload } from '/@/components/RangeSlider.vue'
+  import RangeSlider, { SliderPayload } from '/@/components/RangeSlider.vue'
   import Score from '/@/components/Score.vue'
   import Tile from '/@/components/Tile.vue'
 
@@ -38,18 +45,15 @@
       Cell,
       ControlsPanel,
       GameEndOverlay,
-      // RangeSlider,
+      RangeSlider,
       Score,
       Tile,
     },
     props: {},
     setup: () => {
-      console.log('[app] Board component was set up.')
-
       const board = ref<Board>(new Board())
 
       const handleKeyDown = (event: KeyboardEvent) => {
-        board.value.geometricTest()
         // if (showModal.value) {
         //   console.log('Modal is opened.')
         //   return
@@ -80,9 +84,9 @@
       const onRestart = () => {
         board.value = new Board()
       }
-      // const updateValue = (payload: SliderPayload) => {
-      //   console.log('Value received from slider: ', payload.value)
-      // }
+      const updateBernouilliProbability = (payload: SliderPayload) => {
+        board.value.updateBernouilliProbability(payload.value)
+      }
       onMounted(() => {
         window.addEventListener('keydown', handleKeyDown)
       })
@@ -95,7 +99,7 @@
       return {
         board,
         onRestart,
-        // updateValue,
+        updateBernouilliProbability,
         tiles,
       }
     },

@@ -12,18 +12,29 @@ export class Probability {
     }
   }
 
+  get rng01(): () => number {
+    return this._rng01
+  }
+
+  get rng11(): () => number {
+    return this._rng11
+  }
+
   bernouilli(p = 0.9): Distribution {
     return new BernouilliDistribution(this._rng01, p)
   }
 
-  binomial(n = 10, p = 0.4, k = 1): BinomialDistribution {
+  // n: 5 to 20 (range of 1)
+  binomial(n = 10, p = 0.8, k = 1): BinomialDistribution {
     return new BinomialDistribution(this._rng01, n, p, k)
   }
 
-  geometric(k = 100, p = 0.2): GeometricDistribution {
+  // k: 1 to 50 (range of 1)
+  geometric(k = 5, p = 0.2): GeometricDistribution {
     return new GeometricDistribution(this._rng01, k, p)
   }
 
+  // lambda: 1 to 15 (range of 1)
   poisson(lambda = 1): PoissonDistribution {
     return new PoissonDistribution(this._rng01, lambda)
   }
@@ -125,13 +136,12 @@ export class GeometricDistribution implements Distribution {
 export class PoissonDistribution implements Distribution {
   private _rng01: () => number
   private _type: DistributionType
-  private _L: number
+  private _lambda: number
 
   constructor(rng01: () => number, lambda: number) {
     this._rng01 = rng01
     this._type = DistributionType.Discrete
-    // 0 experiences so k = 0 and so:
-    this._L = Math.exp(-lambda)
+    this._lambda = lambda
   }
 
   get type(): DistributionType {
@@ -139,17 +149,7 @@ export class PoissonDistribution implements Distribution {
   }
 
   random(): number {
-    let k = 0
-    let p = 1
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-      p = p * this._rng01()
-      if (p <= this._L) {
-        break
-      }
-      k++
-    }
-    return k
+    return Math.exp(-this._lambda)
   }
 }
 

@@ -1,12 +1,14 @@
-import { Probability } from '/@/lib/probability'
+import { Distribution, Probability } from '/@/lib/probability'
+import { Manager } from '/@/classes/interfaces'
 
-export class ProbManager {
+export class ProbManager implements Manager {
   private _probability: Probability
   private _min: number
   private _max: number
   private _lambda: number
-  private _n: number
   private _p: number
+  private _n: number
+  private _k: number
 
   constructor(min = 0, max = 1) {
     if (min < 0) {
@@ -23,36 +25,76 @@ export class ProbManager {
     this._probability = new Probability()
     this._min = min
     this._max = max
-    this._lambda = 1
-    this._n = 100
     this._p = 0.9
+    this._n = 10
+    this._k = 5
+    this._lambda = 10
   }
 
-  public bernouilli(): number {
+  private computeExperiences(dist: Distribution): number {
+    let k = 0
+    let p = 1
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      p = p * this._probability.rng01()
+      if (p <= dist.random()) {
+        break
+      }
+      k++
+    }
+    return k
+  }
+
+  public get p(): number {
+    return this._p
+  }
+
+  public set p(p: number) {
+    this._p = p
+  }
+
+  public get n(): number {
+    return this._n
+  }
+
+  public set n(n: number) {
+    this._n = n
+  }
+
+  public get k(): number {
+    return this._k
+  }
+
+  public set k(k: number) {
+    this._k = k
+  }
+
+  bernouilli(): number {
     const bernouilli = this._probability.bernouilli(this._p)
-    console.log(bernouilli.random())
     return bernouilli.random()
   }
 
-  public binomial(): number {
-    const binomial = this._probability.binomial()
-    console.log(binomial.random())
-    return binomial.random()
+  binomial(): number {
+    const binomial = this._probability.binomial(this._n, 0.8, 1)
+    return this.computeExperiences(binomial)
   }
 
-  public geometric(): number {
-    const geometric = this._probability.geometric()
-    console.log(geometric.random())
-    return geometric.random()
+  geometric(): number {
+    const geometric = this._probability.geometric(this._k, 0.2)
+    let t = 1
+    t = t * this._probability.rng01()
+    if (t < geometric.random()) {
+      return 1
+    }
+    return 0
   }
 
-  public poisson(): number {
+  poisson(): number {
     const poisson = this._probability.poisson(this._lambda)
-    console.log(poisson.random())
-    return poisson.random()
+    return this.computeExperiences(poisson)
   }
 
-  public uniform(): number {
+  uniform(): number {
     const uniform = this._probability.uniform(this._min, this._max)
     return uniform.random()
   }

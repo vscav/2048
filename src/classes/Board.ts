@@ -5,10 +5,7 @@ import { ProbManager } from '/@/classes/ProbManager'
 import { Secret } from '/@/classes/Secret'
 import { Tile, TileType } from '/@/classes/Tile'
 
-interface Cell {
-  row: number
-  column: number
-}
+import { Cell } from '/@/classes/interfaces'
 
 export class Board {
   private readonly _probabilityManager: ProbManager
@@ -44,24 +41,8 @@ export class Board {
     this._won = false
   }
 
-  public bernouilliTest(): void {
-    this._probabilityManager.bernouilli()
-  }
-
-  public binomialTest(): void {
-    this._probabilityManager.binomial()
-  }
-
-  public geometricTest(): void {
-    this._probabilityManager.poisson()
-  }
-
-  public poissonTest(): void {
-    this._probabilityManager.poisson()
-  }
-
-  public uniformTest(): void {
-    this._probabilityManager.uniform()
+  public updateBernouilliProbability(p: number): void {
+    this._probabilityManager.p = p
   }
 
   public get tiles(): Tile[] {
@@ -115,28 +96,31 @@ export class Board {
   }
 
   private addTile(value: number): Tile {
-    const res: Tile = new Tile(value)
+    const res = new Tile(value)
     this._tiles.push(res)
 
     return res
   }
 
   private addJoker(): Joker {
-    const res: Joker = new Joker()
+    const res = new Joker()
     this._tiles.push(res)
 
     return res
   }
 
   private addObstacle(): Obstacle {
-    const res: Obstacle = new Obstacle()
+    const remaining = this._probabilityManager.poisson()
+    const res = new Obstacle(remaining)
     this._tiles.push(res)
 
     return res
   }
 
   private addSecret(): Secret {
-    const res: Secret = new Secret()
+    const value = Math.pow(2, Math.floor(Math.random() * 4) + 1)
+    const remaining = this._probabilityManager.binomial()
+    const res = new Secret(value, remaining)
     this._tiles.push(res)
 
     return res
@@ -152,28 +136,29 @@ export class Board {
       }
     }
 
-    const uniformValue1 = this._probabilityManager.uniform()
+    // The next tile will be a classic or a special case?
+    const classic = this._probabilityManager.geometric() === 1 ? false : true
 
-    // Use the first uniform to calc the index of the targeted empty cell
-    const index = ~~(uniformValue1 * emptyCells.length)
+    // We perform a uniform distribution to get the empty cell on which the next tile will appear
+    const uniform = this._probabilityManager.uniform()
+    const index = ~~(uniform * emptyCells.length)
     const cell = emptyCells[index]
-    // Use the first uniform to calc the value of the numbered Tile to add
-    const newValue = uniformValue1 < 0.1 ? 4 : 2
 
-    const uniformValue2 = this._probabilityManager.uniform()
-    const uniformValue3 = this._probabilityManager.uniform()
-    const uniformValue4 = this._probabilityManager.uniform()
-
-    // Use the second uniform to decide whether we add a "normal" Tile or a "special" Tile
-    // If we have to add a "special" Tile, we use a third uniform to know which type of "special" Tile we will add
-    this._cells[cell.row][cell.column] =
-      uniformValue2 < 0.25
-        ? uniformValue3 < 0.01
-          ? this.addObstacle()
-          : uniformValue4 < 0.45
-            ? this.addJoker()
+    // If classic tile, we perform a bernouilli distribution to get the actual value (2 or 4)
+    // p is by default 0.9 (probability of success)
+    if (classic) {
+      const bernouilli = this._probabilityManager.bernouilli()
+      const newValue = bernouilli === 1 ? 2 : 4
+      this._cells[cell.row][cell.column] = this.addTile(newValue)
+    } else {
+      const uniform2 = this._probabilityManager.uniform()
+      this._cells[cell.row][cell.column] =
+        uniform2 < 1 / 3
+          ? this.addJoker()
+          : uniform2 < 2 / 3
+            ? this.addObstacle()
             : this.addSecret()
-        : this.addTile(newValue)
+    }
   }
 
   private setPositions(): void {
@@ -290,15 +275,22 @@ export class Board {
       for (let column = 0; column < this._size; ++column) {
         if (
           currentRow.length > 0 &&
-          currentRow[column]?.type === TileType.Obstacle
+          (currentRow[column]?.type === TileType.Obstacle ||
+            currentRow[column]?.type === TileType.Secret)
         ) {
-          const obstacle = currentRow[column] as Obstacle
+          let toDecrement: Secret | Obstacle
+          if (currentRow[column]?.type === TileType.Secret)
+            toDecrement = currentRow[column] as Secret
+          else toDecrement = currentRow[column] as Obstacle
           if (mergingCount > 0) {
-            obstacle.decrement()
+            toDecrement.decrement()
           }
-          if (obstacle.remainingMoves <= 0) {
-            // Transform in a null Tile
-            obstacle.value = 0
+          if (toDecrement.remainingMoves <= 0) {
+            // Transform obstcale in a null Tile
+            if (currentRow[column]?.type === TileType.Obstacle)
+              toDecrement.value = 0
+            // Transform secret in classic tile
+            else toDecrement.type = TileType.Classic
           }
         }
       }

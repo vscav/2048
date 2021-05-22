@@ -7,6 +7,7 @@
       type="range"
       :min="min"
       :max="max"
+      :step="step"
       @input="onChange"
     />
   </div>
@@ -32,6 +33,10 @@
         required: true,
       },
       max: {
+        type: Number,
+        required: true,
+      },
+      step: {
         type: Number,
         required: true,
       },
