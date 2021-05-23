@@ -17,6 +17,7 @@ body {
   align-items: center;
   font-size: 2rem;
   height: 100vh;
+  background-color: $darker-background;
 }
 
 #app {
@@ -25,6 +26,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: $text-dark;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 input[type='range'] {
@@ -39,7 +46,7 @@ input[type='range'] {
 }
 
 input[type='range']::-webkit-slider-runnable-track {
-  background: $light-grey;
+  background: $dark-grey;
   height: 4px;
   border-radius: 4px;
   transition: 0.3s;
@@ -47,12 +54,12 @@ input[type='range']::-webkit-slider-runnable-track {
 
 input[type='range']:hover::-webkit-slider-runnable-track,
 input[type='range']:focus::-webkit-slider-runnable-track {
-  background: $light-grey;
+  background: $dark-grey;
 }
 
 input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
-  background: $tile-0-bg;
+  background: $button;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -63,7 +70,7 @@ input[type='range']::-webkit-slider-thumb {
 
 input[type='range']:hover::-webkit-slider-thumb,
 input[type='range']:focus::-webkit-slider-thumb {
-  background: $board-bg;
+  background: $button;
 }
 
 input[type='range']::-moz-focus-outer {
@@ -71,18 +78,18 @@ input[type='range']::-moz-focus-outer {
 }
 
 input[type='range']::-moz-range-track {
-  background: $light-grey;
+  background: $dark-grey;
   height: 4px;
   border-radius: 4px;
 }
 
 input[type='range']:hover::-moz-range-track,
 input[type='range']:focus::-moz-range-track {
-  background: $light-grey;
+  background: $dark-grey;
 }
 
 input[type='range']::-moz-range-thumb {
-  background: $tile-0-bg;
+  background: $button;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -91,22 +98,22 @@ input[type='range']::-moz-range-thumb {
 
 input[type='range']:hover::-moz-range-thumb,
 input[type='range']:focus::-moz-range-thumb {
-  background: $board-bg;
+  background: $button;
 }
 
 input[type='range']::-moz-range-progress {
-  background: $tile-0-bg;
+  background: $button;
   border-radius: 4px;
   height: 4px;
 }
 
 input[type='range']:hover::-moz-range-progress,
 input[type='range']:focus::-moz-range-progress {
-  background: $board-bg;
+  background: $button;
 }
 
 input[type='range']::-ms-track {
-  background: $light-grey;
+  background: $dark-grey;
   height: 4px;
   border-radius: 4px;
   border: none;
@@ -115,11 +122,11 @@ input[type='range']::-ms-track {
 
 input[type='range']:hover::-ms-track,
 input[type='range']:focus::-ms-track {
-  background: $light-grey;
+  background: $dark-grey;
 }
 
 input[type='range']::-ms-thumb {
-  background: $tile-0-bg;
+  background: $button;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -129,7 +136,7 @@ input[type='range']::-ms-thumb {
 
 input[type='range']:hover::-ms-thumb,
 input[type='range']:focus::-ms-thumb {
-  background: $board-bg;
+  background: $button;
 }
 
 input[type='range']::-ms-tooltip {
@@ -137,13 +144,13 @@ input[type='range']::-ms-tooltip {
 }
 
 input[type='range']::-ms-fill-lower {
-  background: $tile-0-bg;
+  background: $button;
   border-radius: 4px;
 }
 
 input[type='range']:hover::-ms-fill-lower,
 input[type='range']:focus::-ms-fill-lower {
-  background: $board-bg;
+  background: $button;
 }
 
 .text {
@@ -153,21 +160,83 @@ input[type='range']:focus::-ms-fill-lower {
   font-weight: bold;
 }
 
-.button {
-  background-color: $button-bg;
-  color: $text-light;
-  height: 40px;
-  width: 200px;
-  font-size: 20px;
+.button__icon {
+  width: 0.9em;
+  height: 0.9em;
   font-weight: bold;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  outline: none;
-  transition: background-color 135ms linear;
+  fill: currentcolor;
+  margin-right: 0.5em;
 
-  &:hover {
-    background-color: $button-bg-hover;
+  &--end {
+    margin-right: 0;
+    margin-left: 0.5em;
+  }
+}
+
+.button {
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: start;
+  font-size: 1rem;
+  background-color: $button;
+  color: $text-light;
+  border-radius: 8px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
+  padding: 0.25em 0.75em;
+  min-width: 12ch;
+  min-height: 35px;
+  text-align: center;
+  line-height: 1.1;
+  transition: 220ms all ease-in-out;
+
+  &:hover,
+  &:active {
+    background-color: scale-color($button, $lightness: -20%);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px scale-color($button, $lightness: -40%);
+  }
+
+  &--small {
+    font-size: 1.15rem;
+  }
+}
+
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 5%;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
+  background-color: $dark-background;
+
+  .title {
+    color: white;
+    margin-right: auto;
+    font-size: 1.45rem;
+    letter-spacing: 0.65rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    > :not(:first-child) {
+      margin-left: 2rem;
+    }
   }
 }
 
@@ -176,7 +245,7 @@ input[type='range']:focus::-ms-fill-lower {
   width: 440px;
   height: 440px;
   padding: 5px;
-  background-color: $board-bg;
+  background-color: $dark-background;
   border-radius: 7px;
   outline: none;
   position: relative;
@@ -195,7 +264,7 @@ input[type='range']:focus::-ms-fill-lower {
   vertical-align: middle;
   border-radius: 7px;
   color: $text-light;
-  background-color: $tile-bg;
+  background-color: $lighter-background;
 }
 
 .board .cell,
@@ -352,7 +421,7 @@ input[type='range']:focus::-ms-fill-lower {
   margin-bottom: 0.7em;
 
   .slider-title {
-    font-size: 1rem;
+    font-size: 0.85rem;
   }
 
   .slider-container {
@@ -361,60 +430,18 @@ input[type='range']:focus::-ms-fill-lower {
     flex: 1 4 1;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    color: $dark-grey;
   }
 
   .slider-value {
-    font-size: 1.15rem;
+    font-size: 1rem;
     color: $text-light;
   }
 
   // &:last-of-type {
   //   margin-bottom: 1.15em;
   // }
-}
-
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  // cursor: pointer;
-
-  .modal {
-    background: #001427;
-    overflow-x: auto;
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    width: 40%;
-    border-radius: 7px;
-    box-shadow: 0 0 15px 3px rgba(0, 0, 0, 0.6);
-    padding: 40px;
-    text-align: center;
-
-    @media (max-width: $screen-lg-min) {
-      width: 50%;
-    }
-
-    @media (max-width: $screen-md-min) {
-      width: 60%;
-    }
-
-    p {
-      font-size: 1.2rem;
-      color: white;
-    }
-
-    button {
-      margin-top: 10px;
-    }
-  }
 }
 
 .slide-enter-active,
@@ -425,22 +452,22 @@ input[type='range']:focus::-ms-fill-lower {
 .slide-enter,
 .slide-leave-to {
   transform: translateX(-100%);
-  transition: all 150ms ease-in 0s;
+  transition: all 215ms ease-in 0s;
 }
 
 .sidebar {
   .sidebar-backdrop {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
+    // width: 100vw;
+    // height: 100vh;
+    // position: fixed;
+    // top: 0;
+    // left: 0;
     // cursor: pointer;
   }
 
   .sidebar-panel {
     overflow-y: auto;
-    background-color: #001427;
+    background-color: $dark-background;
     position: fixed;
     left: 0;
     top: 0;
@@ -448,9 +475,10 @@ input[type='range']:focus::-ms-fill-lower {
     z-index: 5;
     padding: 3rem 2rem 2rem;
     width: 300px;
-    box-shadow: 5px 0 15px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 2px 0 15px 1px rgba(0, 0, 0, 0.18);
 
     .sidebar-title {
+      color: $text-light;
       font-size: 1.45rem;
       margin-bottom: 1.15em;
     }

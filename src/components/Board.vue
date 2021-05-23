@@ -52,6 +52,7 @@
         if (board.value.hasWon()) {
           return
         }
+
         let direction: number
         switch (event.key) {
           case 'ArrowLeft':

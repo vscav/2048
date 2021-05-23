@@ -1,7 +1,7 @@
 <template>
   <div class="slider">
     <div v-show="!(description === '')" class="slider-title">
-      <h3>Bernouilli probability</h3>
+      <h3>{{ description }}</h3>
     </div>
     <div class="slider-container">
       <span>{{ min }}</span>
@@ -59,7 +59,9 @@
     emits: ['onchange'],
     setup(_, { emit }) {
       const onChange = (event: InputEvent) => {
-        emit('onchange', { value: (event.target as HTMLInputElement).value })
+        emit('onchange', {
+          value: parseFloat((event.target as HTMLInputElement).value),
+        })
       }
 
       return {

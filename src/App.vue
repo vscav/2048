@@ -1,9 +1,6 @@
 <template>
   <ActionsPanel :onrestart="onRestart" />
   <Board :current="board" :onrestart="onRestart" />
-  <Dialog>
-    <h2>About.</h2>
-  </Dialog>
   <Sidebar>
     <div class="sidebar-title">
       <h2>Controls</h2>
@@ -44,11 +41,10 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, ref } from 'vue'
+  import { computed, defineComponent, ref } from 'vue'
 
-  import Board from '/@/components/Board.vue'
   import ActionsPanel from '/@/components/ActionsPanel.vue'
-  import Dialog from '/@/components/Dialog.vue'
+  import Board from '/@/components/Board.vue'
   import RangeSlider, { SliderPayload } from '/@/components/RangeSlider.vue'
   import Sidebar from '/@/components/Sidebar.vue'
 
@@ -59,7 +55,6 @@
     components: {
       Board,
       ActionsPanel,
-      Dialog,
       RangeSlider,
       Sidebar,
     },
@@ -83,13 +78,18 @@
         board.value.updatePoissonNumberOfSuccesses(payload.value)
       }
 
-      const initialBernouilliProbability = board.value.probabilityManager.p
-      const initialBinomialNumberOfExperiences =
-        board.value.probabilityManager.n
-      const initialGeometricNumberOfExperiences =
-        board.value.probabilityManager.k
-      const initialPoissonNumberOfSuccesses =
-        board.value.probabilityManager.lambda
+      const initialBernouilliProbability = computed(() => {
+        return board.value.probabilityManager.p
+      })
+      const initialBinomialNumberOfExperiences = computed(() => {
+        return board.value.probabilityManager.n
+      })
+      const initialGeometricNumberOfExperiences = computed(() => {
+        return board.value.probabilityManager.k
+      })
+      const initialPoissonNumberOfSuccesses = computed(() => {
+        return board.value.probabilityManager.lambda
+      })
 
       return {
         board,
