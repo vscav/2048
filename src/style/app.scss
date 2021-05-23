@@ -160,19 +160,6 @@ input[type='range']:focus::-ms-fill-lower {
   font-weight: bold;
 }
 
-.button__icon {
-  width: 0.9em;
-  height: 0.9em;
-  font-weight: bold;
-  fill: currentcolor;
-  margin-right: 0.5em;
-
-  &--end {
-    margin-right: 0;
-    margin-left: 0.5em;
-  }
-}
-
 .button {
   text-decoration: none;
   border: none;
@@ -205,6 +192,83 @@ input[type='range']:focus::-ms-fill-lower {
 
   &--small {
     font-size: 1.15rem;
+  }
+}
+
+.icon-button {
+  letter-spacing: 0.1ex;
+  border: none;
+  outline: none;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  background: transparent;
+  color: $text-light;
+
+  &::before {
+    top: 50%;
+    transform: translate(0, -50%);
+    position: absolute;
+    display: block;
+    content: '\a';
+    background-color: $button;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    left: 0;
+    border-radius: 50%;
+    -webkit-transition: background-color 0.25s ease-out;
+    -moz-transition: background-color 0.25s ease-out;
+    -o-transition: background-color 0.25s ease-out;
+    transition: background-color 0.25s ease-out;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
+  }
+
+  &:hover::before,
+  &:active::before {
+    background-color: scale-color($button, $lightness: -20%);
+  }
+
+  &.icon-button-small {
+    padding-left: 40px;
+
+    &::before {
+      width: 30px;
+      height: 30px;
+      background-size: 50%;
+    }
+  }
+
+  &.icon-button-medium {
+    padding-left: 50px;
+
+    &::before {
+      width: 45px;
+      height: 45px;
+      background-size: 40%;
+    }
+  }
+
+  &.icon-button-large {
+    padding-left: 60px;
+
+    &::before {
+      width: 60px;
+      height: 60px;
+      background-size: 30%;
+    }
+  }
+
+  &.icon-github {
+    &::before {
+      background-image: url(../assets/images/icon-github.svg);
+    }
+  }
+
+  &.icon-controls {
+    &::before {
+      background-image: url(../assets/images/icon-controls.svg);
+    }
   }
 }
 
@@ -413,7 +477,7 @@ input[type='range']:focus::-ms-fill-lower {
   .message {
     font-size: 55px;
     font-weight: bolder;
-    color: #f9f6f2;
+    color: $text-light;
   }
 }
 
@@ -435,8 +499,10 @@ input[type='range']:focus::-ms-fill-lower {
   }
 
   .slider-value {
-    font-size: 1rem;
+    font-size: 1.05rem;
+    font-weight: bold;
     color: $text-light;
+    letter-spacing: 0.05rem;
   }
 
   // &:last-of-type {
@@ -456,15 +522,6 @@ input[type='range']:focus::-ms-fill-lower {
 }
 
 .sidebar {
-  .sidebar-backdrop {
-    // width: 100vw;
-    // height: 100vh;
-    // position: fixed;
-    // top: 0;
-    // left: 0;
-    // cursor: pointer;
-  }
-
   .sidebar-panel {
     overflow-y: auto;
     background-color: $dark-background;

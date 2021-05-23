@@ -4,8 +4,10 @@
       <h1>{{ applicationName }}</h1>
     </div>
     <div class="actions">
-      <button class="button">Github</button>
-      <button class="button" @click="toggle">Controls</button>
+      <IconButton icon="github" small :onclick="() => console.log('coucou')"
+        >Github</IconButton
+      >
+      <IconButton icon="controls" small :onclick="toggle">Controls</IconButton>
       <button class="button" @click="restart">New game</button>
     </div>
   </div>
@@ -14,11 +16,15 @@
 <script lang="ts">
   import { defineComponent } from 'vue'
 
+  import IconButton from '/@/components/IconButton.vue'
+
   import { useToggleControls } from '/@/composables/useToggleControls'
 
   export default defineComponent({
     name: 'ActionsPanel',
-    components: {},
+    components: {
+      IconButton,
+    },
     props: {
       onrestart: {
         type: Function,
