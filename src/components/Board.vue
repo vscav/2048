@@ -18,8 +18,11 @@
     defineComponent,
     onBeforeUnmount,
     onMounted,
+    PropType,
     toRefs,
   } from 'vue'
+
+  import { Board } from '/@/classes/Board'
 
   import Cell from '/@/components/Cell.vue'
   import GameEndOverlay from '/@/components/GameEndOverlay.vue'
@@ -36,7 +39,7 @@
     },
     props: {
       current: {
-        type: Object,
+        type: Object as PropType<Board>,
         required: true,
       },
       onrestart: {

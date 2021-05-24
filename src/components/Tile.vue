@@ -3,15 +3,16 @@
 </template>
 
 <script lang="ts">
-  import { computed, defineComponent, toRefs } from 'vue'
-  import { TileType } from '/@/classes/Tile'
+  import { computed, defineComponent, PropType, toRefs } from 'vue'
+  import { Tile, TileType } from '/@/classes/Tile'
 
   export default defineComponent({
     name: 'Tile',
     props: {
       tile: {
-        type: Object,
+        type: Object as PropType<Tile>,
         required: true,
+        validator: (tile: Tile) => !!tile.value,
       },
     },
     setup(props) {

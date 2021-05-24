@@ -5,7 +5,7 @@ import { ProbManager } from '/@/classes/ProbManager'
 import { Secret } from '/@/classes/Secret'
 import { Tile, TileType } from '/@/classes/Tile'
 
-import { Cell } from '/@/classes/interfaces'
+import { ICell } from '/@/classes/interfaces'
 
 export class Board {
   private readonly _probabilityManager: ProbManager
@@ -143,7 +143,7 @@ export class Board {
   }
 
   private addRandomTile(): void {
-    const emptyCells: Cell[] = []
+    const emptyCells: ICell[] = []
     for (let row = 0; row < this._size; ++row) {
       for (let column = 0; column < this._size; ++column) {
         if (this._cells[row][column].value === 0) {

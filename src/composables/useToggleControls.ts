@@ -1,12 +1,12 @@
 import { reactive, toRefs } from 'vue'
-import { ToggleState, UseToggle } from '/@/composables/interfaces'
+import { IToggleState, IUseToggle } from '/@/composables/interfaces'
 
 const createToggleControls = () => {
-  const state: ToggleState = reactive({
+  const state: IToggleState = reactive({
     isOpen: false,
   })
 
-  const useToggleControls = (): UseToggle => {
+  const useToggleControls = (): IUseToggle => {
     const toggle = (): void => {
       state.isOpen = !state.isOpen
     }

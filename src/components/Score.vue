@@ -5,15 +5,18 @@
   </div>
 </template>
 
-<script>
-  import { computed, defineComponent, toRefs } from 'vue'
+<script lang="ts">
+  import { computed, defineComponent, PropType, toRefs } from 'vue'
+
+  import { Board } from '/@/classes/Board'
 
   export default defineComponent({
     name: 'Score',
     props: {
       board: {
-        type: Object,
+        type: Object as PropType<Board>,
         required: true,
+        validator: (board: Board) => board.tiles.length > 0,
       },
     },
     setup(props) {

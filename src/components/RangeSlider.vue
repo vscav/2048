@@ -1,21 +1,21 @@
 <template>
   <div class="slider">
-    <div v-show="!(description === '')" class="slider-title">
-      <h3>{{ description }}</h3>
+    <div v-show="!(slider.description === '')" class="slider-title">
+      <h3>{{ slider.description }}</h3>
     </div>
     <div class="slider-container">
-      <span>{{ min }}</span>
+      <span>{{ slider.min }}</span>
       <input
         ref="input"
         v-model="currentValue"
         class="slider"
         type="range"
-        :min="min"
-        :max="max"
-        :step="step"
+        :min="slider.min"
+        :max="slider.max"
+        :step="slider.step"
         @input="onChange"
       />
-      <span>{{ max }}</span>
+      <span>{{ slider.max }}</span>
     </div>
     <div class="slider-value">
       <span>{{ currentValue }}</span>
@@ -24,35 +24,33 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
+  import { defineComponent, PropType } from 'vue'
 
-  export interface SliderPayload {
+  export interface IRSlider {
+    name: string
+    value: number
+    min: number
+    max: number
+    step: number
+    description: string
+    // eslint-disable-next-line no-unused-vars
+    onchange: (payload: IRSliderPayload) => void
+  }
+
+  export interface IRSliders {
+    [key: string]: IRSlider
+  }
+
+  export interface IRSliderPayload {
     value: number
   }
 
   export default defineComponent({
     name: 'RangeSlider',
     props: {
-      value: {
-        type: Number,
+      slider: {
+        type: Object as PropType<IRSlider>,
         required: true,
-      },
-      min: {
-        type: Number,
-        required: true,
-      },
-      max: {
-        type: Number,
-        required: true,
-      },
-      step: {
-        type: Number,
-        required: true,
-      },
-      description: {
-        type: String,
-        default: '',
-        required: false,
       },
     },
     emits: ['onchange'],
@@ -69,7 +67,7 @@
     },
     data() {
       return {
-        currentValue: this.value,
+        currentValue: this.slider.value,
       }
     },
   })

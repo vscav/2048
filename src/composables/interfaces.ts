@@ -1,10 +1,10 @@
 import { Ref } from 'vue'
 
-export interface ToggleState {
+export interface IToggleState {
   isOpen: boolean
 }
 
-export interface UseToggle {
+export interface IUseToggle {
   isOpen: Ref<boolean>
   toggle: () => void
 }

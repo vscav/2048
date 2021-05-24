@@ -1,7 +1,7 @@
-import { Distribution, Probability } from '/@/lib/probability'
-import { Manager } from '/@/classes/interfaces'
+import { IDistribution, Probability } from '/@/lib/probability'
+import { IManager } from '/@/classes/interfaces'
 
-export class ProbManager implements Manager {
+export class ProbManager implements IManager {
   private _probability: Probability
   private _min: number
   private _max: number
@@ -31,7 +31,7 @@ export class ProbManager implements Manager {
     this._lambda = 10
   }
 
-  private computeExperiences(dist: Distribution): number {
+  private computeExperiences(dist: IDistribution): number {
     let k = 0
     let p = 1
     // eslint-disable-next-line no-constant-condition

@@ -8,11 +8,7 @@
     <RangeSlider
       v-for="slider in sliders"
       :key="slider.name"
-      :value="slider.value"
-      :min="slider.min"
-      :max="slider.max"
-      :step="slider.step"
-      :description="slider.description"
+      :slider="slider"
       @onchange="slider.onchange"
     />
   </Sidebar>
@@ -23,25 +19,13 @@
 
   import ActionsPanel from '/@/components/ActionsPanel.vue'
   import Board from '/@/components/Board.vue'
-  import RangeSlider, { SliderPayload } from '/@/components/RangeSlider.vue'
+  import RangeSlider, {
+    IRSliders,
+    IRSliderPayload,
+  } from '/@/components/RangeSlider.vue'
   import Sidebar from '/@/components/Sidebar.vue'
 
   import { Board as Game } from '/@/classes/Board'
-
-  interface Slider {
-    name: string
-    value: number
-    min: number
-    max: number
-    step: number
-    description: string
-    // eslint-disable-next-line no-unused-vars
-    onchange: (payload: SliderPayload) => void
-  }
-
-  interface Sliders {
-    [key: string]: Slider
-  }
 
   export default defineComponent({
     name: 'App',
@@ -58,7 +42,7 @@
         board.value = new Game()
       }
 
-      const sliders: Sliders = reactive({
+      const sliders: IRSliders = reactive({
         bernouilli: {
           name: 'bernouilli',
           value: computed(() => {
@@ -68,7 +52,7 @@
           max: 1,
           step: 0.01,
           description: "Poisson's average number of successes",
-          onchange: (payload: SliderPayload) => {
+          onchange: (payload: IRSliderPayload) => {
             board.value.updateBernouilliProbability(payload.value)
           },
         },
@@ -81,7 +65,7 @@
           max: 20,
           step: 1,
           description: "Binomial's number of experiences",
-          onchange: (payload: SliderPayload) => {
+          onchange: (payload: IRSliderPayload) => {
             board.value.updateBinomialNumberOfExperiences(payload.value)
           },
         },
@@ -94,7 +78,7 @@
           max: 50,
           step: 1,
           description: "Geometric's number of experiences",
-          onchange: (payload: SliderPayload) => {
+          onchange: (payload: IRSliderPayload) => {
             board.value.updateGeometricNumberOfExperiences(payload.value)
           },
         },
@@ -107,7 +91,7 @@
           max: 15,
           step: 1,
           description: "Poisson's average number of successes",
-          onchange: (payload: SliderPayload) => {
+          onchange: (payload: IRSliderPayload) => {
             board.value.updatePoissonNumberOfSuccesses(payload.value)
           },
         },

@@ -20,7 +20,7 @@ export class Probability {
     return this._rng11
   }
 
-  bernouilli(p = 0.9): Distribution {
+  bernouilli(p = 0.9): BernouilliDistribution {
     return new BernouilliDistribution(this._rng01, p)
   }
 
@@ -50,13 +50,13 @@ export enum DistributionType {
 }
 /* eslint-enable no-unused-vars */
 
-export interface Distribution {
+export interface IDistribution {
   type: DistributionType
 
   random(): number
 }
 
-export class BernouilliDistribution implements Distribution {
+export class BernouilliDistribution implements IDistribution {
   private _rng01: () => number
   private _type: DistributionType
   private _p: number
@@ -81,7 +81,7 @@ export class BernouilliDistribution implements Distribution {
   }
 }
 
-export class BinomialDistribution implements Distribution {
+export class BinomialDistribution implements IDistribution {
   private _rng01: () => number
   private _type: DistributionType
   private _n: number
@@ -109,7 +109,7 @@ export class BinomialDistribution implements Distribution {
   }
 }
 
-export class GeometricDistribution implements Distribution {
+export class GeometricDistribution implements IDistribution {
   private _rng01: () => number
   private _type: DistributionType
   private _k: number
@@ -131,7 +131,7 @@ export class GeometricDistribution implements Distribution {
   }
 }
 
-export class PoissonDistribution implements Distribution {
+export class PoissonDistribution implements IDistribution {
   private _rng01: () => number
   private _type: DistributionType
   private _lambda: number
@@ -151,7 +151,7 @@ export class PoissonDistribution implements Distribution {
   }
 }
 
-export class UniformDistribution implements Distribution {
+export class UniformDistribution implements IDistribution {
   private _rng01: () => number
   private _min: number
   private _max: number

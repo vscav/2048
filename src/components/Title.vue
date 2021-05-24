@@ -7,9 +7,6 @@
 
   export default defineComponent({
     name: 'Title',
-    setup() {
-      return {}
-    },
   })
 </script>
 

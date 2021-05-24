@@ -1,20 +1,20 @@
 import { Tile } from '/@/classes/Tile'
 
-export interface Moveable {
+export interface IMoveable {
   hasMoved(): boolean | Tile | null
 }
 
-export interface Mutable {
+export interface IMutable {
   _remaining: number
   decrement(): void
 }
 
-export interface Cell {
+export interface ICell {
   row: number
   column: number
 }
 
-export interface Manager {
+export interface IManager {
   bernouilli(): number
   binomial(): number
   geometric(): number

@@ -1,7 +1,7 @@
 import { Tile, TileType } from '/@/classes/Tile'
-import { Mutable } from '/@/classes/interfaces'
+import { IMutable } from '/@/classes/interfaces'
 
-export class Obstacle extends Tile implements Mutable {
+export class Obstacle extends Tile implements IMutable {
   _remaining: number
 
   constructor(remaining: number) {

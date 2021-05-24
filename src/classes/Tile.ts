@@ -1,4 +1,4 @@
-import { Moveable } from '/@/classes/interfaces'
+import { IMoveable } from '/@/classes/interfaces'
 
 /* eslint-disable no-unused-vars */
 export enum TileType {
@@ -9,7 +9,7 @@ export enum TileType {
 }
 /* eslint-enable no-unused-vars */
 
-export class Tile implements Moveable {
+export class Tile implements IMoveable {
   private _type: TileType
   private _value: number
   private _row: number
@@ -118,19 +118,19 @@ export class Tile implements Moveable {
     return this._oldRow === -1 && !this._mergedInto
   }
 
-  private fromRow(): number {
+  public fromRow(): number {
     return this._mergedInto ? this._row : this._oldRow
   }
 
-  private fromColumn(): number {
+  public fromColumn(): number {
     return this._mergedInto ? this._column : this._oldColumn
   }
 
-  private toRow(): number {
+  public toRow(): number {
     return this._mergedInto ? this._mergedInto._row : this._row
   }
 
-  private toColumn(): number {
+  public toColumn(): number {
     return this._mergedInto ? this._mergedInto._column : this._column
   }
 
