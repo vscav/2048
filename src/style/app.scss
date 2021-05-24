@@ -325,6 +325,85 @@ input[type='range']:focus::-ms-fill-lower {
   position: relative;
 }
 
+.board-score {
+  position: relative;
+
+  & > span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    -webkit-animation: fadeInFromNone 1s ease-out;
+    -moz-animation: fadeInFromNone 1s ease-out;
+    -o-animation: fadeInFromNone 1s ease-out;
+    animation: fadeInFromNone 1s ease-out;
+    transform: translateY(3rem);
+  }
+}
+
+@-webkit-keyframes fadeInFromNone {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-1.85rem);
+  }
+}
+
+@-moz-keyframes fadeInFromNone {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-1.85rem);
+  }
+}
+
+@-o-keyframes fadeInFromNone {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-1.85rem);
+  }
+}
+
+@keyframes fadeInFromNone {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-1.85rem);
+  }
+}
+
 .cell,
 .tile {
   width: 100px;

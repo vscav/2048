@@ -152,16 +152,12 @@ export class Board {
       }
     }
 
-    // The next tile will be a classic or a special case?
     const classic = this._probabilityManager.geometric() === 1 ? false : true
 
-    // We perform a uniform distribution to get the empty cell on which the next tile will appear
     const uniform = this._probabilityManager.uniform()
     const index = ~~(uniform * emptyCells.length)
     const cell = emptyCells[index]
 
-    // If classic tile, we perform a bernouilli distribution to get the actual value (2 or 4)
-    // p is by default 0.9 (probability of success)
     if (classic) {
       const bernouilli = this._probabilityManager.bernouilli()
       const newValue = bernouilli === 1 ? 2 : 4
@@ -216,6 +212,7 @@ export class Board {
   private moveLeft(): boolean {
     let hasChanged = false
     let mergingCount = 0
+    let totalMovePoints = 0
 
     for (let row = 0; row < this._size; ++row) {
       const currentRow = this._cells[row].filter((tile) => tile.value !== 0)
@@ -265,14 +262,14 @@ export class Board {
             targetTile.value = targetTile.value + tile2.value
           }
 
-          this._lastScore.points = targetTile.value
+          totalMovePoints += targetTile.value
+          this._score += targetTile.value
           this._lastScore.animation = true
-          this._score += this._lastScore.points
         }
+        this._lastScore.points = totalMovePoints
 
         resultRow[target] = targetTile
-        // Quick test (win on 8):
-        // this._won ||= targetTile.value === 8
+
         this._won ||= targetTile.value === 2048
         hasChanged ||= targetTile.value !== this._cells[row][target].value
         mergingCount =
@@ -301,10 +298,8 @@ export class Board {
             toDecrement.decrement()
           }
           if (toDecrement.remainingMoves <= 0) {
-            // Transform obstcale in a null Tile
             if (currentRow[column]?.type === TileType.Obstacle)
               toDecrement.value = 0
-            // Transform secret in classic tile
             else toDecrement.type = TileType.Classic
           }
         }

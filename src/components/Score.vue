@@ -1,7 +1,7 @@
 <template>
   <div class="board-score">
     <p>Score: {{ totalScore }}</p>
-    <!-- <span v-show="scoreAnimation">+{{ lastScore }}</span> -->
+    <span v-show="scoreAnimation">+{{ lastScore }}</span>
   </div>
 </template>
 
