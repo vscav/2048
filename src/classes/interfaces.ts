@@ -15,9 +15,9 @@ export interface ICell {
 }
 
 export interface IManager {
-  bernouilli(): number
-  binomial(): number
-  geometric(): number
-  poisson(): number
-  uniform(): number
+  simulateBernouilli(): number
+  simulateBinomial(): number
+  simulateGeometric(): number
+  simulatePoisson(): number
+  simulateUniform(): number
 }

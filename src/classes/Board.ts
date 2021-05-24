@@ -126,7 +126,7 @@ export class Board {
   }
 
   private addObstacle(): Obstacle {
-    const remaining = this._probabilityManager.poisson()
+    const remaining = this._probabilityManager.simulatePoisson()
     const res = new Obstacle(remaining)
     this._tiles.push(res)
 
@@ -135,7 +135,7 @@ export class Board {
 
   private addSecret(): Secret {
     const value = Math.pow(2, Math.floor(Math.random() * 4) + 1)
-    const remaining = this._probabilityManager.binomial()
+    const remaining = this._probabilityManager.simulateBinomial()
     const res = new Secret(value, remaining)
     this._tiles.push(res)
 
@@ -152,22 +152,23 @@ export class Board {
       }
     }
 
-    const classic = this._probabilityManager.geometric() === 1 ? false : true
+    const classic =
+      this._probabilityManager.simulateGeometric() === 1 ? false : true
 
-    const uniform = this._probabilityManager.uniform()
-    const index = ~~(uniform * emptyCells.length)
+    const firstUniform = this._probabilityManager.simulateUniform()
+    const index = ~~(firstUniform * emptyCells.length)
     const cell = emptyCells[index]
 
     if (classic) {
-      const bernouilli = this._probabilityManager.bernouilli()
+      const bernouilli = this._probabilityManager.simulateBernouilli()
       const newValue = bernouilli === 1 ? 2 : 4
       this._cells[cell.row][cell.column] = this.addTile(newValue)
     } else {
-      const uniform2 = this._probabilityManager.uniform()
+      const secondUniform = this._probabilityManager.simulateUniform()
       this._cells[cell.row][cell.column] =
-        uniform2 < 1 / 3
+        secondUniform < 1 / 3
           ? this.addJoker()
-          : uniform2 < 2 / 3
+          : secondUniform < 2 / 3
             ? this.addObstacle()
             : this.addSecret()
     }

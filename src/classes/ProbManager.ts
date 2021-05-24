@@ -30,6 +30,21 @@ export class ProbManager implements IManager {
     this._k = 5
     this._lambda = 10
   }
+  bernouilli(): number {
+    throw new Error('Method not implemented.')
+  }
+  binomial(): number {
+    throw new Error('Method not implemented.')
+  }
+  geometric(): number {
+    throw new Error('Method not implemented.')
+  }
+  poisson(): number {
+    throw new Error('Method not implemented.')
+  }
+  uniform(): number {
+    throw new Error('Method not implemented.')
+  }
 
   private computeExperiences(dist: IDistribution): number {
     let k = 0
@@ -77,17 +92,17 @@ export class ProbManager implements IManager {
     this._lambda = lambda
   }
 
-  bernouilli(): number {
+  simulateBernouilli(): number {
     const bernouilli = this._probability.bernouilli(this._p)
     return bernouilli.random()
   }
 
-  binomial(): number {
+  simulateBinomial(): number {
     const binomial = this._probability.binomial(this._n, 0.8, 1)
     return this.computeExperiences(binomial)
   }
 
-  geometric(): number {
+  simulateGeometric(): number {
     const geometric = this._probability.geometric(this._k, 0.2)
     let t = 1
     t = t * this._probability.rng01()
@@ -97,12 +112,12 @@ export class ProbManager implements IManager {
     return 0
   }
 
-  poisson(): number {
+  simulatePoisson(): number {
     const poisson = this._probability.poisson(this._lambda)
     return this.computeExperiences(poisson)
   }
 
-  uniform(): number {
+  simulateUniform(): number {
     const uniform = this._probability.uniform(this._min, this._max)
     return uniform.random()
   }
