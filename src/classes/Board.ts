@@ -180,7 +180,6 @@ export class Board {
   private setPositions(): void {
     this._cells.forEach((row, rowIndex) => {
       row.forEach((tile, columnIndex) => {
-        // console.log(tile)
         tile.oldRow = tile.row
         tile.oldColumn = tile.column
         tile.row = rowIndex

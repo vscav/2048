@@ -1,3 +1,5 @@
-interface ImportMetaEnv {
-  VITE_APP_NAME: string
+interface ImportMeta {
+  env: {
+    VITE_APP_NAME: string
+  }
 }

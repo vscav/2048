@@ -34,6 +34,11 @@ body {
   justify-content: center;
 }
 
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 input[type='range'] {
   width: 75%;
   height: 28px;
@@ -168,7 +173,7 @@ input[type='range']:focus::-ms-fill-lower {
   align-items: center;
   justify-content: center;
   align-self: start;
-  font-size: 1rem;
+  font-size: 0.85rem;
   background-color: $button;
   color: $text-light;
   border-radius: 8px;
@@ -177,7 +182,7 @@ input[type='range']:focus::-ms-fill-lower {
   min-width: 12ch;
   min-height: 35px;
   text-align: center;
-  line-height: 1.1;
+  line-height: 1;
   transition: 220ms all ease-in-out;
 
   &:hover,
@@ -227,6 +232,11 @@ input[type='range']:focus::-ms-fill-lower {
   &:hover::before,
   &:active::before {
     background-color: scale-color($button, $lightness: -20%);
+  }
+
+  &:focus::before {
+    outline: none;
+    box-shadow: 0 0 0 4px scale-color($button, $lightness: -40%);
   }
 
   &.icon-button-small {
@@ -499,7 +509,7 @@ input[type='range']:focus::-ms-fill-lower {
   }
 
   .slider-value {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     font-weight: bold;
     color: $text-light;
     letter-spacing: 0.05rem;

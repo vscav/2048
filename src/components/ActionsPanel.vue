@@ -1,12 +1,10 @@
 <template>
   <div class="top-bar">
     <div class="title">
-      <h1>{{ applicationName }}</h1>
+      <h1>{{ data.applicationName }}</h1>
     </div>
     <div class="actions">
-      <IconButton icon="github" small :onclick="() => console.log('coucou')"
-        >Github</IconButton
-      >
+      <IconButton icon="github" small :onclick="redirect">Github</IconButton>
       <IconButton icon="controls" small :onclick="toggle">Controls</IconButton>
       <button class="button" @click="restart">New game</button>
     </div>
@@ -14,7 +12,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
+  import { defineComponent, reactive } from 'vue'
 
   import IconButton from '/@/components/IconButton.vue'
 
@@ -34,18 +32,25 @@
     setup(props) {
       const { toggle } = useToggleControls()
 
+      const data = reactive({
+        applicationName: import.meta.env.VITE_APP_NAME,
+        get applicationLink() {
+          return `https://github.com/vscav/${this.applicationName}`
+        },
+      })
+
+      const redirect = () => {
+        // window.location.href = data.applicationLink
+        window.open(data.applicationLink, '_blank')
+      }
+
       const restart = () => {
         props.onrestart && props.onrestart()
       }
 
-      const applicationName = '2048'
-
-      // const applicationName = computed(() => {
-      //   return import.meta.env.VITE_APP_NAME
-      // })
-
       return {
-        applicationName,
+        data,
+        redirect,
         restart,
         toggle,
       }
