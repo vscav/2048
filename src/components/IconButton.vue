@@ -21,7 +21,6 @@
 
   export default defineComponent({
     name: 'IconButton',
-    components: {},
     props: {
       small: {
         type: Boolean,

@@ -10,7 +10,6 @@
 
   export default defineComponent({
     name: 'Score',
-    components: {},
     props: {
       board: {
         type: Object,
@@ -21,7 +20,6 @@
       const { board } = toRefs(props)
 
       const lastScore = computed(() => {
-        console.log(board.value.lastScorePoints)
         return board.value.lastScorePoints
       })
 

@@ -40,7 +40,6 @@
       })
 
       const redirect = () => {
-        // window.location.href = data.applicationLink
         window.open(data.applicationLink, '_blank')
       }
 

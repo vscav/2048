@@ -32,7 +32,6 @@
 
   export default defineComponent({
     name: 'RangeSlider',
-    components: {},
     props: {
       value: {
         type: Number,

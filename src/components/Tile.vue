@@ -8,7 +8,6 @@
 
   export default defineComponent({
     name: 'Tile',
-    components: {},
     props: {
       tile: {
         type: Object,

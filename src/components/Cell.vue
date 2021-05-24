@@ -7,10 +7,5 @@
 
   export default defineComponent({
     name: 'Cell',
-    components: {},
-    props: {},
-    setup() {
-      return {}
-    },
   })
 </script>

@@ -7,8 +7,6 @@
 
   export default defineComponent({
     name: 'Title',
-    components: {},
-    props: {},
     setup() {
       return {}
     },

@@ -10,7 +10,6 @@
 
   export default defineComponent({
     name: 'GameEndOverlay',
-    components: {},
     props: {
       board: {
         type: Object,
