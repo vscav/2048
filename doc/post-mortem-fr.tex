@@ -1,0 +1,103 @@
+\documentclass[12pt]{report}
+\usepackage{amsmath}
+\usepackage{tabto}
+\usepackage{graphicx}
+\usepackage{titlesec}
+
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries}{}{0pt}{\Huge}
+
+\titleformat{\section}[display]
+  {\normalfont\bfseries}{}{0pt}{\Large}
+
+\begin{document}
+
+\begin{titlepage}
+
+\centering
+
+\includegraphics[width=0.45\textwidth]{images/gustave-eiffel-university.png}\par\vspace{1cm}
+
+{\scshape\Large Projet de mathématiques appliquées\par}
+
+\vspace{1.5cm}
+
+{\huge\bfseries 2048\par}
+
+\vspace{2cm}
+
+{\Large\itshape Cloé \textsc{Quirin} \& Vincent \textsc{Scavinner}\par}
+
+\vfill
+supervisé par\par
+Miguel \textsc{Martinez}
+\vfill
+
+{\large \today\par}
+
+\end{titlepage}
+
+\begin{abstract}
+Rapport de projet documentant la réflexion et les choix d'implémentation réalisés dans le cadre de la conception d'une version revisitée du jeu 2048, utilisant des lois de probabilités mathématiques. 
+\end{abstract}
+
+\chapter{Introduction}
+
+\tabto{1cm}Cela fait maintenant quelques années que le jeu du 2048 a pris d'assaut Internet.
+Dans le monde entier, des milliers de personnes ont passé des millions d'heures à
+essayer de créer la tuile 2048.
+
+\vspace{0.5cm}
+
+\tabto{1cm}Outre le côté addictif du jeu, il présente également une possibilité
+d'explorer les mathématiques. Dans le cadre d'un projet réalisé au cours d'une seconde année d'ingénieur
+à l'IMAC (Univeristé Gustave Eiffel, Champs-sur-Marne, France), ce document tente de
+démontrer la manière dont les théories et lois probabilistiques ont été appliquées au jeu
+original pour l'étendre et le renouveler dans une version revisitée.
+
+\section{Règles}
+
+\tabto{1cm}Le 2048 est un jeu "puzzle block" développé par Gabriele Cirulli. C'est un jeu joué sur
+une grille 4x4 avec des tuiles numérotées ${2^{n}}$ où ${n}$ représente un nombre naturel. L'objectif
+du jeu est de combiner des tuiles du même nombre pour finalement former le nombre 2048.
+
+\vspace{0.5cm}
+
+\tabto{1cm}L'utilisateur peut se déplacer dans les quatre directions cardinales et après chaque mouvement,
+une nouvelle tuile est générée aléatoirement dans la grille qui est numérotée 2 ou 4. Un mouvement est
+considéré comme "légal" si au moins une tuile peut être glissée dans un emplacement vide ou si les tuiles
+peuvent être combinés dans la direction choisie. Le jeu se termine lorsque l'utilisateur n'a pas de mouvement
+"légal" à gauche.
+
+\section{Aspect mathématique de la version classique}
+
+\tabto{1cm}Après avoir fait un mouvement, une nouvelle tuile est placée sur le plateau.
+Celle-ci est placée aléatoirement sur un emplacement vide de la grille. Cette nouvelle tuile
+peut avoir pour valeur un 2 ou un 4, là encore choisi aléatoirement. La valeur 2 a 90\% de chance
+de tomber, tandis que la valeur 4 en a seulement 10. Le jeu continue ensuite jusqu'à ce qu'il n'y
+ait plus de mouvements possibles.
+
+\vspace{0.5cm}
+
+\tabto{1cm}Outre cet aspect probabiliste, le coeur du jeu et de son intéractivité repose sur une
+combinaison de transformations matricielles relative à la grille. Néanmoins, il est possible de
+procéder à l'ensemble des mouvements nécessaires par un enchaînement de rotations matricielles.
+C'est ce que nous avons choisi de faire dans le cadre de notre implémentation.
+
+\chapter{Les composantes aléatoires utilisées}
+
+\section{Le type de tuile}
+
+\textbf{Espace d'état :} Choix du type de tuile.
+
+\chapter{Conclusion}
+
+\tabto{1cm}Nous espérons avoir réussi à montrer que derrière un simple jeu, il y a un monde
+mathématique à explorer. Les concepts étudiés ce semestre et les ressources consultées au
+cours du projet nous ont aidés à analyser le jeu et son fonctionnement, mais aussi à l'aborder
+sous des angles différents afin de comprendre comment y implanter des lois de probabilités
+pour le rendre d'autant plus ludique. L'intéractivité offerte à l'utilisateur via un contrôle
+sur certains paramètres lui permet de visualiser l'impact qu'ils ont au cours du jeu et l'oblige 
+potentiellement à adopter de nouvelles stratégies pour résoudre le puzzle.
+
+\end{document}
