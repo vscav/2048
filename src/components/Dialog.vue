@@ -23,7 +23,7 @@
           <p>Default content</p>
         </slot>
         <div class="modal-control-container">
-          <button class="button" @click="toggle">Close modal</button>
+          <button class="button" @click="toggle">Close</button>
         </div>
       </div>
     </div>

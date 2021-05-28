@@ -26,11 +26,11 @@
     setup(props) {
       const { board } = toRefs(props)
 
-      const show = computed(() => {
+      const show = computed((): boolean => {
         return board.value.hasWon() || board.value.hasLost()
       })
 
-      const content = computed(() => {
+      const content = computed((): string => {
         if (board.value.hasWon()) {
           return 'You win!'
         } else if (board.value.hasLost()) {
@@ -40,7 +40,7 @@
         }
       })
 
-      const restart = () => {
+      const restart = (): void => {
         props.onrestart && props.onrestart()
       }
 

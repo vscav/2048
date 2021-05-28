@@ -53,7 +53,7 @@
       },
     },
     setup(props) {
-      const click = () => {
+      const click = (): void => {
         props.onclick && props.onclick()
       }
       return { click }

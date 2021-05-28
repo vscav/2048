@@ -24,6 +24,12 @@
   import { useToggleControls } from '/@/composables/useToggleControls'
   import { useToggleDialog } from '/@/composables/useToggleDialog'
 
+  interface IActionsPanel {
+    applicationName: string
+    repoUrl: string
+    readonly applicationLink: string
+  }
+
   export default defineComponent({
     name: 'ActionsPanel',
     components: {
@@ -39,7 +45,7 @@
       const { toggle: toggleControls } = useToggleControls()
       const { toggle: toggleDialog } = useToggleDialog()
 
-      const data = reactive({
+      const data: IActionsPanel = reactive({
         applicationName: import.meta.env.VITE_APP_NAME,
         repoUrl: import.meta.env.VITE_APP_GIT_URL,
         get applicationLink() {
@@ -47,11 +53,11 @@
         },
       })
 
-      const redirect = () => {
+      const redirect = (): void => {
         window.open(data.applicationLink, '_blank')
       }
 
-      const restart = () => {
+      const restart = (): void => {
         props.onrestart && props.onrestart()
       }
 

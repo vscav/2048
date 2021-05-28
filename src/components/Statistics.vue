@@ -15,6 +15,10 @@
   export default defineComponent({
     name: 'Cell',
     props: {
+      type: {
+        type: String,
+        required: true,
+      },
       statistics: {
         type: Object as PropType<IStatistics>,
         required: true,
@@ -26,7 +30,7 @@
       },
     },
     setup(props) {
-      const { statistics, options } = toRefs(props)
+      const { type, statistics, options } = toRefs(props)
 
       const chart = ref<Chart>()
 
@@ -63,7 +67,7 @@
       const createChart = (chartData: unknown) => {
         const context = document.getElementById('chart') as HTMLCanvasElement
         const opts = {
-          type: 'doughnut',
+          type: type.value,
           data: chartData,
           options: options.value,
         } as ChartConfiguration

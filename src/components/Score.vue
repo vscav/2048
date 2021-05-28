@@ -22,15 +22,15 @@
     setup(props) {
       const { board } = toRefs(props)
 
-      const lastScore = computed(() => {
+      const lastScore = computed((): number => {
         return board.value.lastScorePoints
       })
 
-      const scoreAnimation = computed(() => {
+      const scoreAnimation = computed((): boolean => {
         return board.value.lastScoreAnimation
       })
 
-      const totalScore = computed(() => {
+      const totalScore = computed((): number => {
         return board.value.score
       })
 

@@ -75,7 +75,7 @@
         }
         board.value.move(direction)
       }
-      const onRestart = () => {
+      const onRestart = (): void => {
         props.onrestart && props.onrestart()
       }
       onMounted(() => {

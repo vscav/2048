@@ -12,6 +12,7 @@
     <template #content>
       <div class="visualization-container">
         <Statistics
+          type="doughnut"
           :statistics="statistics"
           :options="{
             responsive: false,
@@ -70,9 +71,7 @@
     setup() {
       const board = ref<Game>(new Game())
 
-      const key = ref<number>(0)
-
-      const onRestart = () => {
+      const onRestart = (): void => {
         board.value = new Game()
       }
 
@@ -82,7 +81,7 @@
         colors: ['#86cb92', '#8c2155', '#e4717a', '#b9b9bb'],
       })
 
-      const changeStats = () => {
+      const changeStats = (): void => {
         statistics.value = {
           ...statistics.value,
           data: [20, 25, 5, 40],
@@ -92,7 +91,7 @@
       const sliders: IRSliders = reactive({
         bernouilli: {
           name: 'bernouilli',
-          value: computed(() => {
+          value: computed((): number => {
             return board.value.probabilityManager.p
           }),
           min: 0,
@@ -105,7 +104,7 @@
         },
         binomial: {
           name: 'binomial',
-          value: computed(() => {
+          value: computed((): number => {
             return board.value.probabilityManager.n
           }),
           min: 5,
@@ -118,7 +117,7 @@
         },
         geometric: {
           name: 'geometric',
-          value: computed(() => {
+          value: computed((): number => {
             return board.value.probabilityManager.k
           }),
           min: 1,
@@ -131,7 +130,7 @@
         },
         poisson: {
           name: 'poisson',
-          value: computed(() => {
+          value: computed((): number => {
             return board.value.probabilityManager.lambda
           }),
           min: 1,
@@ -147,7 +146,6 @@
       return {
         board,
         changeStats,
-        key,
         onRestart,
         sliders,
         statistics,

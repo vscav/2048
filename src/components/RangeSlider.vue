@@ -26,6 +26,10 @@
 <script lang="ts">
   import { defineComponent, PropType } from 'vue'
 
+  export interface IRSliderData {
+    currentValue: number
+  }
+
   export interface IRSlider {
     name: string
     value: number
@@ -65,7 +69,7 @@
         onChange,
       }
     },
-    data() {
+    data(): IRSliderData {
       return {
         currentValue: this.slider.value,
       }
