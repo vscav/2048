@@ -4,7 +4,14 @@
       <div v-if="isOpen" class="sidebar-backdrop"></div>
       <transition name="slide">
         <div v-if="isOpen" class="sidebar-panel">
-          <slot></slot>
+          <div class="sidebar-title">
+            <slot name="header">
+              <h2>Default header</h2>
+            </slot>
+          </div>
+          <slot name="content">
+            <p>Default content</p>
+          </slot>
           <button class="button" @click="toggle">Close</button>
         </div>
       </transition>

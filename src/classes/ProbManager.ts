@@ -30,21 +30,6 @@ export class ProbManager implements IManager {
     this._k = 5
     this._lambda = 10
   }
-  bernouilli(): number {
-    throw new Error('Method not implemented.')
-  }
-  binomial(): number {
-    throw new Error('Method not implemented.')
-  }
-  geometric(): number {
-    throw new Error('Method not implemented.')
-  }
-  poisson(): number {
-    throw new Error('Method not implemented.')
-  }
-  uniform(): number {
-    throw new Error('Method not implemented.')
-  }
 
   private computeExperiences(dist: IDistribution): number {
     let k = 0

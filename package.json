@@ -18,9 +18,11 @@
     "*": "prettier -w -u"
   },
   "dependencies": {
+    "chart.js": "^3.3.0",
     "vue": "^3.0.4"
   },
   "devDependencies": {
+    "@types/chart.js": "^2.9.32",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "@vue/compiler-sfc": "^3.0.4",

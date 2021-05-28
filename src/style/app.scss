@@ -39,6 +39,13 @@ a {
   text-decoration: inherit;
 }
 
+.visualization-container {
+  display: block;
+  width: auto;
+  height: 300px;
+  margin-bottom: 30px;
+}
+
 input[type='range'] {
   width: 75%;
   height: 28px;
@@ -268,15 +275,21 @@ input[type='range']:focus::-ms-fill-lower {
     }
   }
 
-  &.icon-github {
+  &.icon-chart {
     &::before {
-      background-image: url(../assets/images/icon-github.svg);
+      background-image: url(../assets/images/icon-chart.svg);
     }
   }
 
   &.icon-controls {
     &::before {
       background-image: url(../assets/images/icon-controls.svg);
+    }
+  }
+
+  &.icon-github {
+    &::before {
+      background-image: url(../assets/images/icon-github.svg);
     }
   }
 }
@@ -596,6 +609,77 @@ input[type='range']:focus::-ms-fill-lower {
   // &:last-of-type {
   //   margin-bottom: 1.15em;
   // }
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  // cursor: pointer;
+
+  .modal {
+    background-color: $dark-background;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    width: 40%;
+    border-radius: 7px;
+    box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.18);
+    padding: 40px;
+    text-align: center;
+
+    @include xs {
+      width: 75%;
+    }
+
+    @include sm {
+      width: 75%;
+    }
+
+    @include md {
+      width: 60%;
+    }
+
+    @include lg {
+      width: 45%;
+    }
+
+    @include xl {
+      width: 30%;
+    }
+
+    .modal-title {
+      color: $text-light;
+      font-size: 1.45rem;
+      margin-bottom: 0.5em;
+    }
+
+    .modal-description {
+      font-size: 0.85rem;
+      margin-bottom: 1.2em;
+    }
+
+    .modal-control-container {
+      width: 45%;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: white;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+  }
 }
 
 .slide-enter-active,

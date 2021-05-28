@@ -5,7 +5,12 @@
     </div>
     <div class="actions">
       <IconButton icon="github" small :onclick="redirect">Github</IconButton>
-      <IconButton icon="controls" small :onclick="toggle">Controls</IconButton>
+      <IconButton icon="controls" small :onclick="toggleControls"
+        >Controls</IconButton
+      >
+      <IconButton icon="chart" small :onclick="toggleDialog"
+        >Statistics</IconButton
+      >
       <button class="button" @click="restart">New game</button>
     </div>
   </div>
@@ -17,6 +22,7 @@
   import IconButton from '/@/components/IconButton.vue'
 
   import { useToggleControls } from '/@/composables/useToggleControls'
+  import { useToggleDialog } from '/@/composables/useToggleDialog'
 
   export default defineComponent({
     name: 'ActionsPanel',
@@ -30,12 +36,14 @@
       },
     },
     setup(props) {
-      const { toggle } = useToggleControls()
+      const { toggle: toggleControls } = useToggleControls()
+      const { toggle: toggleDialog } = useToggleDialog()
 
       const data = reactive({
         applicationName: import.meta.env.VITE_APP_NAME,
+        repoUrl: import.meta.env.VITE_APP_GIT_URL,
         get applicationLink() {
-          return `https://github.com/vscav/${this.applicationName}`
+          return `${this.repoUrl}/${this.applicationName}`
         },
       })
 
@@ -51,7 +59,8 @@
         data,
         redirect,
         restart,
-        toggle,
+        toggleControls,
+        toggleDialog,
       }
     },
   })
