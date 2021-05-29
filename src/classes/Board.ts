@@ -155,7 +155,7 @@ export class Board {
     return res
   }
 
-  private addRandomTile(): void {
+  private provideEmptyCells(): ICell[] {
     const emptyCells: ICell[] = []
     for (let row = 0; row < this._size; ++row) {
       for (let column = 0; column < this._size; ++column) {
@@ -164,6 +164,12 @@ export class Board {
         }
       }
     }
+
+    return emptyCells
+  }
+
+  private addRandomTile(): void {
+    const emptyCells = this.provideEmptyCells()
 
     const classic =
       this._probabilityManager.simulateGeometric() === 1 ? false : true
