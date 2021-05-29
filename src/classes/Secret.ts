@@ -1,4 +1,5 @@
 import { Tile, TileType } from '/@/classes/Tile'
+
 import { IMutable } from '/@/classes/interfaces'
 
 export class Secret extends Tile implements IMutable {

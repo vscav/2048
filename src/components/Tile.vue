@@ -18,7 +18,7 @@
     setup(props) {
       const { tile } = toRefs(props)
 
-      const classes = computed(() => {
+      const classes = computed((): string => {
         const classesArray = ['tile']
 
         if (tile.value.type === TileType.Classic)

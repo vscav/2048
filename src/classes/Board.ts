@@ -1,4 +1,3 @@
-import { rotateLeft } from '/@/lib/matrix'
 import { Joker } from '/@/classes/Joker'
 import { Obstacle } from '/@/classes/Obstacle'
 import { ProbManager } from '/@/classes/ProbManager'
@@ -6,6 +5,8 @@ import { Secret } from '/@/classes/Secret'
 import { Tile, TileType } from '/@/classes/Tile'
 
 import { ICell } from '/@/classes/interfaces'
+
+import { rotateLeft } from '/@/lib/matrix'
 
 export class Board {
   private readonly _probabilityManager: ProbManager

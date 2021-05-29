@@ -3,11 +3,21 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, onMounted, PropType, ref, toRefs, watch } from 'vue'
+  import {
+    ComputedRef,
+    defineComponent,
+    onMounted,
+    PropType,
+    ref,
+    toRefs,
+    watch,
+  } from 'vue'
   import { Chart, ChartConfiguration, registerables } from 'chart.js'
 
+  import _ from 'lodash'
+
   export interface IStatistics {
-    data: Array<number>
+    data: ComputedRef<Array<number>>
     labels: Array<string>
     colors: Array<string>
   }
@@ -35,8 +45,8 @@
       const chart = ref<Chart>()
 
       watch(
-        () => props.statistics,
-        () => {
+        (): ComputedRef<Array<number>> => _.cloneDeep(props.statistics.data),
+        (): void => {
           chart.value?.destroy()
           createChart({
             datasets: [

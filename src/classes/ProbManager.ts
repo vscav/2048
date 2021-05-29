@@ -1,5 +1,6 @@
-import { IDistribution, Probability } from '/@/lib/probability'
 import { IManager } from '/@/classes/interfaces'
+
+import { IDistribution, Probability } from '/@/lib/probability'
 
 export class ProbManager implements IManager {
   private _probability: Probability
@@ -43,6 +44,30 @@ export class ProbManager implements IManager {
       k++
     }
     return k
+  }
+
+  public get tileTwoProbability(): number {
+    return 100 * (1 - 0.2) * this._p
+  }
+
+  public get tileFourProbability(): number {
+    return 100 * (1 - 0.2) * (1 - this._p)
+  }
+
+  public get classicTileProbability(): number {
+    return this.tileTwoProbability + this.tileFourProbability
+  }
+
+  public get jokerTileProbability(): number {
+    return 100 * 0.2 * (1 / 3)
+  }
+
+  public get secretTileProbability(): number {
+    return 100 * 0.2 * (1 / 3)
+  }
+
+  public get obstacleTileProbability(): number {
+    return 100 * 0.2 * (1 / 3)
   }
 
   public get p(): number {

@@ -1,6 +1,5 @@
 <template>
   <ActionsPanel :onrestart="onRestart" />
-  <button @click="changeStats">Change stats</button>
   <Board :current="board" :onrestart="onRestart" />
   <Dialog>
     <template #header>
@@ -21,6 +20,14 @@
             plugins: {
               tooltip: {
                 enabled: false,
+              },
+              legend: {
+                display: true,
+                labels: {
+                  color: '#f9f6f2',
+                  usePointStyle: true,
+                  boxWidth: 10,
+                },
               },
             },
           }"
@@ -75,18 +82,17 @@
         board.value = new Game()
       }
 
-      const statistics = ref<IStatistics>({
-        data: [20, 65, 5, 10],
-        labels: ['Classic', 'Joker', 'Secret', 'Obstacle'],
-        colors: ['#86cb92', '#8c2155', '#e4717a', '#b9b9bb'],
+      const statistics = reactive<IStatistics>({
+        data: computed(() => [
+          board.value.probabilityManager.tileTwoProbability,
+          board.value.probabilityManager.tileFourProbability,
+          board.value.probabilityManager.jokerTileProbability,
+          board.value.probabilityManager.secretTileProbability,
+          board.value.probabilityManager.obstacleTileProbability,
+        ]),
+        labels: ['2', '4', 'Joker', 'Secret', 'Obstacle'],
+        colors: ['#86cb92', '#70b28b', '#8c2155', '#e4717a', '#b9b9bb'],
       })
-
-      const changeStats = (): void => {
-        statistics.value = {
-          ...statistics.value,
-          data: [20, 25, 5, 40],
-        }
-      }
 
       const sliders: IRSliders = reactive({
         bernouilli: {
@@ -145,7 +151,6 @@
 
       return {
         board,
-        changeStats,
         onRestart,
         sliders,
         statistics,
