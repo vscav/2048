@@ -29,6 +29,8 @@
   import Score from '/@/components/Score.vue'
   import Tile from '/@/components/Tile.vue'
 
+  import { fil } from '/@/lib/array'
+
   export default defineComponent({
     name: 'Board',
     components: {
@@ -85,7 +87,7 @@
         window.removeEventListener('keydown', handleKeyDown)
       })
       const tiles = computed(() => {
-        return board.value.tiles.filter((tile) => tile.value !== 0)
+        return fil((tile) => tile.value !== 0, board.value.tiles)
       })
       return {
         board,
