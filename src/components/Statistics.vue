@@ -1,87 +1,64 @@
 <template>
-  <canvas id="chart" />
+  <div class="statistics">
+    <div class="statistics-title">
+      <h3>Current game statistics</h3>
+    </div>
+    <div class="statistics-content">
+      <p>
+        Total tiles played: <span>{{ total }}</span>
+      </p>
+      <p>
+        Classic tiles played: <span>{{ totalClassic }}</span>
+      </p>
+      <p>
+        Joker tiles played: <span>{{ totalJoker }}</span>
+      </p>
+      <p>
+        Secret tiles played: <span>{{ totalSecret }}</span>
+      </p>
+      <p>
+        Obstacle tiles played: <span>{{ totalObstacle }}</span>
+      </p>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-  import {
-    ComputedRef,
-    defineComponent,
-    onMounted,
-    PropType,
-    ref,
-    toRefs,
-    watch,
-  } from 'vue'
-  import { Chart, ChartConfiguration, registerables } from 'chart.js'
+  import { computed, defineComponent, PropType, toRefs } from 'vue'
 
-  import _ from 'lodash'
-
-  export interface IStatistics {
-    data: ComputedRef<Array<number>>
-    labels: Array<string>
-    colors: Array<string>
-  }
+  import { Board } from '/@/classes/Board'
+  import { TileType } from '/@/classes/Tile'
 
   export default defineComponent({
-    name: 'Cell',
+    name: 'Statistics',
     props: {
-      type: {
-        type: String,
+      current: {
+        type: Object as PropType<Board>,
         required: true,
-      },
-      statistics: {
-        type: Object as PropType<IStatistics>,
-        required: true,
-      },
-      options: {
-        type: Object,
-        default: () => ({}),
-        required: false,
+        validator: (board: Board) => board.tiles.length > 0,
       },
     },
     setup(props) {
-      const { type, statistics, options } = toRefs(props)
-
-      const chart = ref<Chart>()
-
-      watch(
-        (): ComputedRef<Array<number>> => _.cloneDeep(props.statistics.data),
-        (): void => {
-          chart.value?.destroy()
-          createChart({
-            datasets: [
-              {
-                data: statistics.value.data,
-                backgroundColor: statistics.value.colors,
-              },
-            ],
-            labels: statistics.value.labels,
-          })
-        },
+      const { current: board } = toRefs(props)
+      const total = computed(() => board.value.statisticsManager.total)
+      const totalClassic = computed(() =>
+        board.value.statisticsManager.getTotalByType(TileType.Classic),
       )
-
-      onMounted(() => {
-        Chart.register(...registerables)
-
-        createChart({
-          datasets: [
-            {
-              data: statistics.value.data,
-              backgroundColor: statistics.value.colors,
-            },
-          ],
-          labels: statistics.value.labels,
-        })
-      })
-
-      const createChart = (chartData: unknown) => {
-        const context = document.getElementById('chart') as HTMLCanvasElement
-        const opts = {
-          type: type.value,
-          data: chartData,
-          options: options.value,
-        } as ChartConfiguration
-        chart.value = new Chart(context, opts)
+      const totalJoker = computed(() =>
+        board.value.statisticsManager.getTotalByType(TileType.Joker),
+      )
+      const totalSecret = computed(() =>
+        board.value.statisticsManager.getTotalByType(TileType.Secret),
+      )
+      const totalObstacle = computed(() =>
+        board.value.statisticsManager.getTotalByType(TileType.Obstacle),
+      )
+      return {
+        total,
+        totalClassic,
+        totalJoker,
+        totalSecret,
+        totalObstacle,
       }
     },
   })

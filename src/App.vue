@@ -5,12 +5,9 @@
     <template #header>
       <h2>Statistics</h2>
     </template>
-    <template #description>
-      <h3>Tile type distribution</h3>
-    </template>
     <template #content>
-      <div class="visualization-container">
-        <Statistics
+      <div class="modal-content">
+        <Distribution
           type="doughnut"
           :statistics="statistics"
           :options="{
@@ -32,6 +29,7 @@
             },
           }"
         />
+        <Statistics :current="board" />
       </div>
     </template>
   </Dialog>
@@ -56,12 +54,13 @@
   import ActionsPanel from '/@/components/ActionsPanel.vue'
   import Board from '/@/components/Board.vue'
   import Dialog from '/@/components/Dialog.vue'
+  import Distribution, { IDistribution } from '/@/components/Distribution.vue'
   import RangeSlider, {
     IRSliders,
     IRSliderPayload,
   } from '/@/components/RangeSlider.vue'
   import Slider from '/@/components/Sidebar.vue'
-  import Statistics, { IStatistics } from '/@/components/Statistics.vue'
+  import Statistics from '/@/components/Statistics.vue'
 
   import { Board as Game } from '/@/classes/Board'
 
@@ -71,6 +70,7 @@
       ActionsPanel,
       Board,
       Dialog,
+      Distribution,
       RangeSlider,
       Slider,
       Statistics,
@@ -82,7 +82,7 @@
         board.value = new Game()
       }
 
-      const statistics = reactive<IStatistics>({
+      const statistics = reactive<IDistribution>({
         data: computed(() => [
           board.value.probabilityManager.tileTwoProbability,
           board.value.probabilityManager.tileFourProbability,

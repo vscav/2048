@@ -16,7 +16,7 @@ body {
   align-content: center;
   align-items: center;
   font-size: 2rem;
-  height: 100vh;
+  min-height: 100vh;
   background-color: $darker-background;
 }
 
@@ -32,18 +32,12 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 a {
   color: inherit;
   text-decoration: inherit;
-}
-
-.visualization-container {
-  display: block;
-  width: auto;
-  height: $visualization-container-size;
-  margin-bottom: 30px;
 }
 
 input[type='range'] {
@@ -610,80 +604,105 @@ input[type='range']:focus::-ms-fill-lower {
     color: $text-light;
     letter-spacing: 0.05rem;
   }
-
-  // &:last-of-type {
-  //   margin-bottom: 1.15em;
-  // }
 }
 
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.modal {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $dark-background;
+  overflow-x: auto;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  z-index: 10;
-  // cursor: pointer;
+  height: auto;
+  width: 40%;
+  border-radius: 7px;
+  box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.18);
+  padding: 40px;
+  text-align: center;
 
-  .modal {
-    background-color: $dark-background;
-    overflow-x: auto;
+  @include xs {
+    width: 75%;
+  }
+
+  @include sm {
+    width: 75%;
+  }
+
+  @include md {
+    width: 65%;
+  }
+
+  @include lg {
+    width: 55%;
+  }
+
+  @include xl {
+    width: 45%;
+  }
+
+  .modal-title {
+    color: $text-light;
+    font-size: 1.45rem;
+    margin-bottom: 0.5em;
+  }
+
+  .modal-content {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
-    height: auto;
-    width: 40%;
-    border-radius: 7px;
-    box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.18);
-    padding: 40px;
-    text-align: center;
-
-    @include xs {
-      width: 75%;
-    }
-
-    @include sm {
-      width: 75%;
-    }
+    width: 100%;
+    margin-bottom: 0.5em;
 
     @include md {
-      width: 60%;
+      flex-direction: row;
+      align-items: flex-start;
+      margin-bottom: 0;
     }
+  }
 
-    @include lg {
-      width: 45%;
-    }
+  .modal-control-container {
+    width: 45%;
+  }
 
-    @include xl {
-      width: 30%;
-    }
+  p {
+    font-size: 1.2rem;
+    color: white;
+  }
 
-    .modal-title {
-      color: $text-light;
-      font-size: 1.45rem;
-      margin-bottom: 0.5em;
-    }
+  button {
+    margin-top: 10px;
+  }
+}
 
-    .modal-description {
-      font-size: 0.85rem;
-      margin-bottom: 1.2em;
-    }
+.distribution {
+  display: flex;
+  flex-direction: column;
 
-    .modal-control-container {
-      width: 45%;
-    }
+  .distribution-title {
+    font-size: 0.85rem;
+    margin-bottom: 1.2em;
+  }
 
-    p {
-      font-size: 1.2rem;
-      color: white;
-    }
+  .distribution-visualization-container {
+    display: block;
+    width: auto;
+    height: $visualization-container-size;
+    margin-bottom: 30px;
+  }
+}
 
-    button {
-      margin-top: 10px;
-    }
+.statistics {
+  display: flex;
+  flex-direction: column;
+
+  .statistics-title {
+    font-size: 0.85rem;
+    margin-bottom: 1.2em;
   }
 }
 

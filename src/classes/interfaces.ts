@@ -5,12 +5,18 @@ export interface ICell {
   column: number
 }
 
-export interface IManager {
+export interface IProbManager {
   simulateBernouilli(): number
   simulateBinomial(): number
   simulateGeometric(): number
   simulatePoisson(): number
   simulateUniform(): number
+}
+
+export interface IStatManager {
+  readonly total: number
+  // eslint-disable-next-line no-unused-vars
+  getTotalByType(t: string): number
 }
 
 export interface IMoveable {

@@ -1,8 +1,8 @@
-import { IManager } from '/@/classes/interfaces'
+import { IProbManager } from '/@/classes/interfaces'
 
 import { IDistribution, Probability } from '/@/lib/probability'
 
-export class ProbManager implements IManager {
+export class ProbManager implements IProbManager {
   private _probability: Probability
   private _min: number
   private _max: number

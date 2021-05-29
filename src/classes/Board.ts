@@ -2,6 +2,7 @@ import { Joker } from '/@/classes/Joker'
 import { Obstacle } from '/@/classes/Obstacle'
 import { ProbManager } from '/@/classes/ProbManager'
 import { Secret } from '/@/classes/Secret'
+import { StatManager } from '/@/classes/StatManager'
 import { Tile, TileType } from '/@/classes/Tile'
 
 import { ICell } from '/@/classes/interfaces'
@@ -10,6 +11,7 @@ import { rotateLeft } from '/@/lib/matrix'
 
 export class Board {
   private readonly _probabilityManager: ProbManager
+  private _statisticsManager: StatManager
   private readonly _size: number
   private readonly _deltaX = [-1, 0, 1, 0]
   private readonly _deltaY = [0, -1, 0, 1]
@@ -26,6 +28,8 @@ export class Board {
     if (size <= 0) {
       throw new Error(`Board size must be >= 0 (but was ${size})`)
     }
+    this._probabilityManager = new ProbManager()
+    this._statisticsManager = new StatManager()
     this._size = size
     this._tiles = []
     this._cells = []
@@ -35,7 +39,6 @@ export class Board {
         this._cells[i].push(this.addTile(0))
       }
     }
-    this._probabilityManager = new ProbManager()
     this.addRandomTile()
     this.addRandomTile()
     this.setPositions()
@@ -60,6 +63,10 @@ export class Board {
 
   public get probabilityManager(): ProbManager {
     return this._probabilityManager
+  }
+
+  public get statisticsManager(): StatManager {
+    return this._statisticsManager
   }
 
   public get tiles(): Tile[] {
@@ -115,6 +122,7 @@ export class Board {
   private addTile(value: number): Tile {
     const res = new Tile(value)
     this._tiles.push(res)
+    if (value !== 0) this._statisticsManager.add(res)
 
     return res
   }
@@ -122,6 +130,7 @@ export class Board {
   private addJoker(): Joker {
     const res = new Joker()
     this._tiles.push(res)
+    this._statisticsManager.add(res)
 
     return res
   }
@@ -130,6 +139,7 @@ export class Board {
     const remaining = this._probabilityManager.simulatePoisson()
     const res = new Obstacle(remaining)
     this._tiles.push(res)
+    this._statisticsManager.add(res)
 
     return res
   }
@@ -139,6 +149,7 @@ export class Board {
     const remaining = this._probabilityManager.simulateBinomial()
     const res = new Secret(value, remaining)
     this._tiles.push(res)
+    this._statisticsManager.add(res)
 
     return res
   }
