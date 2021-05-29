@@ -1,5 +1,5 @@
 <template>
-  <ActionsPanel :onrestart="onRestart" />
+  <ActionsPanel :current="board" :onrestart="onRestart" />
   <Board :current="board" :onrestart="onRestart" />
   <Dialog>
     <template #header>

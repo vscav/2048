@@ -8,7 +8,11 @@
       <IconButton icon="controls" small :onclick="toggleControls"
         >Controls</IconButton
       >
-      <IconButton icon="chart" small :onclick="toggleDialog"
+      <IconButton
+        icon="chart"
+        small
+        :highlight="highlighted"
+        :onclick="toggleDialog"
         >Statistics</IconButton
       >
       <button class="button" @click="restart">New game</button>
@@ -17,12 +21,14 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive } from 'vue'
+  import { computed, defineComponent, PropType, reactive, toRefs } from 'vue'
 
   import IconButton from '/@/components/IconButton.vue'
 
   import { useToggleControls } from '/@/composables/useToggleControls'
   import { useToggleDialog } from '/@/composables/useToggleDialog'
+
+  import { Board } from '/@/classes/Board'
 
   interface IActionsPanel {
     applicationName: string
@@ -36,12 +42,19 @@
       IconButton,
     },
     props: {
+      current: {
+        type: Object as PropType<Board>,
+        required: true,
+      },
       onrestart: {
         type: Function,
         required: true,
       },
     },
     setup(props) {
+      const { current } = toRefs(props)
+      const board = current
+
       const { toggle: toggleControls } = useToggleControls()
       const { toggle: toggleDialog } = useToggleDialog()
 
@@ -51,6 +64,10 @@
         get applicationLink() {
           return `${this.repoUrl}/${this.applicationName}`
         },
+      })
+
+      const highlighted = computed((): boolean => {
+        return board.value.hasWon() || board.value.hasLost()
       })
 
       const redirect = (): void => {
@@ -63,6 +80,7 @@
 
       return {
         data,
+        highlighted,
         redirect,
         restart,
         toggleControls,

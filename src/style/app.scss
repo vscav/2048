@@ -212,7 +212,7 @@ input[type='range']:focus::-ms-fill-lower {
 
   &::before {
     top: 50%;
-    transform: translate(0, -50%);
+    transform: translate(0, -50%) scale(1);
     position: absolute;
     display: block;
     content: '\a';
@@ -227,6 +227,12 @@ input[type='range']:focus::-ms-fill-lower {
     -o-transition: background-color 0.25s ease-out;
     transition: background-color 0.25s ease-out;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
+  }
+
+  &.highlight {
+    &::before {
+      animation: pulse 2s infinite;
+    }
   }
 
   &:hover::before,
@@ -285,6 +291,23 @@ input[type='range']:focus::-ms-fill-lower {
     &::before {
       background-image: url(../assets/images/icon-github.svg);
     }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(0, -50%) scale(0.95);
+    box-shadow: 0 0 0 0 rgba($button, 0.7);
+  }
+
+  70% {
+    transform: translate(0, -50%) scale(1);
+    box-shadow: 0 0 0 10px rgba($button, 0);
+  }
+
+  100% {
+    transform: translate(0, -50%) scale(0.95);
+    box-shadow: 0 0 0 0 rgba($button, 0);
   }
 }
 

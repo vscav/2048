@@ -6,6 +6,7 @@
         'icon-button-small': small,
         'icon-button-medium': medium,
         'icon-button-large': large,
+        highlight: highlight,
       },
       icon ? 'icon-' + icon : '',
     ]"
@@ -37,14 +38,14 @@
         default: false,
         required: false,
       },
-      pressed: {
-        type: Boolean,
-        default: false,
-        required: false,
-      },
       icon: {
         type: String,
         default: '',
+        required: false,
+      },
+      highlight: {
+        type: Boolean,
+        default: false,
         required: false,
       },
       onclick: {
