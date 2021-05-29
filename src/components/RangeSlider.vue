@@ -13,7 +13,7 @@
         :min="slider.min"
         :max="slider.max"
         :step="slider.step"
-        @mouseup="onChange"
+        @input="onChange"
       />
       <span>{{ slider.max }}</span>
     </div>

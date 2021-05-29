@@ -14,6 +14,9 @@
             responsive: false,
             maintainAspectRatio: true,
             borderWidth: 0,
+            animation: {
+              duration: 0,
+            },
             plugins: {
               tooltip: {
                 enabled: false,
