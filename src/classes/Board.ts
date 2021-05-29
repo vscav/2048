@@ -11,7 +11,7 @@ import { rotateLeft } from '/@/lib/matrix'
 
 export class Board {
   private readonly _probabilityManager: ProbManager
-  private _statisticsManager: StatManager
+  private readonly _statisticsManager: StatManager
   private readonly _size: number
   private readonly _deltaX = [-1, 0, 1, 0]
   private readonly _deltaY = [0, -1, 0, 1]
@@ -119,10 +119,10 @@ export class Board {
     return !canMove
   }
 
-  private addTile(value: number): Tile {
+  private addTile(value: number, fromMerge = false): Tile {
     const res = new Tile(value)
     this._tiles.push(res)
-    if (value !== 0) this._statisticsManager.add(res)
+    if (value !== 0 && fromMerge === false) this._statisticsManager.add(res)
 
     return res
   }
@@ -234,7 +234,7 @@ export class Board {
       for (let target = 0; target < this._size; ++target) {
         let targetTile: Tile = currentRow.length
           ? (currentRow.shift() as Tile)
-          : this.addTile(0)
+          : this.addTile(0, true)
 
         if (
           currentRow.length > 0 &&
@@ -248,9 +248,9 @@ export class Board {
           const tile2 = currentRow.shift() as Tile
 
           if (targetTile.type === TileType.Joker) {
-            targetTile = this.addTile(tile2.value)
+            targetTile = this.addTile(tile2.value, true)
           } else {
-            targetTile = this.addTile(targetTile.value)
+            targetTile = this.addTile(targetTile.value, true)
           }
 
           tile1.mergedInto = targetTile

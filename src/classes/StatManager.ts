@@ -13,11 +13,10 @@ export class StatManager implements IStatManager {
     this._tiles.push(t)
   }
 
-  get total(): number {
-    return this._tiles.length
-  }
-
-  public getTotalByType(t: string): number {
-    return this._tiles.filter((tile) => tile.type === t).length
+  public count(type: string, value = -1): number {
+    return this._tiles.filter(
+      (tile) =>
+        tile.type === type && (value !== -1 ? tile.value === value : value),
+    ).length
   }
 }

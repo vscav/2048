@@ -14,9 +14,8 @@ export interface IProbManager {
 }
 
 export interface IStatManager {
-  readonly total: number
   // eslint-disable-next-line no-unused-vars
-  getTotalByType(t: string): number
+  count(type: string, value: number): number
 }
 
 export interface IMoveable {
