@@ -8,6 +8,7 @@ import { Tile, TileType } from '/@/classes/Tile'
 import { ICell } from '/@/classes/interfaces'
 
 import { rotateLeft } from '/@/lib/matrix'
+import { fil } from '/@/lib/array'
 
 export class Board {
   private readonly _probabilityManager: ProbManager
@@ -228,7 +229,7 @@ export class Board {
     let totalMovePoints = 0
 
     for (let row = 0; row < this._size; ++row) {
-      const currentRow = this._cells[row].filter((tile) => tile.value !== 0)
+      const currentRow = fil((tile) => tile.value !== 0, this._cells[row])
       const resultRow: Tile[] = []
 
       for (let target = 0; target < this._size; ++target) {
@@ -295,7 +296,7 @@ export class Board {
     }
 
     for (let row = 0; row < this._size; ++row) {
-      const currentRow = this._cells[row].filter((tile) => tile.value !== 0)
+      const currentRow = fil((tile) => tile.value !== 0, this._cells[row])
 
       for (let column = 0; column < this._size; ++column) {
         if (
@@ -323,7 +324,7 @@ export class Board {
   }
 
   private clearOldTiles() {
-    this._tiles = this._tiles.filter((tile) => tile.markForDeletion === false)
+    this._tiles = fil((tile) => tile.markForDeletion === false, this._tiles)
     this._tiles.forEach((tile) => {
       tile.markForDeletion = true
     })

@@ -2,6 +2,8 @@ import { Tile } from '/@/classes/Tile'
 
 import { IStatManager } from '/@/classes/interfaces'
 
+import { fil } from '/@/lib/array'
+
 export class StatManager implements IStatManager {
   private readonly _tiles: Tile[]
 
@@ -14,9 +16,10 @@ export class StatManager implements IStatManager {
   }
 
   public count(type: string, value = -1): number {
-    return this._tiles.filter(
+    return fil(
       (tile) =>
-        tile.type === type && (value !== -1 ? tile.value === value : value),
+        tile.type === type && (value !== -1 ? tile.value === value : true),
+      this._tiles,
     ).length
   }
 }
