@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "test": "mocha -r ts-node/register 'src/lib/_tests_/**/*.spec.ts' --timeout 600000",
     "lint:script": "eslint --ext .ts,vue --ignore-path .gitignore .",
     "lint:style": "stylelint src/**/*.{css,scss,vue}"
   },
@@ -23,24 +24,29 @@
     "vue": "^3.0.4"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.18",
     "@types/chart.js": "^2.9.32",
     "@types/lodash": "^4.14.170",
+    "@types/mocha": "^8.2.2",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "@vue/compiler-sfc": "^3.0.4",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
+    "chai": "^4.3.4",
     "eslint": "^7.22.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.8.0",
     "husky": "^5.2.0",
     "lint-staged": "^10.5.4",
+    "mocha": "^8.4.0",
     "prettier": "^2.2.1",
     "sass": "^1.32.8",
     "stylelint": "^13.12.0",
     "stylelint-config-recommended-scss": "^4.2.0",
     "stylelint-config-standard-scss": "^1.1.0",
     "stylelint-scss": "^3.19.0",
+    "ts-node": "^10.0.0",
     "typescript": "^4.2.3",
     "vite": "^1.0.0-rc.13"
   }
