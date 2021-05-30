@@ -57,7 +57,7 @@ original pour l'étendre et le renouveler dans une version revisitée.
 
 \section{Règles}
 
-\tabto{1cm}Le 2048 est un jeu "puzzle block" développé par Gabriele Cirulli. C'est un jeu joué sur
+\tabto{1cm}Le 2048 est un jeu \textit{"puzzle block"} développé par Gabriele Cirulli. C'est un jeu joué sur
 une grille 4x4 avec des tuiles numérotées ${2^{n}}$ où ${n}$ représente un nombre naturel. L'objectif
 du jeu est de combiner des tuiles du même nombre pour finalement former le nombre 2048.
 
@@ -89,6 +89,54 @@ C'est ce que nous avons choisi de faire dans le cadre de notre implémentation.
 \section{Le type de tuile}
 
 \textbf{Espace d'état :} Choix du type de tuile.
+
+\chapter{Technologies}
+
+\section{Vue/TypeScript}
+
+\tabto{1cm}Nous avons décidé d'utiliser le \textit{Framework Vue} mais dans une version typée grâce au
+langage de programmation \textit{TypeScript}. Nous avons complété l'implémentation en utilisant du développement objet.
+
+\vspace{0.5cm}
+
+\tabto{1cm} \textit{Vue} (prononcé comme le terme anglais view) est un \textit{framework} évolutif pour construire des
+interfaces utilisateur. À la différence des autres \textit{frameworks} existants, \textit{Vue} a été conçu et pensé
+pour pouvoir être adopté de manière incrémentale. Le cœur de la bibliothèque se concentre uniquement
+sur la partie vue/\textit{front}, et il est vraiment simple de l’intégrer avec d’autres bibliothèques ou projets
+existants.
+
+\vspace{0.5cm}
+
+\tabto{1cm} Contrairement à \textit{JavaScript}, le code écrit en \textit{TypeScript} est beaucoup plus fiable et facilement refactorable. 
+Cela permet d'éviter les erreurs et de procéder à de la réécriture plus facilement.
+La mise en place de types permet d'éviter des erreurs classiques et redondantes dans un code JavaScript classique,
+et permet de se concentrer directement dessus afin d'éviter leur accumulation et le risque de bug majeur.
+\tabto{1cm} \textit{TypeScript} permet également de s'intéresser plus en profondeur à la manière dont le système fonctionne vraiment.
+Il permet de rendre abstrait des parties récurrentes afin de les réutiliser.
+\tabto{1cm} Néanmoins, même si on peut facilement défendre l'idée d'utiliser \textit{TypeScript} dans un projet qui s'étend dans
+le temps, il n'en est pas de même pour un projet à court terme comme le nôtre. En effet, typer correctement un projet
+demande beaucoup de temps, beaucoup de minutie et beaucoup de réflexion.
+
+\section{Librairies personnalisées}
+
+\tabto{1cm} Nous avons fait le choix de créer notre propre librairie mathématique, chargée de nous fournir facilement les distributions et lois
+dont nous avions besoin. Cela nous a permis de réaliser un couplage faible avec le reste de notre jeu, mais aussi de préparer
+l'éventualité d'une évolution de l'application avec de nouvelles probabilités. Notre jeu possède donc son propre \textit{Manager}, chargé 
+de faire les appels à la librarie.
+
+\vspace{0.5cm}
+
+\tabto{1cm} En plus des probabilités, le jeu repose également sur des transformations
+matricielles. Nous avons alors créé notre propre fonction utilitaire afin de réaliser ces transformations le plus
+simplement possible. Cette fonction est générique.
+
+\vspace{0.5cm}
+
+\tabto{1cm} Au cours d'une partie, les structures de données chargées de stocker les états relatifs au différentes cases
+(couramment en jeu ou celles déjà jouées) peuvent potentiellement atteindre des tailles importantes. Pour optimiser les recherches, 
+nous avons décidé de réécrire la fonction de filtre (\textit{Array.filter()}) sur tableaux de \textit{JavaScript}.
+Après quelques tests, notre fonction s'avère en moyenne 60\% plus rapide. Nous en avons aussi profiter pour écrire une fonction
+de filtre mais applicable à des objets. Pour cela, nous avons mis en place le principe de \textit{currying}.
 
 \chapter{Conclusion}
 
