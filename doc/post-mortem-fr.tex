@@ -1,6 +1,7 @@
 \documentclass[a4paper, 12pt]{report}
 \usepackage[french]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{tabto}
 \usepackage{graphicx}
@@ -88,11 +89,88 @@ combinaison de transformations matricielles relative à la grille. Néanmoins, i
 procéder à l'ensemble des mouvements nécessaires par un enchaînement de rotations matricielles.
 C'est ce que nous avons choisi de faire dans le cadre de notre implémentation.
 
+\chapter{Réinterprétation de l'original}
+
+\tabto{1cm}Notre reviste du jeu classique se base essentiellement sur l'intégration de nouveaux types de tuiles.
+There are multiple tile types. There is obviouslyThe classic tile from the original game, which either has a “2” or a “4” on it – each has an independent chance to appear.
+\tabto{1cm}Il y a bien évidemment la tuile classique, qui possède la valeur 2 ou 4, chacune ayant une chance indépendante d'apparaître.
+Mais nous avons intégrer trois types de tuiles supplémentaires : la tuile obstacle, mystère et bonus.
+\tabto{1cm}La tuile obstacle est associée à un nombre de mouvements. Elle ne peut en aucun cas être fusionnée avec une autre tuile et son but est donc 
+de vous bloquer dans certains cas. Elle disparaîtra seulement lorsque vous aurez effectuer le nombre de mouvements requis.
+\tabto{1cm}La tuile bonus peut se fusionner à n'importe quelle autre tuile présente sur le plateau (même un obstacle). Pour cela, elle s'adapte et adopte la valeur
+de la tuile cible.
+\tabto{1cm}La tuile mystère représente une tuile de valeur, 2, 4, 8 ou 16. Seulement, il est impossible de le déterminer car la valeur est cachée.
+Il faut la jouer et espérer tomber sur une tuile à la valeur correspondante. Rassurez-vous, la valeur finie par se révéler après un certain nombre de mouvements.
+
+\vspace{0.5cm}
+
+\tabto{1cm}.
+
 \chapter{Les composantes aléatoires utilisées}
+
+\begin{flushleft}
 
 \section{Le type de tuile}
 
-\textbf{Espace d'état :} Choix du type de tuile.
+\textbf{Espace d'état :} Type de la nouvelle tuile.\break
+\textbf{Loi choisie :} Loi géométrique.\break
+\textbf{Pourquoi :} C’est une loi n’ayant que deux issues possibles.\break
+\textbf{Paramètres :} Plus ou moins de chance de tomber sur des cellules spéciales qui peuvent aider ou bloquer le joueurs.\break
+\textbf{Comment :} On effectue un tirage aléatoire d’un nombre entre 0 et 1. Si cette valeur est inférieure à la valeur calculée par la loi géométrique, c’est un succès et la case est spéciale. 
+Sinon, c’est un échec et la case est normale.\break
+
+\begin{center}
+${p(X=k)=(1-p)^{k-1}p}$
+\end{center}
+
+\section{Le type de la tuile spéciale}
+
+\textbf{Espace d'état :} Type la tuile spéciale.\break
+\textbf{Loi choisie :} Loi uniforme.\break
+\textbf{Pourquoi :} Ici on cherche seulement à savoir quel type de tuile spéciale va apparaître sur la grille. Tous les secteurs sont de même taille et ont la même probabilité.\break
+\textbf{Paramètres :} Le jeu devient plus ou moins compliqué en fonction du type de case qui apparaît.\break
+\textbf{Comment :} La variable aléatoire suit une loi uniforme sur l'intervalle [0;3]. On effectue un tirage aléatoire d’un nombre entre 0 et 1. En fonction du tirage, une des trois cases spéciales est sélectionnée.\break
+
+\section{Valeur de la tuile classique}
+
+\textbf{Espace d'état :} Valeur de la tuile classique.\break
+\textbf{Loi choisie :} Loi de Bernoulli.\break
+\textbf{Pourquoi :} La valeur de la cellule classique n’admet que 2 issues : 2 ou 4. Si on tombe sur 2 c’est un succès, si on tombe sur 4 c’est un échec.\break
+\textbf{Paramètres :} Plus ou moins de chance de tomber sur des cellules de valeur 4, rendant le jeu plus ou moins simple pour le joueur.\break
+\textbf{Comment :} On effectue un tirage aléatoire d’un nombre entre 0 et 1.  Si ce nombre est inférieur au paramètre p, c’est un succès et la nouvelle case à pour valeur 2. 
+Sinon c’est un échec est la nouvelle case à pour valeur 4.\break
+
+\begin{center}
+${P(X = 1) = p, P(X = 0) = 1-p}$
+\end{center}
+
+
+\section{Tuile obstacle}
+
+\textbf{Espace d'état :} Nombre de mouvements avant que la tuile obstacle ne disparaisse.\break
+\textbf{Loi choisie :} Loi de Poisson.\break
+\textbf{Pourquoi :} Ici, on veut compter le nombre d'événement en ne connaissant que le nombre moyen de ceux-ci.\break
+\textbf{Paramètres :} Plus ou moins de chance que la case obstacle reste longtemps sur la grille.\break
+\textbf{Comment :} k correspond au nombre de mouvement que le joueur doit effectuer avant que la case ne disparaisse et , un paramètre modifiable par le joueur, correspond au nombre de mouvements moyen. 
+On effectue des tirages aléatoires d’un nombre entre 0 et 1.  On compte alors le nombre de tirage qu’il faut avant que le nombre tiré soit inférieur au calcul de la probabilité. Si c’est inférieur, c’est un succès et la case disparaît.\break
+
+\begin{center}
+${p(X=k)=e^{-\lambda}\frac{\lambda^k}{k!}}$
+\end{center}
+
+\section{Tuile mystère}
+
+\textbf{Espace d'état :} Nombre de mouvements avant que la tuile mystère ne soit révélée.\break
+\textbf{Loi choisie :} Loi binomial.\break
+\textbf{Pourquoi :} On réitère n fois un tirage de Bernoulli de manière indépendante.\break
+\textbf{Paramètres :} Plus ou moins de chance que la case mystère soit révélé.\break
+\textbf{Comment :} n, un paramètre modifiable par le joueur,  correspond au nombre de tirages et on fixe k à 1 car on souhaite obtenir un succès.\break
+
+\begin{center}
+${P(X=k)={n \choose k} p^k(1-p)^{n-k}}$
+\end{center}
+
+\end{flushleft}
 
 \chapter{Technologies}
 
@@ -103,7 +181,7 @@ langage de programmation \textit{TypeScript}. Nous avons complété l'implément
 
 \vspace{0.5cm}
 
-\tabto{1cm} \textit{Vue} (prononcé comme le terme anglais view) est un \textit{framework} évolutif pour construire des
+\tabto{1cm} \textit{Vue} (prononcé comme le terme anglais \textit{view}) est un \textit{framework} évolutif pour construire des
 interfaces utilisateur. À la différence des autres \textit{frameworks} existants, \textit{Vue} a été conçu et pensé
 pour pouvoir être adopté de manière incrémentale. Le cœur de la bibliothèque se concentre uniquement
 sur la partie vue/\textit{front}, et il est vraiment simple de l’intégrer avec d’autres bibliothèques ou projets
@@ -132,14 +210,14 @@ de faire les appels à la librarie.
 
 \tabto{1cm} En plus des probabilités, le jeu repose également sur des transformations
 matricielles. Nous avons alors créé notre propre fonction utilitaire afin de réaliser ces transformations le plus
-simplement possible. Cette fonction est générique.
+simplement possible. Cette fonction a été implémentée de manière générique grâce à TypeScript.
 
 \vspace{0.5cm}
 
-\tabto{1cm} Au cours d'une partie, les structures de données chargées de stocker les états relatifs au différentes tuiles
+\tabto{1cm} Enfin, au cours d'une partie, les structures de données chargées de stocker les états relatifs au différentes tuiles
 (couramment en jeu ou celles déjà jouées) peuvent potentiellement atteindre des tailles importantes. Pour optimiser les recherches, 
-nous avons décidé de réécrire la fonction de filtre (\textit{Array.filter()}) sur tableaux de \textit{JavaScript}.
-Après quelques tests, notre fonction s'avère en moyenne 60\% plus rapide. Nous en avons aussi profiter pour écrire une fonction
+nous avons décidé de réinterpréter la fonction de filtre (\textit{Array.filter()}) sur tableaux de \textit{JavaScript}.
+Après quelques tests, notre implémentation s'avère en moyenne 60\% plus rapide. Nous en avons aussi profiter pour écrire une fonction
 de filtre mais applicable à des objets. Pour cela, nous avons mis en place le principe de \textit{currying}.
 
 \chapter{Conclusion}
