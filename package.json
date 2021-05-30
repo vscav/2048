@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "test": "mocha -r ts-node/register 'src/lib/_tests_/**/*.spec.ts' --timeout 600000",
+    "test": "mocha -r ts-node/register 'src/lib/_tests_/**/*.ts' --timeout 600000",
     "lint:script": "eslint --ext .ts,vue --ignore-path .gitignore .",
     "lint:style": "stylelint src/**/*.{css,scss,vue}"
   },
