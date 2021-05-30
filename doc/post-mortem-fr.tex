@@ -1,4 +1,6 @@
-\documentclass[12pt]{report}
+\documentclass[a4paper, 12pt]{report}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{tabto}
 \usepackage{graphicx}
@@ -40,6 +42,8 @@ Miguel \textsc{Martinez}
 \begin{abstract}
 Rapport de projet documentant la réflexion et les choix d'implémentation réalisés dans le cadre de la conception d'une version revisitée du jeu 2048, utilisant des lois de probabilités mathématiques. 
 \end{abstract}
+
+\tableofcontents
 
 \chapter{Introduction}
 
@@ -132,7 +136,7 @@ simplement possible. Cette fonction est générique.
 
 \vspace{0.5cm}
 
-\tabto{1cm} Au cours d'une partie, les structures de données chargées de stocker les états relatifs au différentes cases
+\tabto{1cm} Au cours d'une partie, les structures de données chargées de stocker les états relatifs au différentes tuiles
 (couramment en jeu ou celles déjà jouées) peuvent potentiellement atteindre des tailles importantes. Pour optimiser les recherches, 
 nous avons décidé de réécrire la fonction de filtre (\textit{Array.filter()}) sur tableaux de \textit{JavaScript}.
 Après quelques tests, notre fonction s'avère en moyenne 60\% plus rapide. Nous en avons aussi profiter pour écrire une fonction
