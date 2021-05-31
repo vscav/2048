@@ -124,7 +124,7 @@ export class ProbManager implements IProbManager {
 
   simulatePoisson(): number {
     const poisson = this._probability.poisson(this._lambda)
-    return this.computeExperiences(poisson)
+    return poisson.random()
   }
 
   simulateUniform(): number {

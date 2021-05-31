@@ -1,4 +1,4 @@
-import { combination } from '/@/lib/probability/utils'
+import { combination } from './utils'
 
 export class Probability {
   private _rng01: () => number
@@ -32,7 +32,6 @@ export class Probability {
     return new GeometricDistribution(this._rng01, k, p)
   }
 
-  // lambda: 1 to 15 (range of 1)
   poisson(lambda = 1): PoissonDistribution {
     return new PoissonDistribution(this._rng01, lambda)
   }
@@ -51,6 +50,10 @@ export enum DistributionType {
 /* eslint-enable no-unused-vars */
 
 export interface IDistribution {
+  min: number
+  max: number
+  mean: number
+  variance: number
   type: DistributionType
 
   random(): number
@@ -58,13 +61,37 @@ export interface IDistribution {
 
 export class BernouilliDistribution implements IDistribution {
   private _rng01: () => number
+  private _min: number
+  private _max: number
+  private _mean: number
+  private _variance: number
   private _type: DistributionType
   private _p: number
 
   constructor(rng01: () => number, p: number) {
     this._rng01 = rng01
+    this._min = 0
+    this._max = Number.POSITIVE_INFINITY
     this._type = DistributionType.Discrete
     this._p = p
+    this._mean = this._p
+    this._variance = this._p * (1 - this._p)
+  }
+
+  get min(): number {
+    return this._min
+  }
+
+  get max(): number {
+    return this._max
+  }
+
+  get mean(): number {
+    return this._mean
+  }
+
+  get variance(): number {
+    return this._variance
   }
 
   get type(): DistributionType {
@@ -83,6 +110,10 @@ export class BernouilliDistribution implements IDistribution {
 
 export class BinomialDistribution implements IDistribution {
   private _rng01: () => number
+  private _min: number
+  private _max: number
+  private _mean: number
+  private _variance: number
   private _type: DistributionType
   private _n: number
   private _p: number
@@ -90,10 +121,29 @@ export class BinomialDistribution implements IDistribution {
 
   constructor(rng01: () => number, n: number, p: number, k: number) {
     this._rng01 = rng01
+    this._min = 0
+    this._max = Number.POSITIVE_INFINITY
     this._type = DistributionType.Discrete
     this._n = n
     this._p = p
     this._k = k
+    this._mean = this._n * this._p
+    this._variance = this._n * this._p * (1 - this._p)
+  }
+  get min(): number {
+    return this._min
+  }
+
+  get max(): number {
+    return this._max
+  }
+
+  get mean(): number {
+    return this._mean
+  }
+
+  get variance(): number {
+    return this._variance
   }
 
   get type(): DistributionType {
@@ -111,15 +161,38 @@ export class BinomialDistribution implements IDistribution {
 
 export class GeometricDistribution implements IDistribution {
   private _rng01: () => number
+  private _min: number
+  private _max: number
+  private _mean: number
+  private _variance: number
   private _type: DistributionType
   private _k: number
   private _p: number
 
   constructor(rng01: () => number, k: number, p: number) {
     this._rng01 = rng01
+    this._min = 0
+    this._max = Number.POSITIVE_INFINITY
     this._type = DistributionType.Discrete
     this._k = k
     this._p = p
+    this._mean = (1 - this._p) / this._p
+    this._variance = (1 - this._p) / Math.pow(this._p, 2)
+  }
+  get min(): number {
+    return this._min
+  }
+
+  get max(): number {
+    return this._max
+  }
+
+  get mean(): number {
+    return this._mean
+  }
+
+  get variance(): number {
+    return this._variance
   }
 
   get type(): DistributionType {
@@ -133,13 +206,39 @@ export class GeometricDistribution implements IDistribution {
 
 export class PoissonDistribution implements IDistribution {
   private _rng01: () => number
+  private _min: number
+  private _max: number
+  private _mean: number
+  private _variance: number
   private _type: DistributionType
   private _lambda: number
+  private _L: number
 
   constructor(rng01: () => number, lambda: number) {
     this._rng01 = rng01
+    this._min = 0
+    this._max = Number.POSITIVE_INFINITY
+    this._mean = lambda
+    this._variance = lambda
     this._type = DistributionType.Discrete
     this._lambda = lambda
+    this._L = Math.exp(-lambda)
+  }
+
+  get min(): number {
+    return this._min
+  }
+
+  get max(): number {
+    return this._max
+  }
+
+  get mean(): number {
+    return this._mean
+  }
+
+  get variance(): number {
+    return this._variance
   }
 
   get type(): DistributionType {
@@ -147,7 +246,17 @@ export class PoissonDistribution implements IDistribution {
   }
 
   random(): number {
-    return Math.exp(-this._lambda)
+    let k = 0
+    let p = 1
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      p = p * this._rng01()
+      if (p <= this._L) {
+        break
+      }
+      k++
+    }
+    return k
   }
 }
 
@@ -156,6 +265,8 @@ export class UniformDistribution implements IDistribution {
   private _min: number
   private _max: number
   private _range: number
+  private _mean: number
+  private _variance: number
   private _type: DistributionType
 
   constructor(rng01: () => number, min: number, max: number) {
@@ -163,6 +274,8 @@ export class UniformDistribution implements IDistribution {
     this._min = min
     this._max = max
     this._range = max - min
+    this._mean = min + this._range / 2
+    this._variance = ((max - min) * (max - min)) / 12
     this._type = DistributionType.Continuous
   }
 
@@ -172,6 +285,14 @@ export class UniformDistribution implements IDistribution {
 
   get max(): number {
     return this._max
+  }
+
+  get mean(): number {
+    return this._mean
+  }
+
+  get variance(): number {
+    return this._variance
   }
 
   get type(): DistributionType {
