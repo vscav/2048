@@ -106,7 +106,7 @@
           min: 0,
           max: 1,
           step: 0.01,
-          description: "Poisson's average number of successes",
+          description: "Bernouilli's probability",
           onchange: (payload: IRSliderPayload) => {
             board.value.updateBernouilliProbability(payload.value)
           },
@@ -130,7 +130,7 @@
             return board.value.probabilityManager.k
           }),
           min: 1,
-          max: 50,
+          max: 20,
           step: 1,
           description: "Geometric's number of experiences",
           onchange: (payload: IRSliderPayload) => {

@@ -26,9 +26,9 @@ export class ProbManager implements IProbManager {
     this._probability = new Probability()
     this._min = min
     this._max = max
-    this._p = 0.9
+    this._p = 0.75
     this._n = 10
-    this._k = 5
+    this._k = 2
     this._lambda = 10
   }
 
@@ -47,11 +47,11 @@ export class ProbManager implements IProbManager {
   }
 
   public get tileTwoProbability(): number {
-    return 100 * (1 - 0.2) * this._p
+    return 100 * (1 - this.simulateGeometric(true)) * this._p
   }
 
   public get tileFourProbability(): number {
-    return 100 * (1 - 0.2) * (1 - this._p)
+    return 100 * (1 - this.simulateGeometric(true)) * (1 - this._p)
   }
 
   public get classicTileProbability(): number {
@@ -59,15 +59,15 @@ export class ProbManager implements IProbManager {
   }
 
   public get jokerTileProbability(): number {
-    return 100 * 0.2 * (1 / 3)
+    return 100 * this.simulateGeometric(true) * (1 / 3)
   }
 
   public get secretTileProbability(): number {
-    return 100 * 0.2 * (1 / 3)
+    return 100 * this.simulateGeometric(true) * (1 / 3)
   }
 
   public get obstacleTileProbability(): number {
-    return 100 * 0.2 * (1 / 3)
+    return 100 * this.simulateGeometric(true) * (1 / 3)
   }
 
   public get p(): number {
@@ -112,8 +112,10 @@ export class ProbManager implements IProbManager {
     return this.computeExperiences(binomial)
   }
 
-  simulateGeometric(): number {
-    const geometric = this._probability.geometric(this._k, 0.2)
+  simulateGeometric(original = false): number {
+    const geometric = this._probability.geometric(this._k, 0.25)
+
+    if (original) return geometric.random()
     let t = 1
     t = t * this._probability.rng01()
     if (t < geometric.random()) {
