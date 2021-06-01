@@ -5,6 +5,7 @@
     "dev": "vite",
     "build": "vite build",
     "test": "mocha -r ts-node/register 'src/lib/_tests_/**/*.ts' --timeout 600000",
+    "deploy": "sh deploy.sh",
     "lint:script": "eslint --ext .ts,vue --ignore-path .gitignore .",
     "lint:style": "stylelint src/**/*.{css,scss,vue}"
   },

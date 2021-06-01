@@ -2,7 +2,8 @@ import { join } from 'path'
 import type { UserConfig } from 'vite'
 
 const config: UserConfig = {
-  base: process.env.NODE_ENV === 'production' ? '/2048/' : '/',
+  base: '/2048/',
+  assetsDir: 'assets',
   alias: {
     '/@/': join(__dirname, 'src'),
   },
