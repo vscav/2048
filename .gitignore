@@ -15,10 +15,10 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Doc files
-doc/*.aux
-doc/*.fdb_latexmk
-doc/*.fls
-doc/*.log
-doc/*.out
-doc/*.toc
-doc/*.synctex.gz
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+*.synctex.gz

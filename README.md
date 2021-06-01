@@ -1,14 +1,16 @@
 # 2048
 
-A 2048 revisited game, using laws of mathematical probabilities distribution.
+<p align="center">A 2048 revisited/extended game, using laws of mathematical probabilities distribution.</p>
 
-## Usage
+<p align="center"><img src="misc/preview/interface.png" width="80%"></p>
 
-Once you cloned the project, run `yarn install` to install all the dependencies of the project. Afterwards, you just have to run `yarn dev` to launch the development server. The project using [Vite](https://vitejs.dev/guide/why.html), the development server provides rich feature enhancements over native ES modules, for example extremely fast Hot Module Replacement (HMR).
+## Set up
+
+Once you cloned the project, run `yarn install` to install all the dependencies of the project. Afterwards, you just have to run `yarn dev` to launch the development server. Using [Vite](https://vitejs.dev/guide/why.html), the project and its development server provides rich feature enhancements over native ES modules, for example extremely fast Hot Module Replacement (HMR).
 
 ## Game rules
 
-A game of 2048 is played on a 4×4 board. Each position on the board may be empty or may contain a tile, and each tile will have a number on it. In our version, the tile may be a special tile.
+A game of 2048 is played on a 4×4 board. Each position on the board may be empty or may contain a tile, and each tile will have a number on it. In this version, the tile may be a special tile.
 
 When we start, the board will have two tiles in random locations.
 
