@@ -9,9 +9,26 @@ export enum TileType {
 }
 /* eslint-enable no-unused-vars */
 
+export type TileValue =
+  | 0
+  | 2
+  | 4
+  | 8
+  | 16
+  | 32
+  | 64
+  | 128
+  | 256
+  | 512
+  | 1024
+  | 2048
+
+/**
+ * Class representing a tile of the game board.
+ */
 export class Tile implements IMoveable {
   private _type: TileType
-  private _value: number
+  private _value: TileValue
   private _row: number
   private _column: number
   private _oldRow: number
@@ -21,16 +38,12 @@ export class Tile implements IMoveable {
   private _id: number
   private static _count = 0
 
-  constructor(value: number, row = -1, column = -1, type = TileType.Classic) {
-    if (value < 0) {
-      throw new Error(`Tile value (as number) must be >= 0 (but was ${value})`)
-    }
-    if ((value & (value - 1)) !== 0 && value !== 1) {
-      throw new Error(
-        `Tile value (as number) must be in the binary sequence [0, (1), 2, 4, 8, 16, 32, 64, ...] (but was ${value})`,
-      )
-    }
-
+  constructor(
+    value: TileValue,
+    row = -1,
+    column = -1,
+    type = TileType.Classic,
+  ) {
     this._type = type
     this._value = value
     this._row = row
@@ -42,11 +55,11 @@ export class Tile implements IMoveable {
     this._id = ++Tile._count
   }
 
-  public get value(): number {
+  public get value(): TileValue {
     return this._value
   }
 
-  public set value(newValue: number) {
+  public set value(newValue: TileValue) {
     this._value = newValue
   }
 

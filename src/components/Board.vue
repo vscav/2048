@@ -22,7 +22,7 @@
     toRefs,
   } from 'vue'
 
-  import { Board } from '/@/classes/Board'
+  import { Board, MovementDirection } from '/@/classes/Board'
 
   import Cell from '/@/components/Cell.vue'
   import GameEndOverlay from '/@/components/GameEndOverlay.vue'
@@ -58,7 +58,7 @@
           return
         }
 
-        let direction: number
+        let direction: MovementDirection
         switch (event.key) {
           case 'ArrowLeft':
             direction = 0
