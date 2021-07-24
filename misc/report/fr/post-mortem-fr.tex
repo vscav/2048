@@ -204,7 +204,7 @@ de pouvoir s'assurer que cela correspond bien aux probabilités promises.
 \begin{figure}[!t]
 \centering
 \includegraphics[width=0.4\textwidth]{../images/2048-revisited-version-controls.jpg}
-\caption{Control de certains paramètres via des sliders}
+\caption{Contrôle de certains paramètres via des sliders}
 \label{Controls}
 \end{figure}
 
@@ -261,7 +261,7 @@ simplement possible. Cette fonction a été implémentée de manière génériqu
 (couramment en jeu ou celles déjà jouées) peuvent potentiellement atteindre des tailles importantes. Pour optimiser les recherches, 
 nous avons décidé de réinterpréter la fonction de filtre (\textit{Array.filter()}) sur tableaux de \textit{JavaScript}.
 Après quelques tests, notre implémentation s'avère en moyenne 60\% plus rapide. Nous en avons aussi profiter pour écrire une fonction
-de filtre mais applicable à des objets. Pour cela, nous avons mis en place le principe de \textit{currying}.
+de filtre mais applicable à des objets. Pour cela, nous avons mis en place le principe de \textit{currying} (composition de fonction).
 
 \vspace{0.5cm}
 
@@ -269,7 +269,7 @@ de filtre mais applicable à des objets. Pour cela, nous avons mis en place le p
 Ces tests sont notamment primordiaux sur les retours des méthodes des lois de distribution. Ainsi nous avons pu mettre en place des tests pour
 vérifier que les résultats retournés par nos lois uniformes, nos lois de Poisson et nos lois de Bernouilli étaient corrects. Pour cela, nous
 vérifions que la valeur de retour est bien supérieure au minimum attendu et inférieure au maximum attendu, mais nous vérifions également que la 
-médiane et la variance sont bien proches de celles attendues (avec un degré d'erreur calculé en fonction du nombre d'essais, fixés à 1 million pour les tests).
+médiane et la variance sont bien proches de celles attendues (avec un degré d'erreur calculé en fonction du nombre d'essais, fixés à un million pour les tests).
 
 \chapter{Conclusion}
 
