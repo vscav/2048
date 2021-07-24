@@ -32,7 +32,7 @@
 
   interface IActionsPanel {
     applicationName: string
-    repoUrl: string
+    repositoryUrl: string
     readonly applicationLink: string
   }
 
@@ -60,9 +60,9 @@
 
       const data: IActionsPanel = reactive({
         applicationName: import.meta.env.VITE_APP_NAME,
-        repoUrl: import.meta.env.VITE_APP_GIT_URL,
+        repositoryUrl: import.meta.env.VITE_APP_GIT_URL,
         get applicationLink() {
-          return `${this.repoUrl}/${this.applicationName}`
+          return `${this.repositoryUrl}/${this.applicationName}`
         },
       })
 

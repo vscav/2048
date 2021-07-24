@@ -11,14 +11,14 @@ import { rotateLeft } from '/@/lib/matrix'
 import { fil } from '/@/lib/array'
 
 export class Board {
-  private readonly _probabilityManager: ProbManager
+  private readonly _probabilityManager = ProbManager.getInstance()
   private readonly _statisticsManager: StatManager
   private readonly _size: number
   private readonly _deltaX = [-1, 0, 1, 0]
   private readonly _deltaY = [0, -1, 0, 1]
   private _tiles: Tile[]
   private _cells: Tile[][]
-  private _won: boolean
+  private _won = false
   private _score = 0
   private _lastScore = {
     points: 0,
@@ -29,7 +29,6 @@ export class Board {
     if (size <= 0) {
       throw new Error(`Board size must be >= 0 (but was ${size})`)
     }
-    this._probabilityManager = new ProbManager()
     this._statisticsManager = new StatManager()
     this._size = size
     this._tiles = []
@@ -43,7 +42,6 @@ export class Board {
     this.addRandomTile()
     this.addRandomTile()
     this.setPositions()
-    this._won = false
   }
 
   public updateBernouilliProbability(p: number): void {

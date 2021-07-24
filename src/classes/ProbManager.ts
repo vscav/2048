@@ -3,15 +3,16 @@ import { IProbManager } from '/@/classes/interfaces'
 import { IDistribution, Probability } from '/@/lib/probability'
 
 export class ProbManager implements IProbManager {
+  private static _instance: ProbManager
   private _probability: Probability
   private _min: number
   private _max: number
-  private _lambda: number
-  private _p: number
-  private _n: number
-  private _k: number
+  private _lambda = 10
+  private _p = 0.75
+  private _n = 10
+  private _k = 2
 
-  constructor(min = 0, max = 1) {
+  private constructor(min = 0, max = 1) {
     if (min < 0) {
       throw new Error(`Minimal range value must be >= 0 (but was ${min})`)
     }
@@ -26,10 +27,14 @@ export class ProbManager implements IProbManager {
     this._probability = new Probability()
     this._min = min
     this._max = max
-    this._p = 0.75
-    this._n = 10
-    this._k = 2
-    this._lambda = 10
+  }
+
+  public static getInstance(): ProbManager {
+    if (!ProbManager._instance) {
+      ProbManager._instance = new ProbManager()
+    }
+
+    return ProbManager._instance
   }
 
   private computeExperiences(dist: IDistribution): number {
