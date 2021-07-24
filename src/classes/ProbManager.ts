@@ -2,6 +2,9 @@ import { IProbManager } from '/@/classes/interfaces'
 
 import { IDistribution, Probability } from '/@/lib/probability'
 
+/**
+ * Class representing a game probability manager.
+ */
 export class ProbManager implements IProbManager {
   private static _instance: ProbManager
   private _probability: Probability
@@ -12,6 +15,9 @@ export class ProbManager implements IProbManager {
   private _n = 10
   private _k = 2
 
+  /**
+   * Create a game probabillity manager.
+   */
   private constructor(min = 0, max = 1) {
     if (min < 0) {
       throw new Error(`Minimal range value must be >= 0 (but was ${min})`)
@@ -29,6 +35,11 @@ export class ProbManager implements IProbManager {
     this._max = max
   }
 
+  /**
+   * Get the instance of the probability manager.
+   * @alias ProbManager.getInstance
+   * @return {ProbManager} The instance of the probability manager.
+   */
   public static getInstance(): ProbManager {
     if (!ProbManager._instance) {
       ProbManager._instance = new ProbManager()
@@ -37,6 +48,11 @@ export class ProbManager implements IProbManager {
     return ProbManager._instance
   }
 
+  /**
+   * Process and count the number of experieces needed before the realization of the probability.
+   * @param {IDistribution} dist The probability distributio used for these experiences.
+   * @return {number} The number of experiences that have been processed.
+   */
   private computeExperiences(dist: IDistribution): number {
     let k = 0
     let p = 1
@@ -51,26 +67,50 @@ export class ProbManager implements IProbManager {
     return k
   }
 
+  /**
+   * Get the probability of having a tile with the value 2.
+   * @return {number} The probability of having a tile with the value 2.
+   */
   public get tileTwoProbability(): number {
     return 100 * (1 - this.simulateGeometric(true)) * this._p
   }
 
+  /**
+   * Get the probability of having a tile with the value 4.
+   * @return {number} The probability of having a tile with the value 4.
+   */
   public get tileFourProbability(): number {
     return 100 * (1 - this.simulateGeometric(true)) * (1 - this._p)
   }
 
+  /**
+   * Get the probability of having a classic tile.
+   * @return {number} The probability of having a classic tile.
+   */
   public get classicTileProbability(): number {
     return this.tileTwoProbability + this.tileFourProbability
   }
 
+  /**
+   * Get the probability of having a joker tile.
+   * @return {number} The probability of having a joker tile.
+   */
   public get jokerTileProbability(): number {
     return 100 * this.simulateGeometric(true) * (1 / 3)
   }
 
+  /**
+   * Get the probability of having a secret tile.
+   * @return {number} The probability of having a secret tile.
+   */
   public get secretTileProbability(): number {
     return 100 * this.simulateGeometric(true) * (1 / 3)
   }
 
+  /**
+   * Get the probability of having an obstacle tile.
+   * @return {number} The probability of having an obstacle tile.
+   */
   public get obstacleTileProbability(): number {
     return 100 * this.simulateGeometric(true) * (1 / 3)
   }

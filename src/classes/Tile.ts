@@ -207,28 +207,46 @@ export class Tile implements IMoveable {
     return this._oldRow === -1 && !this._mergedInto
   }
 
+  /**
+   * Get the row index previous to the movement.
+   * @return {number} The row index previous to the movement.
+   */
   public fromRow(): number {
     return this._mergedInto ? this._row : this._oldRow
   }
 
+  /**
+   * Get the column index previous to the movement.
+   * @return {number} The column index previous to the movement.
+   */
   public fromColumn(): number {
     return this._mergedInto ? this._column : this._oldColumn
   }
 
+  /**
+   * Get the row index following the movement.
+   * @return {number} The row index following the movement.
+   */
   public toRow(): number {
     return this._mergedInto ? this._mergedInto._row : this._row
   }
 
+  /**
+   * Get the column index following the movement.
+   * @return {number} The column index following the movement.
+   */
   public toColumn(): number {
     return this._mergedInto ? this._mergedInto._column : this._column
   }
 
-  public hasMoved(): boolean | Tile | null {
-    return (
-      (this.fromRow() != -1 &&
-        (this.fromRow() != this.toRow() ||
-          this.fromColumn() != this.toColumn())) ||
-      this._mergedInto
-    )
+  /**
+   * Indicate whether the tile has been moved due to the last game movement or not.
+   * @return {boolean | Tile | null} A boolean to indicate whether the tile has been moved due to the last game movement or not.
+   */
+  public hasMoved(): boolean {
+    return ((this.fromRow() != -1 &&
+      (this.fromRow() != this.toRow() ||
+        this.fromColumn() != this.toColumn())) ||
+      this._mergedInto) as boolean
   }
 }
