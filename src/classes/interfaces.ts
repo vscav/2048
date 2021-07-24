@@ -1,4 +1,4 @@
-import { Tile } from '/@/classes/Tile'
+import { Tile, TileType, TileValue } from '/@/classes/Tile'
 
 export interface ICell {
   row: number
@@ -15,7 +15,7 @@ export interface IProbManager {
 
 export interface IStatManager {
   // eslint-disable-next-line no-unused-vars
-  count(type: string, value: number): number
+  count(type: TileType, value: TileValue): number
 }
 
 export interface IMoveable {

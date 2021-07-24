@@ -31,7 +31,7 @@ export class Board {
   }
 
   /**
-   * Create a the game squared board.
+   * Create a game squared board.
    * @param {number} [size = 4] - The size of the squared board.
    */
   constructor(size = 4) {
@@ -182,7 +182,7 @@ export class Board {
   /**
    * Add a new (classic) tile on the game board.
    * @param {TileValue} value - The value of the tile (the number which displayed on it).
-   * @param {boolean} fromMerge - A boolean to indicate if the tile was created following a merge between two other tiles or not.
+   * @param {boolean} [fromMerge = false] - A boolean to indicate if the tile was created following a merge between two other tiles or not.
    * @return {Tile} The (classic) tile newly created.
    */
   private addTile(value: TileValue, fromMerge = false): Tile {

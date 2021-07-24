@@ -79,7 +79,7 @@
   import AccordionItem from '/@/components/AccordionItem.vue'
 
   import { Board } from '/@/classes/Board'
-  import { TileType } from '/@/classes/Tile'
+  import { TileType, TileValue } from '/@/classes/Tile'
 
   export default defineComponent({
     name: 'Statistics',
@@ -101,10 +101,10 @@
         board.value.statisticsManager.count(TileType.Classic),
       )
       const totalClassicTwo = computed(() =>
-        board.value.statisticsManager.count(TileType.Classic, 2),
+        board.value.statisticsManager.count(TileType.Classic, 2 as TileValue),
       )
       const totalClassicFour = computed(() =>
-        board.value.statisticsManager.count(TileType.Classic, 4),
+        board.value.statisticsManager.count(TileType.Classic, 4 as TileValue),
       )
       const totalJoker = computed(() =>
         board.value.statisticsManager.count(TileType.Joker),
@@ -116,16 +116,16 @@
         board.value.statisticsManager.count(TileType.Secret),
       )
       const totalSecretTwo = computed(() =>
-        board.value.statisticsManager.count(TileType.Secret, 2),
+        board.value.statisticsManager.count(TileType.Secret, 2 as TileValue),
       )
       const totalSecretFour = computed(() =>
-        board.value.statisticsManager.count(TileType.Secret, 4),
+        board.value.statisticsManager.count(TileType.Secret, 4 as TileValue),
       )
       const totalSecretEight = computed(() =>
-        board.value.statisticsManager.count(TileType.Secret, 8),
+        board.value.statisticsManager.count(TileType.Secret, 8 as TileValue),
       )
       const totalSecretSixteen = computed(() =>
-        board.value.statisticsManager.count(TileType.Secret, 16),
+        board.value.statisticsManager.count(TileType.Secret, 16 as TileValue),
       )
       return {
         totalClassic,
