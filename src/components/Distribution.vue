@@ -19,7 +19,7 @@
     toRefs,
     watch,
   } from 'vue'
-  import { Chart, ChartConfiguration, registerables } from 'chart.js'
+  import { Chart, ChartConfiguration, ChartData, registerables } from 'chart.js'
 
   import _ from 'lodash'
 
@@ -81,11 +81,11 @@
         })
       })
 
-      const createChart = (chartData: unknown) => {
+      const createChart = (data: ChartData) => {
         const context = document.getElementById('chart') as HTMLCanvasElement
         const opts = {
           type: type.value,
-          data: chartData,
+          data,
           options: options.value,
         } as ChartConfiguration
         chart.value = new Chart(context, opts)
