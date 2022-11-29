@@ -12,8 +12,10 @@ describe('Array operations', () => {
     ])
     expect(fil((e) => e === 'foo', [])).to.deep.eq([])
   })
-  const obj: { [key: string]: number }[] = [{ n: 15 }, { n: 2, m: 15 }]
+
   it('has correct object filter', () => {
+    const obj: Record<string, number>[] = [{ n: 15 }, { n: 2, m: 15 }]
+
     expect(
       filterObjs((o: { [key: string]: number }) => o.n === 15)(obj),
     ).to.deep.eq([{ n: 15 }])

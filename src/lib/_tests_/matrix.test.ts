@@ -9,13 +9,16 @@ describe('Matrix operation', () => {
     [9, 10, 11, 12],
     [13, 14, 15, 16],
   ]
+
   const stringMatrix44: string[][] = [
     ['a', 'b', 'c', 'd'],
     ['e', 'f', 'g', 'h'],
     ['i', 'j', 'k', 'l'],
     ['m', 'n', 'o', 'p'],
   ]
+
   const empty: number[][] = [[], [], [], []]
+
   it('has correct rotateLeft transform on a 4 by 4 generic matrix', () => {
     expect(rotateLeft(numberMatrix44)).to.deep.eq([
       [4, 8, 12, 16],
@@ -30,6 +33,7 @@ describe('Matrix operation', () => {
       ['a', 'e', 'i', 'm'],
     ])
   })
+
   it('has correct rotateLeft transform on a 2D empty matrix', () => {
     expect(rotateLeft(empty)).to.deep.eq([[], [], [], []])
   })
