@@ -1,6 +1,6 @@
 <template>
   <teleport to="#app">
-    <div class="sidebar">
+    <div ref="sidebar" class="sidebar">
       <div v-if="isOpen" class="sidebar-backdrop"></div>
       <transition name="slide">
         <div v-if="isOpen" class="sidebar-panel">
@@ -32,11 +32,12 @@
       const sidebar = ref<HTMLDivElement | null>(null)
 
       useClickOutside(sidebar, () => {
-        isOpen.value = false
+        if (isOpen.value) isOpen.value = false
       })
 
       return {
         isOpen,
+        sidebar,
         toggle,
       }
     },
