@@ -176,7 +176,7 @@ input[type='range']:focus::-ms-fill-lower {
   font-size: 0.85rem;
   background-color: $button;
   color: $text-light;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
   padding: 0.25em 0.75em;
   min-width: 13.75ch;
@@ -362,7 +362,7 @@ input[type='range']:focus::-ms-fill-lower {
     font-size: 1.85rem;
   }
 
-  & > span {
+  &>span {
     position: absolute;
     top: 0;
     right: 0;
@@ -841,16 +841,19 @@ input[type='range']:focus::-ms-fill-lower {
     }
   }
 }
+
 /* stylelint-disable */
 @for $fromRow from 0 through 3 {
   @for $toRow from 0 through 3 {
     $name: row_from_#{$fromRow}_to_#{$toRow};
 
-    @if $fromRow == $toRow {
+    @if $fromRow==$toRow {
       .#{$name} {
         top: 110px * $toRow + 5px;
       }
-    } @else {
+    }
+
+    @else {
       .#{$name} {
         animation-duration: 0.2s;
         animation-name: $name;
@@ -874,11 +877,13 @@ input[type='range']:focus::-ms-fill-lower {
   @for $toColumn from 0 through 3 {
     $name: column_from_#{$fromColumn}_to_#{$toColumn};
 
-    @if $fromColumn == $toColumn {
+    @if $fromColumn==$toColumn {
       .#{$name} {
         left: 110px * $toColumn + 5px;
       }
-    } @else {
+    }
+
+    @else {
       .#{$name} {
         animation-duration: 0.2s;
         animation-name: $name;
@@ -897,4 +902,5 @@ input[type='range']:focus::-ms-fill-lower {
     }
   }
 }
+
 /* stylelint-enable */
