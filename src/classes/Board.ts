@@ -13,7 +13,7 @@ import { rotateLeft } from '/@/lib/matrix'
 export type MovementDirection = 0 | 1 | 2 | 3
 
 /**
- * Class representing the game board and its logic.
+ * Class representing the game board and encapsulating its logic.
  */
 export class Board {
   private readonly _probabilityManager = ProbManager.getInstance()
