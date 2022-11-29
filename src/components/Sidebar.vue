@@ -20,14 +20,20 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
+  import { defineComponent, ref } from 'vue'
 
+  import { useClickOutside } from '/@/composables/useClickOutside'
   import { useToggleControls } from '/@/composables/useToggleControls'
 
   export default defineComponent({
     name: 'Sidebar',
     setup() {
       const { isOpen, toggle } = useToggleControls()
+      const sidebar = ref<HTMLDivElement | null>(null)
+
+      useClickOutside(sidebar, () => {
+        isOpen.value = false
+      })
 
       return {
         isOpen,

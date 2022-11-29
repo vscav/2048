@@ -26,6 +26,7 @@
 <script lang="ts">
   import { defineComponent, ref } from 'vue'
 
+  import { useClickOutside } from '/@/composables/useClickOutside'
   import { useToggleDialog } from '/@/composables/useToggleDialog'
 
   export default defineComponent({
@@ -33,6 +34,11 @@
     setup() {
       const { isOpen, toggle } = useToggleDialog()
       const modal = ref<HTMLDivElement | null>(null)
+
+      useClickOutside(modal, () => {
+        if (isOpen.value) isOpen.value = false
+      })
+
       return {
         isOpen,
         modal,
