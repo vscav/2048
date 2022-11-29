@@ -7,8 +7,8 @@ import { Tile, TileType, TileValue } from '/@/classes/Tile'
 
 import { ICell } from '/@/classes/interfaces'
 
-import { rotateLeft } from '/@/lib/matrix'
 import { fil } from '/@/lib/array'
+import { rotateLeft } from '/@/lib/matrix'
 
 export type MovementDirection = 0 | 1 | 2 | 3
 
