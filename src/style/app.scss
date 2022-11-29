@@ -499,55 +499,55 @@ input[type='range']:focus::-ms-fill-lower {
   }
 }
 
-.tile0 {
+.tile-0 {
   background-color: $tile-0-bg;
 }
 
-.tile2 {
+.tile-2 {
   background-color: $tile-2-bg;
 }
 
-.tile4 {
+.tile-4 {
   background-color: $tile-4-bg;
 }
 
-.tile8 {
+.tile-8 {
   background-color: $tile-8-bg;
 }
 
-.tile16 {
+.tile-16 {
   background-color: $tile-16-bg;
 }
 
-.tile32 {
+.tile-32 {
   background-color: $tile-32-bg;
 }
 
-.tile64 {
+.tile-64 {
   background-color: $tile-64-bg;
 }
 
-.tile128 {
+.tile-128 {
   background-color: $tile-128-bg;
   font-size: 45px;
 }
 
-.tile256 {
+.tile-256 {
   background-color: $tile-256-bg;
   font-size: 45px;
 }
 
-.tile512 {
+.tile-512 {
   background-color: $tile-512-bg;
   font-size: 45px;
 }
 
-.tile1024 {
+.tile-1024 {
   background-color: $tile-1024-bg;
   font-size: 35px;
 }
 
-.tile2048 {
+.tile-2048 {
   background-color: $tile-2048-bg;
   font-size: 35px;
 }
@@ -843,6 +843,7 @@ input[type='range']:focus::-ms-fill-lower {
 }
 
 /* stylelint-disable */
+
 @for $fromRow from 0 through 3 {
   @for $toRow from 0 through 3 {
     $name: row_from_#{$fromRow}_to_#{$toRow};

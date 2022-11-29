@@ -22,7 +22,7 @@
         const classesArray = ['tile']
 
         if (tile.value.type === TileType.Classic)
-          classesArray.push('tile' + tile.value.value)
+          classesArray.push('tile-' + tile.value.value)
         else {
           classesArray.push('tile-special', 'tile-' + tile.value.type)
         }
