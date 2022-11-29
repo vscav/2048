@@ -25,7 +25,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: $text-dark;
+  color: $text-darker;
   height: 100%;
   width: 100%;
   display: flex;
@@ -52,7 +52,7 @@ input[type='range'] {
 }
 
 input[type='range']::-webkit-slider-runnable-track {
-  background: $dark-grey;
+  background: $light-background;
   height: 4px;
   border-radius: 4px;
   transition: 0.3s;
@@ -60,12 +60,12 @@ input[type='range']::-webkit-slider-runnable-track {
 
 input[type='range']:hover::-webkit-slider-runnable-track,
 input[type='range']:focus::-webkit-slider-runnable-track {
-  background: $dark-grey;
+  background: $light-background;
 }
 
 input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
-  background: $button;
+  background: $primary-blue;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -76,7 +76,7 @@ input[type='range']::-webkit-slider-thumb {
 
 input[type='range']:hover::-webkit-slider-thumb,
 input[type='range']:focus::-webkit-slider-thumb {
-  background: $button;
+  background: $primary-blue;
 }
 
 input[type='range']::-moz-focus-outer {
@@ -84,18 +84,18 @@ input[type='range']::-moz-focus-outer {
 }
 
 input[type='range']::-moz-range-track {
-  background: $dark-grey;
+  background: $light-background;
   height: 4px;
   border-radius: 4px;
 }
 
 input[type='range']:hover::-moz-range-track,
 input[type='range']:focus::-moz-range-track {
-  background: $dark-grey;
+  background: $light-background;
 }
 
 input[type='range']::-moz-range-thumb {
-  background: $button;
+  background: $primary-blue;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -104,22 +104,22 @@ input[type='range']::-moz-range-thumb {
 
 input[type='range']:hover::-moz-range-thumb,
 input[type='range']:focus::-moz-range-thumb {
-  background: $button;
+  background: $primary-blue;
 }
 
 input[type='range']::-moz-range-progress {
-  background: $button;
+  background: $primary-blue;
   border-radius: 4px;
   height: 4px;
 }
 
 input[type='range']:hover::-moz-range-progress,
 input[type='range']:focus::-moz-range-progress {
-  background: $button;
+  background: $primary-blue;
 }
 
 input[type='range']::-ms-track {
-  background: $dark-grey;
+  background: $light-background;
   height: 4px;
   border-radius: 4px;
   border: none;
@@ -128,11 +128,11 @@ input[type='range']::-ms-track {
 
 input[type='range']:hover::-ms-track,
 input[type='range']:focus::-ms-track {
-  background: $dark-grey;
+  background: $light-background;
 }
 
 input[type='range']::-ms-thumb {
-  background: $button;
+  background: $primary-blue;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -142,7 +142,7 @@ input[type='range']::-ms-thumb {
 
 input[type='range']:hover::-ms-thumb,
 input[type='range']:focus::-ms-thumb {
-  background: $button;
+  background: $primary-blue;
 }
 
 input[type='range']::-ms-tooltip {
@@ -150,13 +150,13 @@ input[type='range']::-ms-tooltip {
 }
 
 input[type='range']::-ms-fill-lower {
-  background: $button;
+  background: $primary-blue;
   border-radius: 4px;
 }
 
 input[type='range']:hover::-ms-fill-lower,
 input[type='range']:focus::-ms-fill-lower {
-  background: $button;
+  background: $primary-blue;
 }
 
 .text {
@@ -174,7 +174,7 @@ input[type='range']:focus::-ms-fill-lower {
   align-items: center;
   justify-content: center;
   font-size: 0.85rem;
-  background-color: $button;
+  background-color: $primary-blue;
   color: $text-light;
   border-radius: 4px;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
@@ -187,12 +187,12 @@ input[type='range']:focus::-ms-fill-lower {
 
   &:hover,
   &:active {
-    background-color: scale-color($button, $lightness: -20%);
+    background-color: scale-color($primary-blue, $lightness: -8%);
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 4px scale-color($button, $lightness: -40%);
+    box-shadow: 0 0 0 4px scale-color($primary-blue, $lightness: -40%);
   }
 
   &--small {
@@ -216,7 +216,7 @@ input[type='range']:focus::-ms-fill-lower {
     position: absolute;
     display: block;
     content: '\a';
-    background-color: $button;
+    background-color: $primary-blue;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -237,12 +237,12 @@ input[type='range']:focus::-ms-fill-lower {
 
   &:hover::before,
   &:active::before {
-    background-color: scale-color($button, $lightness: -20%);
+    background-color: scale-color($primary-blue, $lightness: -8%);
   }
 
   &:focus::before {
     outline: none;
-    box-shadow: 0 0 0 4px scale-color($button, $lightness: -40%);
+    box-shadow: 0 0 0 4px scale-color($primary-blue, $lightness: -40%);
   }
 
   &.icon-button-small {
@@ -297,17 +297,17 @@ input[type='range']:focus::-ms-fill-lower {
 @keyframes pulse {
   0% {
     transform: translate(0, -50%) scale(0.95);
-    box-shadow: 0 0 0 0 rgba($button, 0.7);
+    box-shadow: 0 0 0 0 rgba($primary-blue, 0.7);
   }
 
   70% {
     transform: translate(0, -50%) scale(1);
-    box-shadow: 0 0 0 10px rgba($button, 0);
+    box-shadow: 0 0 0 10px rgba($primary-blue, 0);
   }
 
   100% {
     transform: translate(0, -50%) scale(0.95);
-    box-shadow: 0 0 0 0 rgba($button, 0);
+    box-shadow: 0 0 0 0 rgba($primary-blue, 0);
   }
 }
 
@@ -618,7 +618,7 @@ input[type='range']:focus::-ms-fill-lower {
     justify-content: space-between;
     align-items: center;
     font-size: 0.8rem;
-    color: $dark-grey;
+    color: $light-background;
   }
 
   .slider-value {
@@ -739,7 +739,7 @@ input[type='range']:focus::-ms-fill-lower {
 
   .statistics-subcount {
     font-size: 1rem;
-    color: $text-dark;
+    color: $text-darker;
   }
 
   .statistics-details-container {
@@ -804,7 +804,7 @@ input[type='range']:focus::-ms-fill-lower {
   .accordion__item {
     cursor: pointer;
     padding: 10px;
-    border-bottom: 1px solid rgba($text-dark, 0.35);
+    border-bottom: 1px solid rgba($text-darker, 0.35);
     position: relative;
     width: 200px;
 
