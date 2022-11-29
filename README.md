@@ -3,10 +3,10 @@
   <p align="center">
     <img src="misc/preview/interface.png" width="850px" alt="Revisited 2048 game main interface">
   </p>
-  <h2 align="center">
+  <p align="center">
     <br/>
     A revisited 2048 game, using laws of mathematical probabilities.
-  </h2>
+  </p>
 </p>
 
 <br/>
