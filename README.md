@@ -74,7 +74,7 @@ The bonus tile can be merged with any other tile on the board (even an obstacle)
 
 **State space**: Type of the new tile (classic or special tile).
 
-**Probability law**: [Geometric distribution]().
+**Probability law**: [Geometric distribution](https://en.wikipedia.org/wiki/Geometric_distribution).
 
 **Parameters**: More or less chances to come across special cells that can help or block the player.
 
@@ -86,7 +86,7 @@ $${p(X=k)=(1-p)^{k-1}p}$$
 
 **State space**: Subtype of the new special tile (obtacle, mystery or bonus tile).
 
-**Probability law**: [Uniform distribution]().
+**Probability law**: [Uniform distribution](https://en.wikipedia.org/wiki/Discrete_uniform_distribution).
 
 **Parameters**: The game becomes more or less complicated depending on the type of tile that appears.
 
@@ -96,7 +96,7 @@ $${p(X=k)=(1-p)^{k-1}p}$$
 
 **State space**: Value of the classic tile.
 
-**Probability law**: [Bernoulli distribution]().
+**Probability law**: [Bernoulli distribution](https://en.wikipedia.org/wiki/Bernoulli_distribution).
 
 **Parameters**: More or less chances to fall on tiles of value `4`, making the game more or less simple for the player.
 
@@ -108,7 +108,7 @@ $${P(X = 1) = p, P(X = 0) = 1-p}$$
 
 **State space**: Number of moves before the obstacle tile disappears.
 
-**Probability law**: [Poisson distribution]().
+**Probability law**: [Poisson distribution](https://en.wikipedia.org/wiki/Poisson_binomial_distribution).
 
 **Parameters**: More or less chance that the obstacle tile will remain on the grid for a long time.
 
@@ -120,7 +120,7 @@ $${p(X=k)=e^{-\lambda}\frac{\lambda^k}{k!}}$$
 
 **State space**: Number of moves before the value of the mystery tile is revealed.
 
-**Probability law**: [Binomial distribution]().
+**Probability law**: [Binomial distribution](https://en.wikipedia.org/wiki/Binomial_distribution).
 
 **Parameters**: More or less chances that the value of the mystery tile will be revealed quickly.
 
