@@ -58,13 +58,25 @@ But we have also integrated **three additional types of tiles**.
 
 ##### Obstacle tile
 
+<p align="center">
+  <img src="misc/preview/obstacle-tile.png" width="100px" alt="Obstacle tile">
+</p>
+
 The obstacle tile is associated with a number of moves. It cannot be merged with any other tile and its purpose is to block you in certain cases. It **will only disappear when you have made the required number of moves**.
 
-##### Mistery tile
+##### Mystery tile
+
+<p align="center">
+  <img src="misc/preview/mystery-tile.png" width="100px" alt="Mystery tile">
+</p>
 
 The mystery tile represents a tile of value `2`, `4`, `8` or `16`. However, it is impossible to determine this because the value is hidden. You have to play it and hope to find a tile with the corresponding value. **The value will eventually be revealed after a certain number of moves to help you**.
 
 ##### Bonus tile
+
+<p align="center">
+  <img src="misc/preview/bonus-tile.png" width="100px" alt="Bonus tile">
+</p>
 
 The bonus tile can be merged with any other tile on the board (even an obstacle). To do so, it **adapts and adopts the value of the target tile** (`2` in the case of merging with an obstacle).
 
@@ -88,7 +100,7 @@ $${p(X=k)=(1-p)^{k-1}p}$$
 
 **Probability law**: [Uniform distribution](https://en.wikipedia.org/wiki/Discrete_uniform_distribution).
 
-**Parameters**: The game becomes more or less complicated depending on the type of tile that appears.
+**Parameters**: The game becomes more or less complicated depending on the type of special tile that appears.
 
 **How**: The random variable follows a uniform distribution on the interval `[0, 3]`. A random draw is made of a number between 0 and 1. Depending on the draw, one of the three special tile types is selected.
 
@@ -116,7 +128,7 @@ $${P(X = 1) = p, P(X = 0) = 1-p}$$
 
 $${p(X=k)=e^{-\lambda}\frac{\lambda^k}{k!}}$$
 
-##### Mistery tile
+##### Mystery tile
 
 **State space**: Number of moves before the value of the mystery tile is revealed.
 
