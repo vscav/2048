@@ -178,11 +178,7 @@ Build the game with
 
 ### Deployment
 
-Deploy the game with
-
-    yarn deploy
-
-It will deploy the game to [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages). The game will then be live [here](https://vscav.github.io/2048/).
+The game is automatically deployed on any push/merge on the `main` branch. The deployment is done on [GitHub Pages](https://pages.github.com/). The game will then be live [here](https://vscav.github.io/2048/).
 
 ## Resources
 
