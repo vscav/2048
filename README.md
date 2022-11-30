@@ -170,7 +170,7 @@ Deploy the game with
 
     yarn deploy
 
-It will deploy the game to [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages). The game will thenbe live [here](https://vscav.github.io/2048/).
+It will deploy the game to [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages). The game will then be live [here](https://vscav.github.io/2048/).
 
 ## Resources
 
