@@ -23,7 +23,7 @@
 
 2048 is a **single-player sliding tile puzzle video game** written by Italian web developer [Gabriele Cirulli](https://twitter.com/gabrielecirulli). You can play the original game [here](https://play2048.co/).
 
-### Rules
+#### Rules
 
 > Source: [Wikipedia](<https://en.wikipedia.org/wiki/2048_(video_game)#Gameplay>)
 
@@ -33,7 +33,7 @@ If a move causes three consecutive tiles of the same value to slide together, on
 
 The game is won when a tile with a value of 2048 appears on the board When the player has no legal moves (there are no empty spaces and no adjacent tiles with the same value), the game ends.
 
-### Mathematical aspect
+#### Mathematical aspect
 
 There are **2 main mathematical components** that composed the original game.
 
