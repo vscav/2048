@@ -130,7 +130,7 @@ $${P(X=k)={n \choose k} p^k(1-p)^{n-k}}$$
 
 ## Post-mortem
 
-A Post-mortem **written in french** is available [here(add link)]().
+A Post-mortem **written in french** is available [here](https://github.com/vscav/2048/blob/main/misc/report/fr/post-mortem-fr.pdf).
 
 ## Development
 
